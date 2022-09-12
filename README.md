@@ -10,7 +10,7 @@ This project was developed for personal usage but you may find it useful. Please
 
 ![screenshot](https://user-images.githubusercontent.com/79826944/189561659-b80f27b6-5a05-494e-bd4d-81c13668fb47.png)
 
-## Building from source
+## Building the source
 
 ### 1: Prerequisites
 
