@@ -1,0 +1,140 @@
+﻿<UserControl
+    x:Class="StringMaster.UserControls.StringCogoPoints"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StringMaster.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="RedGridLine" Color="#ffc0c0" />
+            <SolidColorBrush x:Key="BlueGridLine" Color="#7f9db9" />
+            <SolidColorBrush x:Key="YellowBackground" Color="#ffffeb" />
+            <SolidColorBrush x:Key="GreenBackground" Color="#d7ffd7" />
+
+            <Style x:Key="CivilAlternatingRowBackground" TargetType="{x:Type DataGridRow}">
+                <Setter Property="Background" Value="{StaticResource YellowBackground}" />
+                <Style.Triggers>
+                    <Trigger Property="DataGrid.AlternationIndex" Value="1">
+                        <Setter Property="Background" Value="{StaticResource YellowBackground}" />
+                    </Trigger>
+                    <Trigger Property="DataGrid.AlternationIndex" Value="2">
+                        <Setter Property="Background" Value="{StaticResource YellowBackground}" />
+                    </Trigger>
+                    <Trigger Property="DataGrid.AlternationIndex" Value="3">
+                        <Setter Property="Background" Value="{StaticResource GreenBackground}" />
+                    </Trigger>
+                    <Trigger Property="DataGrid.AlternationIndex" Value="4">
+                        <Setter Property="Background" Value="{StaticResource GreenBackground}" />
+                    </Trigger>
+                    <Trigger Property="DataGrid.AlternationIndex" Value="5">
+                        <Setter Property="Background" Value="{StaticResource GreenBackground}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolTips.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <ToolBar.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="16" />
+                        <Setter Property="Height" Value="16" />
+                    </Style>
+                </ToolBar.Resources>
+                <Button Command="{Binding AddRowCommand}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource AddRowToolTipContent}" />
+                    </Button.ToolTip>
+                    <TextBlock Text="Add" />
+                </Button>
+                <Button Command="{Binding RemoveRowCommand}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource RemoveRowToolTipContent}" />
+                    </Button.ToolTip>
+                    <TextBlock Text="Remove" />
+                </Button>
+                <Separator />
+                <Button Click="Load_Click">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource OpenDocumentToolTipContent}" />
+                    </Button.ToolTip>
+                    <TextBlock Text="Load" />
+                </Button>
+                <Button Click="Save_Click">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource SaveDocumentToolTipContent}" />
+                    </Button.ToolTip>
+                    <TextBlock Text="Save" />
+                </Button>
+                <Separator />
+                <Button Command="{Binding StringCommand}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource StringCogoPointsToolTipContent}" />
+                    </Button.ToolTip>
+                    <TextBlock Text="String CogoPoints" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <DataGrid
+            HorizontalContentAlignment="Center"
+            AlternationCount="6"
+            AutoGenerateColumns="False"
+            Background="{StaticResource YellowBackground}"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserSortColumns="False"
+            ColumnHeaderStyle="{StaticResource HeaderStyle}"
+            HorizontalGridLinesBrush="{StaticResource BlueGridLine}"
+            ItemsSource="{Binding DescriptionKeys}"
+            RowBackground="{StaticResource YellowBackground}"
+            RowStyle="{StaticResource CivilAlternatingRowBackground}"
+            SelectedItem="{Binding SelectedKey}"
+            VerticalGridLinesBrush="{StaticResource RedGridLine}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="80"
+                    Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="Key" />
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding Layer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="Layer" />
+                <DataGridTextColumn
+                    Width="200"
+                    Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="Description" />
+                <DataGridCheckBoxColumn
+                    Width="50"
+                    Binding="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="2D" />
+                <DataGridCheckBoxColumn
+                    Width="50"
+                    Binding="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="3D" />
+                <DataGridCheckBoxColumn
+                    Width="50"
+                    Binding="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Header="Feature Line" />
+                <DataGridTextColumn
+                    Width="50"
+                    Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
+                    Header="Mid-Ordinate" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
