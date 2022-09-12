@@ -35,7 +35,7 @@ To build the plugin make sure that you have references to the following Autodesk
 - AecBaseMgd.dll
 - AeccDbMgd.dll
 
-Make sure to set the `Copy Local` property of each reference to `false`.
+Make sure to set the `Copy Local` property of each Autodesk reference to `False`.
 
 ![Screenshot 2022-09-12 115736](https://user-images.githubusercontent.com/79826944/189563239-1f5d09a9-46d4-4deb-95d2-96b2b2cd4e42.png)
 
