@@ -6,6 +6,12 @@ String master is a plugin for Autodesk Civil 3D 2019-2023 which connects/strings
 
 This project was developed for personal use but you may find it useful. Please feel free to discuss or contribute.
 
+## Usage
+
+Load the plugin DLL into Autodesk Civil 3D with `netload`. 
+
+Display the palette with the `stringmaster` command.
+
 ## Screenshots
 
 ![screenshot](https://user-images.githubusercontent.com/79826944/189561659-b80f27b6-5a05-494e-bd4d-81c13668fb47.png)
