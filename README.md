@@ -25,7 +25,7 @@ git clone https://github.com/puppetsw/StringMaster
 
 This will create a local copy of the repository.
 
-### 3: Build the project
+### 3: Build the plugin
 
 To build the plugin make sure that you have references to the following Autodesk DLLs from your Autodesk Civil 3D installation directories. 
 
