@@ -5,13 +5,13 @@ namespace StringMaster;
 
 public static class Commands
 {
-    private static MyPaletteSet s_palette;
+    private static StringMasterPalette s_palette;
 
     [CommandMethod("WMS", "_StringMaster", CommandFlags.Modal)]
     public static void ShowStringMaster()
     {
         if (s_palette == null)
-            s_palette = new MyPaletteSet();
+            s_palette = new StringMasterPalette();
 
         s_palette.Visible = true;
     }

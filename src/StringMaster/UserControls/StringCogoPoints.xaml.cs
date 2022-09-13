@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
+using StringMaster.Helpers;
 using StringMaster.ViewModels;
 
 namespace StringMaster.UserControls;
@@ -12,21 +13,7 @@ public partial class StringCogoPoints : UserControl
 {
     private string _fileName;
 
-    public StringCogoPoints(StringCogoPointsViewModel viewModel)
-    {
-        InitializeComponent();
-
-        DataContext = viewModel;
-
-        Unloaded += SaveSettings;
-    }
-
-    private void SaveSettings(object sender, RoutedEventArgs e)
-    {
-        Properties.Settings.Default.DescriptionKeyFileName = _fileName;
-        Properties.Settings.Default.Save();
-        Unloaded -= SaveSettings;
-    }
+    public StringCogoPoints() => InitializeComponent();
 
     private void Load_Click(object sender, RoutedEventArgs e)
     {
@@ -37,9 +24,8 @@ public partial class StringCogoPoints : UserControl
             _fileName = dialog.FileName;
             var isLoaded = ((StringCogoPointsViewModel)DataContext).LoadSettings(_fileName);
             if (!isLoaded)
-            {
-                MessageBox.Show("Unable to load Description Key file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                MessageBox.Show(ResourceHelpers.GetLocalizedString("DescriptionKeySaveError"),
+                    ResourceHelpers.GetLocalizedString("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -52,9 +38,8 @@ public partial class StringCogoPoints : UserControl
             _fileName = dialog.FileName;
             var isSaved = ((StringCogoPointsViewModel)DataContext).SaveSettings(_fileName);
             if (!isSaved)
-            {
-                MessageBox.Show("Unable to save Description Key file. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                MessageBox.Show(ResourceHelpers.GetLocalizedString("DescriptionKeyLoadError"),
+                    ResourceHelpers.GetLocalizedString("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

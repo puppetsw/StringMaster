@@ -31,8 +31,9 @@ public class StringCogoPointsViewModel : ObservableObject
 
     public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
 
-    public ICommand StringCommand =>
-        new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null && DescriptionKeys.Count > 0 && DescriptionKeys.All(x => x.IsValid()));
+    public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
+                                                                              DescriptionKeys.Count > 0 &&
+                                                                              DescriptionKeys.All(x => x.IsValid()));
 
     public StringCogoPointsViewModel() => LoadSettings(Properties.Settings.Default.DescriptionKeyFileName);
 
@@ -344,6 +345,7 @@ public class StringCogoPointsViewModel : ObservableObject
     /// <summary>
     /// Get the last xml file loaded from settings
     /// </summary>
+    /// <param name="fileName"></param>
     public bool LoadSettings(string fileName)
     {
         if (!string.IsNullOrEmpty(fileName))

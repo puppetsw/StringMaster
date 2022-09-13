@@ -113,22 +113,22 @@
   <ItemGroup>
     <Compile Include="CivilApplication.cs" />
     <Compile Include="Extensions\CircularArcExtensions.cs" />
+    <Compile Include="Extensions\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CogoPointUtils.cs" />
+    <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Utilities\FeatureLineUtils.cs" />
-    <Compile Include="Utilities\GeometryUtils.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\PointHelpers.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
-    <Compile Include="MyPaletteSet.cs" />
-    <Compile Include="Plugin.cs" />
+    <Compile Include="StringMasterPalette.cs" />
+    <Compile Include="StringMasterPlugin.cs" />
     <Compile Include="Utilities\LayerUtils.cs" />
     <Compile Include="Models\Angle.cs" />
     <Compile Include="Models\DescriptionKey.cs" />
@@ -166,6 +166,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\ToolTips.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +182,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Implementation\" />
+    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

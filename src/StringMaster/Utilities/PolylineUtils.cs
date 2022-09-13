@@ -57,7 +57,7 @@ public static class PolylineUtils
 
             radiusPoint.Radius = secondDerivative.Length * bulgeDirection;
 
-            var num2 = secondDerivative.AngleOnPlane(GeometryUtils.PlaneXY);
+            var num2 = secondDerivative.AngleOnPlane(new Plane(new Point3d(0.0, 0.0, 0.0), Vector3d.ZAxis));
             var pointAtParameter = polyline.GetPointAtParameter(param);
 
             radiusPoint.Point = new Point(

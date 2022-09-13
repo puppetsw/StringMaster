@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="RedGridLine" Color="#ffc0c0" />
+    <SolidColorBrush x:Key="BlueGridLine" Color="#7f9db9" />
+    <SolidColorBrush x:Key="YellowBackground" Color="#ffffeb" />
+    <SolidColorBrush x:Key="GreenBackground" Color="#d7ffd7" />
+</ResourceDictionary>

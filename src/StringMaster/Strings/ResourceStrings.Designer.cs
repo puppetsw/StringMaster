@@ -59,5 +59,158 @@ namespace StringMaster.Strings {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2D.
+        /// </summary>
+        internal static string ColumnHeader2D {
+            get {
+                return ResourceManager.GetString("ColumnHeader2D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3D.
+        /// </summary>
+        internal static string ColumnHeader3D {
+            get {
+                return ResourceManager.GetString("ColumnHeader3D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FeatureLine.
+        /// </summary>
+        internal static string ColumnHeaderFeatureLine {
+            get {
+                return ResourceManager.GetString("ColumnHeaderFeatureLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string ColumnHeaderKey {
+            get {
+                return ResourceManager.GetString("ColumnHeaderKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Layer.
+        /// </summary>
+        internal static string ColumnHeaderLayer {
+            get {
+                return ResourceManager.GetString("ColumnHeaderLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mid-Ordinate.
+        /// </summary>
+        internal static string ColumnHeaderMidOrdinate {
+            get {
+                return ResourceManager.GetString("ColumnHeaderMidOrdinate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load Description Key file.
+        /// </summary>
+        internal static string DescriptionKeyLoadError {
+            get {
+                return ResourceManager.GetString("DescriptionKeyLoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save Description Key file. Please try again..
+        /// </summary>
+        internal static string DescriptionKeySaveError {
+            get {
+                return ResourceManager.GetString("DescriptionKeySaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        internal static string Load {
+            get {
+                return ResourceManager.GetString("Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String CogoPoints.
+        /// </summary>
+        internal static string StringCogoPoints {
+            get {
+                return ResourceManager.GetString("StringCogoPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connects all CogoPoints in drawing using the specified description key set..
+        /// </summary>
+        internal static string StringCogoPointsToolTipContent {
+            get {
+                return ResourceManager.GetString("StringCogoPointsToolTipContent", resourceCulture);
+            }
+        }
     }
 }

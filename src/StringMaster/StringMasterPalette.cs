@@ -6,11 +6,11 @@ using StringMaster.ViewModels;
 
 namespace StringMaster;
 
-public class MyPaletteSet : PaletteSet
+public class StringMasterPalette : PaletteSet
 {
     private Palette _currentPalette;
 
-    public MyPaletteSet() : base("StringMaster", new Guid("B77F8660-CDA0-4978-BC1F-3251079EF3D7"))
+    public StringMasterPalette() : base("StringMaster", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
     {
         Style = PaletteSetStyles.ShowAutoHideButton | PaletteSetStyles.ShowCloseButton | PaletteSetStyles.Snappable |
                 PaletteSetStyles.UsePaletteNameAsTitleForSingle;
@@ -26,7 +26,7 @@ public class MyPaletteSet : PaletteSet
 
     private void Initialize()
     {
-        AddVisual("StringMasterControl", new StringCogoPoints(new StringCogoPointsViewModel()));
+        AddVisual("StringMasterControl", new StringCogoPoints());
         PaletteActivated += MyPaletteSet_PaletteActivated;
         Activate(0);
         _currentPalette = this[0];
