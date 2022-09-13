@@ -3,4 +3,16 @@
     <SolidColorBrush x:Key="BlueGridLine" Color="#7f9db9" />
     <SolidColorBrush x:Key="YellowBackground" Color="#ffffeb" />
     <SolidColorBrush x:Key="GreenBackground" Color="#d7ffd7" />
+    <SolidColorBrush x:Key="DarkBackground" Color="#3b4453" />
+
+    <SolidColorBrush x:Key="TickButtonBackground" Color="#F3F3F3" />
+
+    <SolidColorBrush x:Key="ToolBarButtonHover" Color="#210080FF" />
+    <SolidColorBrush x:Key="ToolBarMenuBorder" Color="#FFB6BDC5" />
+    <SolidColorBrush x:Key="ToolBarSubMenuBackground" Color="#FFEEF5FD" />
+    <SolidColorBrush x:Key="ToolBarHorizontalBackground" Color="#FFEEF5FD" />
+    <SolidColorBrush x:Key="ToolBarVerticalBackground" Color="#FFEEF5FD" />
+    <SolidColorBrush x:Key="ToolBarGripper" Color="#FF6D6D6D" />
+    <SolidColorBrush x:Key="ToolBarToggleButtonHorizontalBackground" Color="#FFEEF5FD" />
+    <SolidColorBrush x:Key="ToolBarToggleButtonVerticalBackground" Color="#FFEEF5FD" />
 </ResourceDictionary>

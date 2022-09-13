@@ -2,7 +2,6 @@
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.UserControls;
-using StringMaster.ViewModels;
 
 namespace StringMaster;
 
@@ -10,10 +9,12 @@ public class StringMasterPalette : PaletteSet
 {
     private Palette _currentPalette;
 
-    public StringMasterPalette() : base("StringMaster", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
+    private StringCogoPoints _stringCogoPointsView;
+
+    public StringMasterPalette() : base("StringMasterPalette", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
     {
         Style = PaletteSetStyles.ShowAutoHideButton | PaletteSetStyles.ShowCloseButton | PaletteSetStyles.Snappable |
-                PaletteSetStyles.UsePaletteNameAsTitleForSingle;
+                PaletteSetStyles.UsePaletteNameAsTitleForSingle | PaletteSetStyles.ShowPropertiesMenu;
         Opacity = 100;
         Dock = DockSides.None;
         DockEnabled = DockSides.None;
@@ -26,10 +27,19 @@ public class StringMasterPalette : PaletteSet
 
     private void Initialize()
     {
-        AddVisual("StringMasterControl", new StringCogoPoints());
+        // BUG: Probably some memory leak bug here if we had more than one palette?
+        _stringCogoPointsView = new StringCogoPoints();
+        _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
+
+        AddVisual("StringMaster", _stringCogoPointsView);
         PaletteActivated += MyPaletteSet_PaletteActivated;
         Activate(0);
         _currentPalette = this[0];
+    }
+
+    private void DismissPalette(object sender, EventArgs e)
+    {
+        _currentPalette.PaletteSet.Visible = false;
     }
 
     private void MyPaletteSet_PaletteActivated(object sender, PaletteActivatedEventArgs e)
@@ -39,6 +49,7 @@ public class StringMasterPalette : PaletteSet
 
     protected override void Dispose(bool A_0)
     {
+        _stringCogoPointsView.DismissPaletteEvent -= DismissPalette;
         PaletteActivated -= MyPaletteSet_PaletteActivated;
         base.Dispose(A_0);
     }

@@ -10,6 +10,7 @@
     d:DataContext="{d:DesignData StringCogoPointsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Background="{DynamicResource DarkBackground}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,56 +18,90 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Brushes.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/DataGrid.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolTips.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolBar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:StringCogoPointsViewModel />
     </UserControl.DataContext>
-    <DockPanel>
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
+    <DockPanel Margin="8,0,0,0">
+        <Grid DockPanel.Dock="Top">
+            <ToolBar Background="{StaticResource DarkBackground}" Style="{DynamicResource ToolBarStyle}">
                 <ToolBar.Resources>
                     <Style TargetType="Image">
                         <Setter Property="Width" Value="16" />
                         <Setter Property="Height" Value="16" />
                     </Style>
                 </ToolBar.Resources>
-
-                <Button Command="{Binding AddRowCommand}">
-                    <Button.ToolTip>
-                        <ToolTip ContentTemplate="{StaticResource AddRowToolTipContent}" />
-                    </Button.ToolTip>
-                    <TextBlock Text="{extensions:ResourceExtension Name=Add}" />
+                <Button>
+                    <Image Source="{StaticResource NewToolBarIcon}" />
                 </Button>
-                <Button Command="{Binding RemoveRowCommand}">
-                    <Button.ToolTip>
-                        <ToolTip ContentTemplate="{StaticResource RemoveRowToolTipContent}" />
-                    </Button.ToolTip>
-                    <TextBlock Text="{extensions:ResourceExtension Name=Remove}" />
-                </Button>
-                <Separator />
                 <Button Click="Load_Click">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource OpenDocumentToolTipContent}" />
                     </Button.ToolTip>
-                    <TextBlock Text="{extensions:ResourceExtension Name=Open}" />
+                    <Image Source="{StaticResource OpenToolBarIcon}" />
+                </Button>
+                <Button>
+                    <Image Source="{StaticResource SaveToolBarIcon}" />
                 </Button>
                 <Button Click="Save_Click">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource SaveDocumentToolTipContent}" />
                     </Button.ToolTip>
-                    <TextBlock Text="{extensions:ResourceExtension Name=Save}" />
+                    <Image Source="{StaticResource SaveAsToolBarIcon}" />
                 </Button>
-                <Separator />
+                <Button Command="{Binding AddRowCommand}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource AddRowToolTipContent}" />
+                    </Button.ToolTip>
+                    <Image Source="{StaticResource AddToolBarIcon}" />
+                </Button>
+                <Button Command="{Binding RemoveRowCommand}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource RemoveRowToolTipContent}" />
+                    </Button.ToolTip>
+                    <Image Source="{StaticResource RemoveToolBarIcon}" />
+                </Button>
                 <Button Command="{Binding StringCommand}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource StringCogoPointsToolTipContent}" />
                     </Button.ToolTip>
-                    <TextBlock Text="{extensions:ResourceExtension Name=StringCogoPoints}" />
+                    <Image Source="{StaticResource ExecuteToolBarIcon}" />
                 </Button>
             </ToolBar>
-        </ToolBarTray>
+            <ToolBar
+                HorizontalAlignment="Right"
+                Background="{StaticResource DarkBackground}"
+                Style="{DynamicResource ToolBarStyle}">
+                <ToolBar.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Width" Value="16" />
+                        <Setter Property="Height" Value="16" />
+                    </Style>
+                </ToolBar.Resources>
+                <Button Click="DismissPalette_Click">
+                    <Border
+                        Width="16"
+                        Height="16"
+                        Background="{StaticResource TickButtonBackground}"
+                        BorderBrush="Gray"
+                        BorderThickness="1">
+                        <Image
+                            Width="12"
+                            Height="12"
+                            Source="{StaticResource TickToolBarIcon}"
+                            Stretch="Uniform" />
+                    </Border>
+                </Button>
+
+                <Button Margin="10,0,0,0">
+                    <Image Source="{StaticResource HelpToolBarIcon}" />
+                </Button>
+            </ToolBar>
+        </Grid>
 
         <DataGrid
             HorizontalContentAlignment="Center"
@@ -104,15 +139,15 @@
                 <DataGridCheckBoxColumn
                     Width="50"
                     Binding="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{extensions:ResourceExtension Name=ColumnHeaderKey3D}" />
+                    Header="{extensions:ResourceExtension Name=ColumnHeader3D}" />
                 <DataGridCheckBoxColumn
                     Width="50"
                     Binding="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{extensions:ResourceExtension Name=ColumnHeaderKeyFeatureLine}" />
+                    Header="{extensions:ResourceExtension Name=ColumnHeaderFeatureLine}" />
                 <DataGridTextColumn
                     Width="50"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
-                    Header="{extensions:ResourceExtension Name=ColumnHeaderKeyMidOrdinate}" />
+                    Header="{extensions:ResourceExtension Name=ColumnHeaderMidOrdinate}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

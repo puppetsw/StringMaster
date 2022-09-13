@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using StringMaster.Helpers;
@@ -12,6 +13,8 @@ namespace StringMaster.UserControls;
 public partial class StringCogoPoints : UserControl
 {
     private string _fileName;
+
+    public event EventHandler DismissPaletteEvent;
 
     public StringCogoPoints() => InitializeComponent();
 
@@ -41,5 +44,10 @@ public partial class StringCogoPoints : UserControl
                 MessageBox.Show(ResourceHelpers.GetLocalizedString("DescriptionKeyLoadError"),
                     ResourceHelpers.GetLocalizedString("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
+
+    private void DismissPalette_Click(object sender, RoutedEventArgs e)
+    {
+        DismissPaletteEvent?.Invoke(sender, e);
     }
 }

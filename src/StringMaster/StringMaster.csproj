@@ -98,6 +98,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -166,6 +167,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -186,6 +195,22 @@
   <ItemGroup>
     <Folder Include="Services\Implementation\" />
     <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\help.bmp" />
+    <Resource Include="Resources\Icons\new.bmp" />
+    <Resource Include="Resources\Icons\open.bmp" />
+    <Resource Include="Resources\Icons\save.bmp" />
+    <Resource Include="Resources\Icons\saveas.bmp" />
+    <Resource Include="Resources\Icons\settings.bmp" />
+    <Resource Include="Resources\Icons\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\add.png" />
+    <Resource Include="Resources\Icons\remove.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\execute.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
