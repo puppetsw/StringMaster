@@ -6,6 +6,8 @@
     <SolidColorBrush x:Key="DarkBackground" Color="#3b4453" />
 
     <SolidColorBrush x:Key="TickButtonBackground" Color="#F3F3F3" />
+    <SolidColorBrush x:Key="ButtonHoverBackground" Color="#e0eef9" />
+    <SolidColorBrush x:Key="ButtonHoverBorder" Color="#0078d4" />
 
     <SolidColorBrush x:Key="ToolBarButtonHover" Color="#210080FF" />
     <SolidColorBrush x:Key="ToolBarMenuBorder" Color="#FFB6BDC5" />

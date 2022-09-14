@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
-using StringMaster.Helpers;
+using StringMaster.Services.Interfaces;
 using StringMaster.ViewModels;
 
 namespace StringMaster.UserControls;
@@ -10,40 +9,15 @@ namespace StringMaster.UserControls;
 /// <summary>
 /// Interaction logic for StringMasterUC.xaml
 /// </summary>
-public partial class StringCogoPoints : UserControl
+public partial class StringCogoPoints : UserControl, IPaletteControl
 {
-    private string _fileName;
-
     public event EventHandler DismissPaletteEvent;
 
-    public StringCogoPoints() => InitializeComponent();
-
-    private void Load_Click(object sender, RoutedEventArgs e)
+    public StringCogoPoints(StringCogoPointsViewModel viewModel)
     {
-        var dialog = new OpenFileDialog();
+        InitializeComponent();
 
-        if (dialog.ShowDialog() == true)
-        {
-            _fileName = dialog.FileName;
-            var isLoaded = ((StringCogoPointsViewModel)DataContext).LoadSettings(_fileName);
-            if (!isLoaded)
-                MessageBox.Show(ResourceHelpers.GetLocalizedString("DescriptionKeySaveError"),
-                    ResourceHelpers.GetLocalizedString("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    private void Save_Click(object sender, RoutedEventArgs e)
-    {
-        var dialog = new SaveFileDialog();
-
-        if (dialog.ShowDialog() == true)
-        {
-            _fileName = dialog.FileName;
-            var isSaved = ((StringCogoPointsViewModel)DataContext).SaveSettings(_fileName);
-            if (!isSaved)
-                MessageBox.Show(ResourceHelpers.GetLocalizedString("DescriptionKeyLoadError"),
-                    ResourceHelpers.GetLocalizedString("Error"), MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        DataContext = viewModel;
     }
 
     private void DismissPalette_Click(object sender, RoutedEventArgs e)

@@ -20,42 +20,6 @@
                         x:Name="Grid"
                         Margin="3,1,1,1"
                         SnapsToDevicePixels="true">
-                        <!--<Grid x:Name="OverflowGrid" HorizontalAlignment="Right">
-                            <ToggleButton
-                                x:Name="OverflowButton"
-                                ClickMode="Press"
-                                FocusVisualStyle="{x:Null}"
-                                IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                IsEnabled="{TemplateBinding HasOverflowItems}"
-                                Style="{StaticResource ToolBarHorizontalOverflowButtonStyle}" />
-                            <Popup
-                                x:Name="OverflowPopup"
-                                AllowsTransparency="true"
-                                Focusable="false"
-                                IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                Placement="Bottom"
-                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                                StaysOpen="false">
-                                <theme:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">
-                                    <Border
-                                        x:Name="ToolBarSubMenuBorder"
-                                        Background="{StaticResource ToolBarSubMenuBackground}"
-                                        BorderBrush="{StaticResource ToolBarMenuBorder}"
-                                        BorderThickness="1"
-                                        RenderOptions.ClearTypeHint="Enabled">
-                                        <ToolBarOverflowPanel
-                                            x:Name="PART_ToolBarOverflowPanel"
-                                            Margin="2"
-                                            FocusVisualStyle="{x:Null}"
-                                            Focusable="true"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            KeyboardNavigation.TabNavigation="Cycle"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                            WrapWidth="200" />
-                                    </Border>
-                                </theme:SystemDropShadowChrome>
-                            </Popup>
-                        </Grid>-->
                         <Border
                             x:Name="MainPanelBorder"
                             Padding="{TemplateBinding Padding}"

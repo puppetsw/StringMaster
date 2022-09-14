@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
+using StringMaster.Services.Implementation;
 using StringMaster.UserControls;
+using StringMaster.ViewModels;
 
 namespace StringMaster;
 
@@ -28,7 +30,8 @@ public class StringMasterPalette : PaletteSet
     private void Initialize()
     {
         // BUG: Probably some memory leak bug here if we had more than one palette?
-        _stringCogoPointsView = new StringCogoPoints();
+        // TODO: Use DI?
+        _stringCogoPointsView = new StringCogoPoints(new StringCogoPointsViewModel(new OpenDialogService(), new SaveDialogService(), new MessageBoxService()));
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);
