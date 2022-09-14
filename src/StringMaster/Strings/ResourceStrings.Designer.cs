@@ -88,6 +88,15 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string ColumnHeaderDescription {
+            get {
+                return ResourceManager.GetString("ColumnHeaderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FeatureLine.
         /// </summary>
         internal static string ColumnHeaderFeatureLine {
