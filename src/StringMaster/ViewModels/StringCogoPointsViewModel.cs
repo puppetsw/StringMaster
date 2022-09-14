@@ -117,7 +117,18 @@ public class StringCogoPointsViewModel : ObservableObject
             return;
 
         if (SelectedKey != null)
-            DescriptionKeys?.Remove(SelectedKey);
+        {
+            if (SelectedKey.IsValid())
+            {
+                var dialog = _messageBoxService.ShowYesNo("Delete", "Remove this description key? This cannot be undone.");
+                if (dialog == true)
+                    DescriptionKeys?.Remove(SelectedKey);
+            }
+            else
+            {
+                DescriptionKeys?.Remove(SelectedKey);
+            }
+        }
 
         IsUnsavedChanges = true;
         DescriptionKeyPropertyChanged(null, null);
