@@ -21,11 +21,28 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolBar.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ToolBarButton" TargetType="{x:Type Button}">
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Width" Value="22" />
+                <Setter Property="Background" Value="{StaticResource DarkBackground}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource ButtonHoverBackground}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource ButtonHoverBorder}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <viewModels:StringCogoPointsViewModel />
-    </UserControl.DataContext>
     <DockPanel Margin="8,0,0,0">
         <Grid DockPanel.Dock="Top">
             <ToolBar Background="{StaticResource DarkBackground}" Style="{DynamicResource ToolBarStyle}">
@@ -34,24 +51,33 @@
                         <Setter Property="Width" Value="16" />
                         <Setter Property="Height" Value="16" />
                     </Style>
+                    <Style x:Key="ImageEnabled" TargetType="Image">
+                        <Setter Property="Width" Value="16" />
+                        <Setter Property="Height" Value="16" />
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.25" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                 </ToolBar.Resources>
-                <Button>
+                <Button Command="{Binding NewDescriptionKeyFileCommand}">
                     <Image Source="{StaticResource NewToolBarIcon}" />
                 </Button>
-                <Button Click="Load_Click">
+                <Button Command="{Binding OpenDescriptionKeyFileCommand}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource OpenDocumentToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource OpenToolBarIcon}" />
                 </Button>
-                <Button>
-                    <Image Source="{StaticResource SaveToolBarIcon}" />
+                <Button Command="{Binding SaveDescriptionKeyFileCommand}">
+                    <Image Source="{StaticResource SaveToolBarIcon}" Style="{StaticResource ImageEnabled}" />
                 </Button>
-                <Button Click="Save_Click">
+                <Button Command="{Binding SaveAsDescriptionKeyFileCommand}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource SaveDocumentToolTipContent}" />
                     </Button.ToolTip>
-                    <Image Source="{StaticResource SaveAsToolBarIcon}" />
+                    <Image Source="{StaticResource SaveAsToolBarIcon}" Style="{StaticResource ImageEnabled}" />
                 </Button>
                 <Button Command="{Binding AddRowCommand}">
                     <Button.ToolTip>
@@ -82,7 +108,7 @@
                         <Setter Property="Height" Value="16" />
                     </Style>
                 </ToolBar.Resources>
-                <Button Click="DismissPalette_Click">
+                <Button Click="DismissPalette_Click" Style="{StaticResource ToolBarButton}">
                     <Border
                         Width="16"
                         Height="16"
@@ -96,7 +122,6 @@
                             Stretch="Uniform" />
                     </Border>
                 </Button>
-
                 <Button Margin="10,0,0,0">
                     <Image Source="{StaticResource HelpToolBarIcon}" />
                 </Button>

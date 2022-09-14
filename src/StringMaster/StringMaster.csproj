@@ -116,6 +116,7 @@
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
+    <Compile Include="Ioc.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -123,6 +124,13 @@
     </Compile>
     <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="Services\Implementation\MessageBoxService.cs" />
+    <Compile Include="Services\Implementation\OpenDialogService.cs" />
+    <Compile Include="Services\Implementation\SaveDialogService.cs" />
+    <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
+    <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
+    <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
+    <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Utilities\FeatureLineUtils.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\PointHelpers.cs" />
@@ -192,10 +200,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Implementation\" />
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons\help.bmp" />
     <Resource Include="Resources\Icons\new.bmp" />

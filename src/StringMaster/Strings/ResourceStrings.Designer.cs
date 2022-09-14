@@ -212,5 +212,23 @@ namespace StringMaster.Strings {
                 return ResourceManager.GetString("StringCogoPointsToolTipContent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to discard the current files? Your changes will be lost..
+        /// </summary>
+        internal static string UnsavedChangesText {
+            get {
+                return ResourceManager.GetString("UnsavedChangesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsaved Changes.
+        /// </summary>
+        internal static string UnsavedChangesTitle {
+            get {
+                return ResourceManager.GetString("UnsavedChangesTitle", resourceCulture);
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -11,13 +13,31 @@ using Autodesk.Civil.DatabaseServices;
 using StringMaster.Extensions;
 using StringMaster.Helpers;
 using StringMaster.Models;
+using StringMaster.Services.Interfaces;
 using StringMaster.Utilities;
 
 namespace StringMaster.ViewModels;
 
 public class StringCogoPointsViewModel : ObservableObject
 {
+    private readonly IOpenDialogService _openDialogService;
+    private readonly ISaveDialogService _saveDialogService;
+    private readonly IMessageBoxService _messageBoxService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
+
+    private string _currentFileName;
+
+    public string CurrentFileName
+    {
+        get => _currentFileName;
+        set => SetProperty(ref _currentFileName, value);
+    }
+
+    public bool IsUnsavedChanges
+    {
+        get => _isUnsavedChanges;
+        set => SetProperty(ref _isUnsavedChanges, value);
+    }
 
     public ObservableCollection<DescriptionKey> DescriptionKeys
     {
@@ -27,20 +47,70 @@ public class StringCogoPointsViewModel : ObservableObject
 
     public DescriptionKey SelectedKey { get; set; }
 
+    public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
+    public ICommand OpenDescriptionKeyFileCommand => new RelayCommand(OpenDescriptionKeyFile);
+    public ICommand SaveDescriptionKeyFileCommand => new RelayCommand(SaveDescriptionKeyFile, () => IsUnsavedChanges);
+    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile, () => IsUnsavedChanges);
     public ICommand AddRowCommand => new RelayCommand(AddRow);
-
     public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
-
     public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
                                                                               DescriptionKeys.Count > 0 &&
                                                                               DescriptionKeys.All(x => x.IsValid()));
 
-    public StringCogoPointsViewModel() => LoadSettings(Properties.Settings.Default.DescriptionKeyFileName);
+
+    ObservableCollection<INotifyPropertyChanged> items = new ObservableCollection<INotifyPropertyChanged>();
+    private bool _isUnsavedChanges = false;
+
+
+    public StringCogoPointsViewModel(IOpenDialogService openDialogService,
+                                     ISaveDialogService saveDialogService,
+                                     IMessageBoxService messageBoxService)
+    {
+        _openDialogService = openDialogService;
+        _saveDialogService = saveDialogService;
+        _messageBoxService = messageBoxService;
+
+        _openDialogService.DefaultExt = ".xml";
+        _openDialogService.Filter = "XML Files (*.xml)|*.xml";
+
+        _saveDialogService.DefaultExt = ".xml";
+        _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
+
+        DescriptionKeys = new ObservableCollection<DescriptionKey>();
+
+        LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
+
+        DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
+    }
+
+    private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.NewItems != null)
+        {
+            foreach (INotifyPropertyChanged descriptionKey in e.NewItems)
+            {
+                descriptionKey.PropertyChanged += DescriptionKeyPropertyChanged;
+            }
+        }
+        if (e.OldItems != null)
+        {
+            foreach (INotifyPropertyChanged descriptionKey in e.OldItems)
+            {
+                descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
+            }
+        }
+    }
+
+    private void DescriptionKeyPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        IsUnsavedChanges = true;
+    }
 
     private void AddRow()
     {
         DescriptionKeys ??= new();
         DescriptionKeys.Add(new DescriptionKey());
+        IsUnsavedChanges = true;
     }
 
     private void RemoveRow()
@@ -50,6 +120,8 @@ public class StringCogoPointsViewModel : ObservableObject
 
         if (SelectedKey != null)
             DescriptionKeys?.Remove(SelectedKey);
+
+        IsUnsavedChanges = true;
     }
 
     // TODO: This method requires a massive cleanup.
@@ -65,9 +137,6 @@ public class StringCogoPointsViewModel : ObservableObject
 
         if (DescriptionKeys.Count == 0)
             return;
-
-        if (!string.IsNullOrEmpty(_fileName))
-            Save();
 
         using Transaction tr = CivilApplication.StartLockedTransaction();
         var desMapping = new Dictionary<string, DescriptionKeyMatch>();
@@ -340,53 +409,116 @@ public class StringCogoPointsViewModel : ObservableObject
             DescriptionKeys.Remove(itemToRemove);
     }
 
-    private string _fileName;
-
     /// <summary>
     /// Get the last xml file loaded from settings
     /// </summary>
     /// <param name="fileName"></param>
-    public bool LoadSettings(string fileName)
+    private void LoadSettingsFromFile(string fileName)
     {
-        if (!string.IsNullOrEmpty(fileName))
-        {
-            if (File.Exists(fileName))
-            {
-                _fileName = fileName;
-                Save();
-                DescriptionKeys = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
-                return true;
-            }
-        }
+        if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
+            return;
 
-        DescriptionKeys = new ObservableCollection<DescriptionKey>();
-        return false;
+        CurrentFileName = fileName;
+        Properties.Settings.Default.DescriptionKeyFileName = fileName;
+        Properties.Settings.Default.Save();
+        DescriptionKeys = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+        IsUnsavedChanges = false;
     }
 
     /// <summary>
     /// Save XML file
     /// </summary>
     /// <param name="fileName"></param>
-    public bool SaveSettings(string fileName)
+    public void SaveToFile(string fileName)
     {
         if (string.IsNullOrEmpty(fileName) || DescriptionKeys == null)
-            return false;
+            throw new ArgumentNullException(nameof(fileName));
 
         RemoveInvalidDescriptionKeys();
 
-        if (DescriptionKeys.Count == 0)
-            return false;
+        // Undone: Maybe they want to save an empty file for some reason?
+        // If no description keys, nothing to save.
+        // if (DescriptionKeys.Count == 0)
+            // return;
 
-        _fileName = fileName;
         XmlHelper.WriteToXmlFile(fileName, DescriptionKeys);
-        Save();
-        return true;
+        Properties.Settings.Default.DescriptionKeyFileName = fileName;
+        Properties.Settings.Default.Save();
+        IsUnsavedChanges = false;
     }
 
     private void Save()
     {
-        Properties.Settings.Default.DescriptionKeyFileName = _fileName;
-        Properties.Settings.Default.Save();
-        CivilApplication.Editor.WriteMessage("\nStringMaster: Settings Saved.");
+        if (string.IsNullOrEmpty(CurrentFileName))
+            SaveAs();
+        else
+            SaveToFile(CurrentFileName);
+    }
+
+    private void SaveAs()
+    {
+        var result = _saveDialogService.ShowDialog();
+        if (result != true)
+            return;
+
+        CurrentFileName = _saveDialogService.FileName;
+        SaveToFile(_saveDialogService.FileName);
+    }
+
+    private bool? CheckForUnsavedChangesAndSave()
+    {
+        return !IsUnsavedChanges ? false : _messageBoxService.ShowYesNoCancel(ResourceHelpers.GetLocalizedString("UnsavedChangesTitle"), ResourceHelpers.GetLocalizedString("UnsavedChangesText"));
+    }
+
+    // View Commands
+    private void SaveDescriptionKeyFile()
+    {
+        Save();
+    }
+
+    private void SaveAsDescriptionKeyFile()
+    {
+        SaveAs();
+    }
+
+    private void NewDescriptionKeyFile()
+    {
+        var hasChanges = CheckForUnsavedChangesAndSave();
+        switch (hasChanges)
+        {
+            case true:
+                break;
+            case false:
+                Save();
+                break;
+            case null:
+                return;
+        }
+
+        CurrentFileName = string.Empty;
+        IsUnsavedChanges = true;
+        DescriptionKeys = new ObservableCollection<DescriptionKey>();
+    }
+
+    private void OpenDescriptionKeyFile()
+    {
+        var hasChanges = CheckForUnsavedChangesAndSave();
+        switch (hasChanges)
+        {
+            case true:
+                break;
+            case false:
+                Save();
+                break;
+            case null:
+                return;
+        }
+
+        var dialog = _openDialogService.ShowDialog();
+        if (dialog != true)
+            return;
+
+        CurrentFileName = _openDialogService.FileName;
+        LoadSettingsFromFile(CurrentFileName);
     }
 }
