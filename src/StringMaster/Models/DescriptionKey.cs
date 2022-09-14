@@ -1,6 +1,8 @@
-﻿namespace StringMaster.Models;
+﻿using System;
 
-public class DescriptionKey : ObservableObject
+namespace StringMaster.Models;
+
+public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<DescriptionKey>
 {
     private string _description;
     private bool _draw2D;
@@ -57,4 +59,39 @@ public class DescriptionKey : ObservableObject
     }
 
     public bool IsValid() => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
+
+    public object Clone() => MemberwiseClone();
+
+    public bool Equals(DescriptionKey other)
+    {
+        if (ReferenceEquals(null, other))
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        return _description == other._description && _draw2D == other._draw2D && _draw3D == other._draw3D &&
+               _drawFeatureLine == other._drawFeatureLine && _key == other._key && _layer == other._layer &&
+               _midOrdinate.Equals(other._midOrdinate);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return ReferenceEquals(this, obj) || obj is DescriptionKey other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hashCode = Description != null ? Description.GetHashCode() : 0;
+            hashCode = hashCode * 397 ^ Draw2D.GetHashCode();
+            hashCode = hashCode * 397 ^ Draw3D.GetHashCode();
+            hashCode = hashCode * 397 ^ DrawFeatureLine.GetHashCode();
+            hashCode = hashCode * 397 ^ (Key != null ? Key.GetHashCode() : 0);
+            hashCode = hashCode * 397 ^ (Layer != null ? Layer.GetHashCode() : 0);
+            hashCode = hashCode * 397 ^ MidOrdinate.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -172,7 +172,7 @@
     <value>Connects all CogoPoints in drawing using the specified description key set.</value>
   </data>
   <data name="UnsavedChangesText" xml:space="preserve">
-    <value>Are you sure you want to discard the current files? Your changes will be lost.</value>
+    <value>Are you sure you want to discard the current file? Your changes will be lost.</value>
   </data>
   <data name="UnsavedChangesTitle" xml:space="preserve">
     <value>Unsaved Changes</value>

@@ -223,7 +223,7 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to discard the current files? Your changes will be lost..
+        ///   Looks up a localized string similar to Are you sure you want to discard the current file? Your changes will be lost..
         /// </summary>
         internal static string UnsavedChangesText {
             get {

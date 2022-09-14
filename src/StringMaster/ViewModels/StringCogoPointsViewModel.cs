@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -20,10 +21,12 @@ namespace StringMaster.ViewModels;
 
 public class StringCogoPointsViewModel : ObservableObject
 {
+    private bool _isUnsavedChanges;
     private readonly IOpenDialogService _openDialogService;
     private readonly ISaveDialogService _saveDialogService;
     private readonly IMessageBoxService _messageBoxService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
+    private ObservableCollection<DescriptionKey> _originalDescriptionKeys;
 
     private string _currentFileName;
 
@@ -57,11 +60,6 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                               DescriptionKeys.Count > 0 &&
                                                                               DescriptionKeys.All(x => x.IsValid()));
 
-
-    ObservableCollection<INotifyPropertyChanged> items = new ObservableCollection<INotifyPropertyChanged>();
-    private bool _isUnsavedChanges = false;
-
-
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
                                      IMessageBoxService messageBoxService)
@@ -77,10 +75,8 @@ public class StringCogoPointsViewModel : ObservableObject
         _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
 
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
-
+        
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
-
-        DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
     }
 
     private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -103,7 +99,8 @@ public class StringCogoPointsViewModel : ObservableObject
 
     private void DescriptionKeyPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        IsUnsavedChanges = true;
+        IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_originalDescriptionKeys);
+        NotifyPropertyChanged(nameof(IsUnsavedChanges));
     }
 
     private void AddRow()
@@ -111,6 +108,7 @@ public class StringCogoPointsViewModel : ObservableObject
         DescriptionKeys ??= new();
         DescriptionKeys.Add(new DescriptionKey());
         IsUnsavedChanges = true;
+        DescriptionKeyPropertyChanged(null, null);
     }
 
     private void RemoveRow()
@@ -122,6 +120,7 @@ public class StringCogoPointsViewModel : ObservableObject
             DescriptionKeys?.Remove(SelectedKey);
 
         IsUnsavedChanges = true;
+        DescriptionKeyPropertyChanged(null, null);
     }
 
     // TODO: This method requires a massive cleanup.
@@ -409,6 +408,12 @@ public class StringCogoPointsViewModel : ObservableObject
             DescriptionKeys.Remove(itemToRemove);
     }
 
+    private void UnHookPropertyChangeEvents()
+    {
+        foreach (DescriptionKey descriptionKey in DescriptionKeys)
+            descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
+    }
+
     /// <summary>
     /// Get the last xml file loaded from settings
     /// </summary>
@@ -418,30 +423,55 @@ public class StringCogoPointsViewModel : ObservableObject
         if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             return;
 
+        DescriptionKeys.CollectionChanged -= DescriptionKeysOnCollectionChanged;
+        UnHookPropertyChangeEvents();
         CurrentFileName = fileName;
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
-        DescriptionKeys = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+        var keysFromFile = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+        DescriptionKeys = new ObservableCollection<DescriptionKey>();
+        DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
+
+        CloneDescriptionKeys(keysFromFile);
+
+        foreach (DescriptionKey key in keysFromFile)
+            DescriptionKeys.Add(key);
+
         IsUnsavedChanges = false;
+    }
+
+    private void CloneDescriptionKeys(ObservableCollection<DescriptionKey> keysFromFile)
+    {
+        _originalDescriptionKeys = new ObservableCollection<DescriptionKey>();
+
+        foreach (var item in keysFromFile)
+        {
+            if (item is ICloneable cloneable)
+                _originalDescriptionKeys.Add((DescriptionKey)cloneable.Clone());
+            else
+                _originalDescriptionKeys.Add(item);
+        }
     }
 
     /// <summary>
     /// Save XML file
     /// </summary>
     /// <param name="fileName"></param>
-    public void SaveToFile(string fileName)
+    private void SaveToFile(string fileName)
     {
         if (string.IsNullOrEmpty(fileName) || DescriptionKeys == null)
             throw new ArgumentNullException(nameof(fileName));
 
         RemoveInvalidDescriptionKeys();
 
-        // Undone: Maybe they want to save an empty file for some reason?
-        // If no description keys, nothing to save.
-        // if (DescriptionKeys.Count == 0)
-            // return;
+        if (DescriptionKeys.Count == 0)
+        {
+            _messageBoxService.ShowWarning("StringMaster", "Unable to save file. No valid description keys found.");
+            return;
+        }
 
         XmlHelper.WriteToXmlFile(fileName, DescriptionKeys);
+        CloneDescriptionKeys(DescriptionKeys);
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
         IsUnsavedChanges = false;
@@ -465,52 +495,52 @@ public class StringCogoPointsViewModel : ObservableObject
         SaveToFile(_saveDialogService.FileName);
     }
 
-    private bool? CheckForUnsavedChangesAndSave()
+    private bool? CheckForUnsavedChangesAndContinue()
     {
-        return !IsUnsavedChanges ? false : _messageBoxService.ShowYesNoCancel(ResourceHelpers.GetLocalizedString("UnsavedChangesTitle"), ResourceHelpers.GetLocalizedString("UnsavedChangesText"));
+        if (IsUnsavedChanges)
+            return _messageBoxService.ShowYesNoCancel(ResourceHelpers.GetLocalizedString("UnsavedChangesTitle"),
+                ResourceHelpers.GetLocalizedString("UnsavedChangesText"));
+        return true;
     }
 
     // View Commands
-    private void SaveDescriptionKeyFile()
-    {
-        Save();
-    }
+    private void SaveDescriptionKeyFile() => Save();
 
-    private void SaveAsDescriptionKeyFile()
-    {
-        SaveAs();
-    }
+    private void SaveAsDescriptionKeyFile() => SaveAs();
 
     private void NewDescriptionKeyFile()
     {
-        var hasChanges = CheckForUnsavedChangesAndSave();
-        switch (hasChanges)
+        var continueWithChanges = CheckForUnsavedChangesAndContinue();
+        switch (continueWithChanges)
         {
-            case true:
+            case true: // Do discard, or we can continue
                 break;
-            case false:
+            case false: // Don't discard changes
                 Save();
                 break;
-            case null:
+            case null: // Cancelled
                 return;
         }
 
         CurrentFileName = string.Empty;
         IsUnsavedChanges = true;
+        UnHookPropertyChangeEvents();
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
+        DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
+        _originalDescriptionKeys = new ObservableCollection<DescriptionKey>();
     }
 
     private void OpenDescriptionKeyFile()
     {
-        var hasChanges = CheckForUnsavedChangesAndSave();
-        switch (hasChanges)
+        var continueWithChanges = CheckForUnsavedChangesAndContinue();
+        switch (continueWithChanges)
         {
-            case true:
+            case true: // Do discard, or we can continue
                 break;
-            case false:
+            case false: // Don't discard changes
                 Save();
                 break;
-            case null:
+            case null:  // Cancelled
                 return;
         }
 

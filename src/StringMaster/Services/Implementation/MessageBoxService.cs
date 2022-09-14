@@ -40,4 +40,8 @@ public class MessageBoxService : IMessageBoxService
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    public void ShowError(string title, string message) => MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+
+    public void ShowWarning(string title, string message) => MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
 }
