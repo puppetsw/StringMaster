@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using StringMaster.Models;
 using StringMaster.Services.Interfaces;
 using StringMaster.ViewModels;
 
@@ -13,6 +14,8 @@ public partial class StringCogoPoints : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
+    public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>();
+
     public StringCogoPoints(StringCogoPointsViewModel viewModel)
     {
         InitializeComponent();
@@ -23,5 +26,14 @@ public partial class StringCogoPoints : UserControl, IPaletteControl
     private void DismissPalette_Click(object sender, RoutedEventArgs e)
     {
         DismissPaletteEvent?.Invoke(sender, e);
+    }
+
+    private void ComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var cmb = (ComboBox)sender;
+        var color = (AcadColor)cmb.SelectedItem;
+
+        if (color.Name.Contains("Select"))
+            cmb.SelectedItem = ColorPicker.GetAcadColor();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
@@ -11,6 +12,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     private string _key;
     private string _layer = "0";
     private double _midOrdinate = 0.01;
+    private AcadColor _acadColor;
 
     /// <summary>
     /// Gets the key value.
@@ -56,6 +58,13 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     {
         get => _midOrdinate;
         set => SetProperty(ref _midOrdinate, value);
+    }
+
+    [XmlIgnore]
+    public AcadColor AcadColor
+    {
+        get => _acadColor;
+        set => SetProperty(ref _acadColor, value);
     }
 
     public bool IsValid() => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);

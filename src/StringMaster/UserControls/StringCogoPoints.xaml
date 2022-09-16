@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:StringMaster.Extensions"
-    xmlns:local="clr-namespace:StringMaster.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:StringMaster.Models"
     xmlns:viewModels="clr-namespace:StringMaster.ViewModels"
     d:DataContext="{d:DesignData StringCogoPointsViewModel}"
     d:DesignHeight="450"
@@ -21,26 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolBar.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="ToolBarButton" TargetType="{x:Type Button}">
-                <Setter Property="Height" Value="22" />
-                <Setter Property="Width" Value="22" />
-                <Setter Property="Background" Value="{StaticResource DarkBackground}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="{TemplateBinding Background}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{StaticResource ButtonHoverBackground}" />
-                        <Setter Property="BorderBrush" Value="{StaticResource ButtonHoverBorder}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel Margin="8,0,0,0">
@@ -129,6 +110,7 @@
         </Grid>
 
         <DataGrid
+            x:Name="DataGrid"
             HorizontalContentAlignment="Center"
             AlternationCount="6"
             AutoGenerateColumns="False"
@@ -137,7 +119,8 @@
             CanUserDeleteRows="False"
             CanUserReorderColumns="False"
             CanUserSortColumns="False"
-            ColumnHeaderStyle="{StaticResource HeaderStyle}"
+            CellStyle="{StaticResource DataGridCellCenter}"
+            ColumnHeaderStyle="{StaticResource DataGridHeader}"
             HorizontalGridLinesBrush="{StaticResource BlueGridLine}"
             ItemsSource="{Binding DescriptionKeys}"
             RowBackground="{StaticResource YellowBackground}"
@@ -173,6 +156,36 @@
                     Width="50"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
                     Header="{extensions:ResourceExtension Name=ColumnHeaderMidOrdinate}" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="models:DescriptionKey">
+                            <ComboBox
+                                x:Name="ComboBox"
+                                Width="200"
+                                Height="30"
+                                ItemsSource="{Binding ColorPicker.Colors, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                SelectedItem="{Binding AcadColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedValuePath="Name"
+                                SelectionChanged="ComboBox_OnSelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="models:AcadColor">
+                                        <StackPanel Margin="2" Orientation="Horizontal">
+                                            <Label
+                                                Width="15"
+                                                Height="15"
+                                                Margin="0,0,3,0"
+                                                Background="{Binding ColorBrush}"
+                                                BorderBrush="Black"
+                                                BorderThickness="1"
+                                                Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            <TextBlock Width="100" Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

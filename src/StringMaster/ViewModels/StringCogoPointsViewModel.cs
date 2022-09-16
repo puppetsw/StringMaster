@@ -48,6 +48,8 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _descriptionKeys, value);
     }
 
+    public AcadColors Colors { get; set; } = new();
+
     public DescriptionKey SelectedKey { get; set; }
 
     public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
