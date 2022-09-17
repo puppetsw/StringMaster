@@ -2,7 +2,7 @@
 
 namespace StringMaster.Helpers;
 
-public static class ResourceHelpers
+public static class StringHelpers
 {
     public static string GetLocalizedString(string name)
     {

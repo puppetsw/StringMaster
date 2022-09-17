@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.Models;
@@ -13,7 +14,23 @@ namespace StringMaster.Services.Implementation;
 /// </summary>
 public class AcadColorPicker : IAcadColorPicker
 {
-    public AcadColors Colors { get; } = new();
+    public ObservableCollection<AcadColor> Colors { get; } = new();
+
+    public AcadColorPicker()
+    {
+        // Add default ACAD colors
+        Colors.Add(AcadColor.ByLayer);              // ByLayer
+        Colors.Add(AcadColor.ByBlock);              // ByBlock
+        Colors.Add(new AcadColor(255, 0, 0));       // Red
+        Colors.Add(new AcadColor(255, 255, 0));     // Yellow
+        Colors.Add(new AcadColor(0, 255, 0));       // Green
+        Colors.Add(new AcadColor(0, 255, 255));     // Cyan
+        Colors.Add(new AcadColor(0, 0, 255));       // Blue
+        Colors.Add(new AcadColor(255, 0, 255));     // Magenta
+        Colors.Add(new AcadColor(255, 255, 255));   // White
+        // Add an extra ComboBox Item so we can 'choose' the color with the dialog.
+        Colors.Add(AcadColor.ColorPicker);
+    }
 
     public AcadColor GetAcadColor()
     {
@@ -27,12 +44,12 @@ public class AcadColorPicker : IAcadColorPicker
         if (selectedColor.IsByAci)
         {
             if (selectedColor.IsByLayer)
-                return new AcadColor(255, 255, 255) { IsByLayer = true };
+                return AcadColor.ByLayer;
 
             if (selectedColor.IsByBlock)
-                return new AcadColor(255, 255, 255) { IsByBlock = true };
+                return AcadColor.ByBlock;
 
-            AcadColor acadColor = new(selectedColor.ColorValue.R, selectedColor.ColorValue.G, selectedColor.ColorValue.B);
+            AcadColor acadColor = new(selectedColor.ColorValue.R, selectedColor.ColorValue.G, selectedColor.ColorValue.B, selectedColor.ColorIndex);
 
             if (!Colors.Contains(acadColor))
                 Colors.Insert(Colors.Count - 1, acadColor);
@@ -48,7 +65,7 @@ public class AcadColorPicker : IAcadColorPicker
             var g = rgb & 0xff00L >> 8;
             var r = rgb >> 16;
 
-            AcadColor acadColor = new((byte)r, (byte)g, (byte)b);
+            AcadColor acadColor = new((byte)r, (byte)g, (byte)b, colorIndex);
 
             if (!Colors.Contains(acadColor))
                 Colors.Insert(Colors.Count - 1, acadColor);
@@ -56,52 +73,4 @@ public class AcadColorPicker : IAcadColorPicker
             return acadColor;
         }
     }
-
-    /*public string ShowColorDialog(AcadColors acadColors)
-    {
-        var dialog = new ColorDialog();
-        IsDialogOpen = true;
-
-        if (dialog.ShowModal() != true)
-        {
-            IsDialogOpen = false;
-            return string.Empty;
-        }
-
-        var selectedColor = dialog.Color;
-
-        if (selectedColor.IsByAci)
-        {
-            if (selectedColor.IsByLayer)
-                return "ByLayer";
-
-            if (selectedColor.IsByBlock)
-                return "ByBlock";
-
-            var colorName = $"{selectedColor.ColorValue.R},{selectedColor.ColorValue.G},{selectedColor.ColorValue.B}";
-
-            if (!acadColors.Contains(colorName))
-                acadColors.Insert(acadColors.Count - 1, new(colorName, selectedColor.ColorValue.R, selectedColor.ColorValue.G, selectedColor.ColorValue.B));
-
-            IsDialogOpen = false;
-            return colorName;
-        }
-        else
-        {
-            var colorIndex = selectedColor.ColorIndex;
-            var colorByte = Convert.ToByte(colorIndex);
-            var rgb = EntityColor.LookUpRgb(colorByte);
-            var b = rgb & 0xffL;
-            var g = rgb & 0xff00L >> 8;
-            var r = rgb >> 16;
-
-            var colorName = $"Color {colorIndex}";
-
-            if (!acadColors.Contains(colorName))
-                acadColors.Insert(acadColors.Count - 1, new(colorName, (byte)r, (byte)g, (byte)b));
-
-            IsDialogOpen = false;
-            return colorName;
-        }
-    }*/
 }

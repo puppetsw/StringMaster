@@ -22,7 +22,7 @@ public sealed class StringMasterPlugin : IExtensionApplication
         Ioc.Register<StringCogoPointsViewModel>();
 
         // TODO: Views/Controls
-        Ioc.Register<StringCogoPoints>();
+        Ioc.Register<StringCogoPointsView>();
     }
 
     public void Terminate()

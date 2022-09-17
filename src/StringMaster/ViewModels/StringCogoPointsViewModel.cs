@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -17,6 +16,8 @@ using StringMaster.Models;
 using StringMaster.Services.Interfaces;
 using StringMaster.Utilities;
 
+// ReSharper disable UnusedMember.Global
+
 namespace StringMaster.ViewModels;
 
 public class StringCogoPointsViewModel : ObservableObject
@@ -26,7 +27,7 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly ISaveDialogService _saveDialogService;
     private readonly IMessageBoxService _messageBoxService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
-    private ObservableCollection<DescriptionKey> _originalDescriptionKeys;
+    private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
 
     private string _currentFileName;
 
@@ -47,8 +48,6 @@ public class StringCogoPointsViewModel : ObservableObject
         get => _descriptionKeys;
         set => SetProperty(ref _descriptionKeys, value);
     }
-
-    public AcadColors Colors { get; set; } = new();
 
     public DescriptionKey SelectedKey { get; set; }
 
@@ -77,31 +76,30 @@ public class StringCogoPointsViewModel : ObservableObject
         _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
 
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
-        
+
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
 
     private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems != null)
-        {
             foreach (INotifyPropertyChanged descriptionKey in e.NewItems)
             {
                 descriptionKey.PropertyChanged += DescriptionKeyPropertyChanged;
+                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
             }
-        }
+
         if (e.OldItems != null)
-        {
             foreach (INotifyPropertyChanged descriptionKey in e.OldItems)
             {
                 descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
+                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
             }
-        }
     }
 
     private void DescriptionKeyPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_originalDescriptionKeys);
+        IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
         NotifyPropertyChanged(nameof(IsUnsavedChanges));
     }
 
@@ -343,10 +341,10 @@ public class StringCogoPointsViewModel : ObservableObject
 
                     // Draw the polylines.
                     if (deskeyMatch.DescriptionKey.Draw2D && !hasCurve)
-                        PolylineUtils.DrawPolyline2d(tr, btr, pointCollection, layerName, isClosed);
+                        PolylineUtils.DrawPolyline2d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
 
                     if (deskeyMatch.DescriptionKey.Draw3D && !hasCurve)
-                        PolylineUtils.DrawPolyline3d(tr, btr, pointCollection, layerName, isClosed);
+                        PolylineUtils.DrawPolyline3d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
 
                     if (deskeyMatch.DescriptionKey.DrawFeatureLine && !hasCurve)
                     {
@@ -354,7 +352,11 @@ public class StringCogoPointsViewModel : ObservableObject
                         tr.AddNewlyCreatedDBObject(polyline, true);
                         var flId = FeatureLine.Create(string.Empty, polylineId);
                         var featureLine = (FeatureLine)tr.GetObject(flId, OpenMode.ForWrite);
+
+                        // Set properties
                         featureLine.Layer = layerName;
+                        featureLine.Color = deskeyMatch.DescriptionKey.AcadColor.ToColor();
+
                         featureLine.DowngradeOpen();
                         polyline.Erase();
                     }
@@ -371,6 +373,7 @@ public class StringCogoPointsViewModel : ObservableObject
 
                         // Set layer.
                         featureLine.Layer = layerName;
+                        featureLine.Color = deskeyMatch.DescriptionKey.AcadColor.ToColor();
 
                         // Set elevations.
                         for (int i = 0; i < featureLine.GetPoints(FeatureLinePointType.AllPoints).Count; i++)
@@ -421,10 +424,13 @@ public class StringCogoPointsViewModel : ObservableObject
             DescriptionKeys.Remove(itemToRemove);
     }
 
-    private void UnHookPropertyChangeEvents()
+    private void UnhookPropertyChangeEvents()
     {
         foreach (DescriptionKey descriptionKey in DescriptionKeys)
+        {
             descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
+            descriptionKey.AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+        }
     }
 
     /// <summary>
@@ -437,32 +443,50 @@ public class StringCogoPointsViewModel : ObservableObject
             return;
 
         DescriptionKeys.CollectionChanged -= DescriptionKeysOnCollectionChanged;
-        UnHookPropertyChangeEvents();
+        UnhookPropertyChangeEvents();
+
         CurrentFileName = fileName;
-        Properties.Settings.Default.DescriptionKeyFileName = fileName;
-        Properties.Settings.Default.Save();
-        var keysFromFile = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
         DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
 
-        CloneDescriptionKeys(keysFromFile);
+        ObservableCollection<DescriptionKey> keysFromFile = null;
+        try
+        {
+            keysFromFile = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+        }
+        catch (Exception e)
+        {
+            CivilApplication.Editor.WriteMessage("\nUnable to load description key file. ");
+            CivilApplication.Editor.WriteMessage($"\n{e.Message}");
+            Console.WriteLine(e);
+            // Clone didn't work so we set it to empty
+            _unchangedDescriptionKeys = new();
+        }
 
-        foreach (DescriptionKey key in keysFromFile)
-            DescriptionKeys.Add(key);
+        if (keysFromFile is not null)
+        {
+            SetUnchangedDescriptionKeys(keysFromFile);
+
+            foreach (DescriptionKey key in keysFromFile)
+                DescriptionKeys.Add(key);
+        }
 
         IsUnsavedChanges = false;
+        Properties.Settings.Default.DescriptionKeyFileName = fileName;
+        Properties.Settings.Default.Save();
     }
 
-    private void CloneDescriptionKeys(ObservableCollection<DescriptionKey> keysFromFile)
+    private void SetUnchangedDescriptionKeys(ObservableCollection<DescriptionKey> keysFromFile)
     {
-        _originalDescriptionKeys = new ObservableCollection<DescriptionKey>();
+        _unchangedDescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         foreach (var item in keysFromFile)
         {
             if (item is ICloneable cloneable)
-                _originalDescriptionKeys.Add((DescriptionKey)cloneable.Clone());
+                _unchangedDescriptionKeys.Add((DescriptionKey)cloneable.Clone());
             else
-                _originalDescriptionKeys.Add(item);
+                _unchangedDescriptionKeys.Add(item);
         }
     }
 
@@ -484,7 +508,7 @@ public class StringCogoPointsViewModel : ObservableObject
         }
 
         XmlHelper.WriteToXmlFile(fileName, DescriptionKeys);
-        CloneDescriptionKeys(DescriptionKeys);
+        SetUnchangedDescriptionKeys(DescriptionKeys);
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
         IsUnsavedChanges = false;
@@ -511,8 +535,8 @@ public class StringCogoPointsViewModel : ObservableObject
     private bool? CheckForUnsavedChangesAndContinue()
     {
         if (IsUnsavedChanges)
-            return _messageBoxService.ShowYesNoCancel(ResourceHelpers.GetLocalizedString("UnsavedChangesTitle"),
-                ResourceHelpers.GetLocalizedString("UnsavedChangesText"));
+            return _messageBoxService.ShowYesNoCancel(StringHelpers.GetLocalizedString("UnsavedChangesTitle"),
+                StringHelpers.GetLocalizedString("UnsavedChangesText"));
         return true;
     }
 
@@ -537,10 +561,10 @@ public class StringCogoPointsViewModel : ObservableObject
 
         CurrentFileName = string.Empty;
         IsUnsavedChanges = true;
-        UnHookPropertyChangeEvents();
+        UnhookPropertyChangeEvents();
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
         DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
-        _originalDescriptionKeys = new ObservableCollection<DescriptionKey>();
+        _unchangedDescriptionKeys = new ObservableCollection<DescriptionKey>();
     }
 
     private void OpenDescriptionKeyFile()

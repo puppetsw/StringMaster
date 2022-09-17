@@ -1,10 +1,11 @@
-﻿using StringMaster.Models;
+﻿using System.Collections.ObjectModel;
+using StringMaster.Models;
 
 namespace StringMaster.Services.Interfaces;
 
 public interface IAcadColorPicker
 {
-    AcadColors Colors { get; }
+    ObservableCollection<AcadColor> Colors { get; }
 
     AcadColor GetAcadColor();
 }

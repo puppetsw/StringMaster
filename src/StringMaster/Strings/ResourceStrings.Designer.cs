@@ -88,6 +88,15 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        internal static string ColumnHeaderColor {
+            get {
+                return ResourceManager.GetString("ColumnHeaderColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string ColumnHeaderDescription {

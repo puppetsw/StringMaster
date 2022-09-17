@@ -10,13 +10,13 @@ namespace StringMaster.UserControls;
 /// <summary>
 /// Interaction logic for StringMasterUC.xaml
 /// </summary>
-public partial class StringCogoPoints : UserControl, IPaletteControl
+public partial class StringCogoPointsView : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
     public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>();
 
-    public StringCogoPoints(StringCogoPointsViewModel viewModel)
+    public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
         InitializeComponent();
 

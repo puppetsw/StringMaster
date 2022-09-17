@@ -114,7 +114,8 @@
   <ItemGroup>
     <Compile Include="CivilApplication.cs" />
     <Compile Include="Extensions\CircularArcExtensions.cs" />
-    <Compile Include="Extensions\ResourceExtension.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Helpers\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -134,11 +135,10 @@
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Models\AcadColor.cs" />
     <Compile Include="Services\Interfaces\IAcadColorPicker.cs" />
-    <Compile Include="Models\AcadColors.cs" />
     <Compile Include="Utilities\FeatureLineUtils.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\PointHelpers.cs" />
-    <Compile Include="Helpers\ResourceHelpers.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="StringMasterPalette.cs" />
     <Compile Include="StringMasterPlugin.cs" />
@@ -160,8 +160,8 @@
       <DependentUpon>ResourceStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\TransactionExtensions.cs" />
-    <Compile Include="UserControls\StringCogoPoints.xaml.cs">
-      <DependentUpon>StringCogoPoints.xaml</DependentUpon>
+    <Compile Include="UserControls\StringCogoPointsView.xaml.cs">
+      <DependentUpon>StringCogoPointsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\StringCogoPointsViewModel.cs" />
   </ItemGroup>
@@ -199,14 +199,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\StringCogoPoints.xaml">
+    <Page Include="UserControls\StringCogoPointsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons\help.bmp" />
     <Resource Include="Resources\Icons\new.bmp" />

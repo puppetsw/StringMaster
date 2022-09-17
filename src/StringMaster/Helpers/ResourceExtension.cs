@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Windows.Markup;
-using StringMaster.Helpers;
 
-namespace StringMaster.Extensions;
+namespace StringMaster.Helpers;
 
-public sealed class ResourceExtension : MarkupExtension
+public sealed class ResourceHelper : MarkupExtension
 {
     public string Name
     {
@@ -13,6 +12,6 @@ public sealed class ResourceExtension : MarkupExtension
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        return ResourceHelpers.GetLocalizedString(Name);
+        return StringHelpers.GetLocalizedString(Name);
     }
 }

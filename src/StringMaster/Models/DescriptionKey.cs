@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
@@ -12,7 +11,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     private string _key;
     private string _layer = "0";
     private double _midOrdinate = 0.01;
-    private AcadColor _acadColor;
+    private AcadColor _acadColor = AcadColor.ByLayer;
 
     /// <summary>
     /// Gets the key value.
@@ -60,7 +59,6 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
         set => SetProperty(ref _midOrdinate, value);
     }
 
-    [XmlIgnore]
     public AcadColor AcadColor
     {
         get => _acadColor;
@@ -70,6 +68,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     public bool IsValid() => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
 
     public object Clone() => MemberwiseClone();
+
 
     public bool Equals(DescriptionKey other)
     {
@@ -81,7 +80,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
 
         return _description == other._description && _draw2D == other._draw2D && _draw3D == other._draw3D &&
                _drawFeatureLine == other._drawFeatureLine && _key == other._key && _layer == other._layer &&
-               _midOrdinate.Equals(other._midOrdinate);
+               _midOrdinate.Equals(other._midOrdinate) && Equals(_acadColor, other._acadColor);
     }
 
     public override bool Equals(object obj)
@@ -93,13 +92,14 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     {
         unchecked
         {
-            int hashCode = Description != null ? Description.GetHashCode() : 0;
-            hashCode = hashCode * 397 ^ Draw2D.GetHashCode();
-            hashCode = hashCode * 397 ^ Draw3D.GetHashCode();
-            hashCode = hashCode * 397 ^ DrawFeatureLine.GetHashCode();
-            hashCode = hashCode * 397 ^ (Key != null ? Key.GetHashCode() : 0);
-            hashCode = hashCode * 397 ^ (Layer != null ? Layer.GetHashCode() : 0);
-            hashCode = hashCode * 397 ^ MidOrdinate.GetHashCode();
+            int hashCode = (_description != null ? _description.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ _draw2D.GetHashCode();
+            hashCode = (hashCode * 397) ^ _draw3D.GetHashCode();
+            hashCode = (hashCode * 397) ^ _drawFeatureLine.GetHashCode();
+            hashCode = (hashCode * 397) ^ (_key != null ? _key.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (_layer != null ? _layer.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ _midOrdinate.GetHashCode();
+            hashCode = (hashCode * 397) ^ (_acadColor != null ? _acadColor.GetHashCode() : 0);
             return hashCode;
         }
     }

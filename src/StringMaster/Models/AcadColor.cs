@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
@@ -11,26 +12,14 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
     private bool _isByLayer;
     private bool _isByBlock;
     private bool _isVisible = true;
+    private int? _colorIndex;
 
-    public string Name
-    {
-        get
-        {
-            if (IsByLayer)
-                return "ByLayer";
-
-            if (IsByBlock)
-                return "ByBlock";
-
-            if (IsColorPicker)
-                return "Select Color...";
-
-            return $"{Red},{Green},{Blue}";
-        }
-    }
+    [XmlIgnore]
+    public string Name => GetColorName();
 
     public bool IsColorPicker { get; set; }
 
+    [XmlIgnore]
     public SolidColorBrush ColorBrush => new(Color.FromRgb(Red, Green, Blue));
 
     public bool IsByLayer
@@ -71,7 +60,17 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
         set
         {
             SetProperty(ref _blue, value);
-            NotifyPropertyChanged(nameof(Blue));
+            NotifyPropertyChanged(nameof(Name));
+        }
+    }
+
+    public int? ColorIndex
+    {
+        get => _colorIndex;
+        set
+        {
+            SetProperty(ref _colorIndex, value);
+            NotifyPropertyChanged(nameof(Name));
         }
     }
 
@@ -81,13 +80,65 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
         set => SetProperty(ref _isVisible, value);
     }
 
-    public AcadColor(byte red, byte green, byte blue)
+    public AcadColor(byte red, byte green, byte blue, int? colorIndex = null)
     {
         Red = red;
         Green = green;
         Blue = blue;
+        ColorIndex = colorIndex;
         NotifyPropertyChanged(nameof(ColorBrush));
         NotifyPropertyChanged(nameof(Name));
+    }
+
+    /// <summary>
+    /// Parameter-less constructor for serialization.
+    /// </summary>
+    public AcadColor() { }
+
+    public static AcadColor ByLayer => new(255, 255, 255) { IsByLayer = true };
+
+    public static AcadColor ByBlock => new(255, 255, 255) { IsByBlock = true };
+
+    /// <summary>
+    /// Opens the ACAD color picker modal when this option is chosen in the list.
+    /// </summary>
+    public static AcadColor ColorPicker => new(255, 255, 255) { IsColorPicker = true };
+
+    // TODO: Could remove this and use the ColorDisplayName from the Color object.
+    private string GetColorName()
+    {
+        if (IsByLayer)
+            return "ByLayer";
+
+        if (IsByBlock)
+            return "ByBlock";
+
+        if (IsColorPicker)
+            return "Select Color...";
+
+        switch (Red, Green, Blue)
+        {
+            case (255, 0, 0):
+                return "Red";
+            case (255, 255, 0):
+                return "Yellow";
+            case (0, 255, 0):
+                return "Green";
+            case (0, 255, 255):
+                return "Cyan";
+            case (0, 0, 255):
+                return "Blue";
+            case (255, 0, 255):
+                return "Magenta";
+            case (255, 255, 255):
+                return "White";
+            case (0, 0, 0):
+                return "Black";
+            default:
+                if (ColorIndex is not null)
+                    return $"Color {ColorIndex}";
+                return $"{Red},{Green},{Blue}";
+        }
     }
 
     public bool Equals(AcadColor other)
@@ -98,7 +149,8 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
         if (ReferenceEquals(this, other))
             return true;
 
-        return Red == other.Red && Green == other.Green && Blue == other.Blue;
+        return _red == other._red && _green == other._green && _blue == other._blue && _isByLayer == other._isByLayer &&
+               _isByBlock == other._isByBlock && _isVisible == other._isVisible && IsColorPicker == other.IsColorPicker;
     }
 
     public override bool Equals(object obj)
@@ -110,10 +162,13 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
     {
         unchecked
         {
-            int hashCode = Name != null ? Name.GetHashCode() : 0;
-            hashCode = (hashCode * 397) ^ Red.GetHashCode();
+            int hashCode = Red.GetHashCode();
             hashCode = (hashCode * 397) ^ Green.GetHashCode();
             hashCode = (hashCode * 397) ^ Blue.GetHashCode();
+            hashCode = (hashCode * 397) ^ IsByLayer.GetHashCode();
+            hashCode = (hashCode * 397) ^ IsByBlock.GetHashCode();
+            hashCode = (hashCode * 397) ^ IsVisible.GetHashCode();
+            hashCode = (hashCode * 397) ^ IsColorPicker.GetHashCode();
             return hashCode;
         }
     }
