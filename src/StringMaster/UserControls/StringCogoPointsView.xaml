@@ -161,14 +161,15 @@
                             <ComboBox
                                 x:Name="ComboBox"
                                 Width="200"
-                                Height="30"
+                                Height="25"
+                                VerticalContentAlignment="Center"
                                 ItemsSource="{Binding ColorPicker.Colors, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 SelectedItem="{Binding AcadColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Name"
                                 SelectionChanged="ComboBox_OnSelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="models:AcadColor">
-                                        <StackPanel Margin="2" Orientation="Horizontal">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                             <Label
                                                 Width="15"
                                                 Height="15"
