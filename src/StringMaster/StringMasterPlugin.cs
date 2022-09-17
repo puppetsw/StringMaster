@@ -12,11 +12,17 @@ public sealed class StringMasterPlugin : IExtensionApplication
 {
     public void Initialize()
     {
+        // TODO: Services
         Ioc.Register<IMessageBoxService, MessageBoxService>();
         Ioc.Register<IOpenDialogService, OpenDialogService>();
         Ioc.Register<ISaveDialogService, SaveDialogService>();
+        Ioc.Register<IAcadColorPicker, AcadColorPicker>();
+
+        // TODO: ViewModels
         Ioc.Register<StringCogoPointsViewModel>();
-        Ioc.Register<StringCogoPoints>();
+
+        // TODO: Views/Controls
+        Ioc.Register<StringCogoPointsView>();
     }
 
     public void Terminate()

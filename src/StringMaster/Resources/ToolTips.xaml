@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:extensions="clr-namespace:StringMaster.Extensions">
+    xmlns:helpers="clr-namespace:StringMaster.Helpers">
     <DataTemplate x:Key="AddRowToolTipContent">
         <StackPanel>
             <TextBlock FontWeight="Bold" Text="Add Row" />
@@ -28,8 +28,8 @@
     </DataTemplate>
     <DataTemplate x:Key="StringCogoPointsToolTipContent">
         <StackPanel>
-            <TextBlock FontWeight="Bold" Text="{extensions:ResourceExtension Name=StringCogoPoints}" />
-            <TextBlock Text="{extensions:ResourceExtension Name=StringCogoPointsToolTipContent}" />
+            <TextBlock FontWeight="Bold" Text="{helpers:ResourceHelper Name=StringCogoPoints}" />
+            <TextBlock Text="{helpers:ResourceHelper Name=StringCogoPointsToolTipContent}" />
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

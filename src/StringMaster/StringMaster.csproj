@@ -114,7 +114,8 @@
   <ItemGroup>
     <Compile Include="CivilApplication.cs" />
     <Compile Include="Extensions\CircularArcExtensions.cs" />
-    <Compile Include="Extensions\ResourceExtension.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Helpers\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -124,6 +125,7 @@
     </Compile>
     <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="Services\Implementation\AcadColorPicker.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
@@ -131,10 +133,12 @@
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
+    <Compile Include="Models\AcadColor.cs" />
+    <Compile Include="Services\Interfaces\IAcadColorPicker.cs" />
     <Compile Include="Utilities\FeatureLineUtils.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\PointHelpers.cs" />
-    <Compile Include="Helpers\ResourceHelpers.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="StringMasterPalette.cs" />
     <Compile Include="StringMasterPlugin.cs" />
@@ -156,8 +160,8 @@
       <DependentUpon>ResourceStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\TransactionExtensions.cs" />
-    <Compile Include="UserControls\StringCogoPoints.xaml.cs">
-      <DependentUpon>StringCogoPoints.xaml</DependentUpon>
+    <Compile Include="UserControls\StringCogoPointsView.xaml.cs">
+      <DependentUpon>StringCogoPointsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\StringCogoPointsViewModel.cs" />
   </ItemGroup>
@@ -195,7 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\StringCogoPoints.xaml">
+    <Page Include="UserControls\StringCogoPointsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

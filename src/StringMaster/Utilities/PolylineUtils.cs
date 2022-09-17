@@ -1,4 +1,5 @@
 ﻿using System;
+using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using StringMaster.Models;
@@ -8,10 +9,11 @@ namespace StringMaster.Utilities;
 
 public static class PolylineUtils
 {
-    public static ObjectId DrawPolyline3d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, bool closed = false)
+    public static ObjectId DrawPolyline3d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
         ObjectId id;
-        using (var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed) { Layer = layerName })
+
+        using (var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed) { Layer = layerName, Color = color })
         {
             id = btr.AppendEntity(pLine3d);
             tr.AddNewlyCreatedDBObject(pLine3d, true);
@@ -19,7 +21,7 @@ public static class PolylineUtils
         return id;
     }
 
-    public static ObjectId DrawPolyline2d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, bool closed = false)
+    public static ObjectId DrawPolyline2d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
         ObjectId id;
         using (var pLine2d = new Polyline2d(Poly2dType.SimplePoly, points, 0, closed, 0, 0, null))
@@ -28,6 +30,7 @@ public static class PolylineUtils
             {
                 pLine.ConvertFrom(pLine2d, false);
                 pLine.Layer = layerName;
+                pLine.Color = color;
                 pLine.Elevation = 0;
                 id = btr.AppendEntity(pLine);
                 tr.AddNewlyCreatedDBObject(pLine, true);

@@ -82,6 +82,7 @@ public static class FeatureLineUtils
 
         polyline3d = new Polyline3d(Poly3dType.SimplePoly, points, false);
         polyline3d.Layer = featureLine.Layer;
+        polyline3d.Color = featureLine.Color;
         return true;
     }
 

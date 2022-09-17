@@ -126,6 +126,9 @@
   <data name="ColumnHeader3D" xml:space="preserve">
     <value>3D</value>
   </data>
+  <data name="ColumnHeaderColor" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="ColumnHeaderDescription" xml:space="preserve">
     <value>Description</value>
   </data>
