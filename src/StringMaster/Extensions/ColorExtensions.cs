@@ -18,4 +18,15 @@ public static class ColorExtensions
 
         return Color.FromRgb(acadColor.Red, acadColor.Green, acadColor.Blue);
     }
+
+    public static AcadColor ToAcadColor(this Color color)
+    {
+        if (color.IsByLayer)
+            return AcadColor.ByLayer;
+
+        if (color.IsByBlock)
+            return AcadColor.ByBlock;
+
+        return new AcadColor(color.Red, color.Green, color.Blue, color.ColorIndex);
+    }
 }
