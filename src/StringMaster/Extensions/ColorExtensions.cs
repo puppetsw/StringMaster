@@ -27,6 +27,6 @@ public static class ColorExtensions
         if (color.IsByBlock)
             return AcadColor.ByBlock;
 
-        return new AcadColor(color.Red, color.Green, color.Blue, color.ColorIndex);
+        return new AcadColor(color.ColorValue.R, color.ColorValue.G, color.ColorValue.B, color.ColorIndex);
     }
 }
