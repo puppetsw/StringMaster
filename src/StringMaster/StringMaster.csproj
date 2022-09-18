@@ -113,6 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CivilApplication.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Helpers\ResourceExtension.cs" />
@@ -127,9 +129,11 @@
     <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Services\Implementation\AcadColorPicker.cs" />
+    <Compile Include="Services\Implementation\AcadLayerService.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
+    <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
@@ -206,12 +210,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Icons\frozen.png" />
-    <Content Include="Resources\Icons\locked.png" />
-    <Content Include="Resources\Icons\off.png" />
-    <Content Include="Resources\Icons\on.png" />
-    <Content Include="Resources\Icons\unfozen.png" />
-    <Content Include="Resources\Icons\unlocked.png" />
+    <Resource Include="Resources\Icons\frozen.png" />
+    <Resource Include="Resources\Icons\locked.png" />
+    <Resource Include="Resources\Icons\off.png" />
+    <Resource Include="Resources\Icons\on.png" />
+    <Resource Include="Resources\Icons\unfozen.png" />
+    <Resource Include="Resources\Icons\unlocked.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\help.bmp" />
@@ -229,5 +233,6 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\execute.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

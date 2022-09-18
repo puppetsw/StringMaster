@@ -12,6 +12,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     private string _layer = "0";
     private double _midOrdinate = 0.01;
     private AcadColor _acadColor = AcadColor.ByLayer;
+    private AcadLayer _acadLayer;
 
     /// <summary>
     /// Gets the key value.
@@ -63,6 +64,12 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     {
         get => _acadColor;
         set => SetProperty(ref _acadColor, value);
+    }
+
+    public AcadLayer AcadLayer
+    {
+        get => _acadLayer;
+        set => SetProperty(ref _acadLayer, value);
     }
 
     public bool IsValid() => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);

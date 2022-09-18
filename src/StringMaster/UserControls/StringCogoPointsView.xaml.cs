@@ -16,6 +16,8 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
 
     public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>();
 
+    public IAcadLayerService LayerService { get; } = Ioc.Resolve<IAcadLayerService>();
+
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
         InitializeComponent();

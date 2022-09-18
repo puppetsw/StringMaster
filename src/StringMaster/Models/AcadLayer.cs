@@ -43,9 +43,19 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
     public AcadLayer()
     {
         Name = "0";
+        Color = AcadColor.ByLayer;
         _isOn = true;
         _isFrozen = false;
         _isLocked = false;
+    }
+
+    public AcadLayer(string name, bool isOn, bool isFrozen, bool isLocked, AcadColor color)
+    {
+        _name = name;
+        _isOn = isOn;
+        _isFrozen = isFrozen;
+        _isLocked = isLocked;
+        _color = color;
     }
 
     public bool Equals(AcadLayer other)
