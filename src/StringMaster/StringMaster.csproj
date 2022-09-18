@@ -118,6 +118,7 @@
     <Compile Include="Helpers\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
+    <Compile Include="Models\AcadLayer.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -204,7 +205,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Icons\frozen.png" />
+    <Content Include="Resources\Icons\locked.png" />
+    <Content Include="Resources\Icons\off.png" />
+    <Content Include="Resources\Icons\on.png" />
+    <Content Include="Resources\Icons\unfozen.png" />
+    <Content Include="Resources\Icons\unlocked.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\help.bmp" />
     <Resource Include="Resources\Icons\new.bmp" />
