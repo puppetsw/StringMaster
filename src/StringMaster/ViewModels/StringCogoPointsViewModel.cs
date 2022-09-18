@@ -54,7 +54,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
     public ICommand OpenDescriptionKeyFileCommand => new RelayCommand(OpenDescriptionKeyFile);
     public ICommand SaveDescriptionKeyFileCommand => new RelayCommand(SaveDescriptionKeyFile, () => IsUnsavedChanges);
-    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile, () => IsUnsavedChanges);
+    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile);
     public ICommand AddRowCommand => new RelayCommand(AddRow);
     public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
     public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
