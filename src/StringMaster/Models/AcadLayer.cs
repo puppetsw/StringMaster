@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
@@ -40,7 +41,7 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
         set => SetProperty(ref _isLocked, value);
     }
 
-    public AcadLayer()
+    public AcadLayer() // For Serialization
     {
         Name = "0";
         Color = AcadColor.ByLayer;
@@ -57,6 +58,9 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
         _isLocked = isLocked;
         _color = color;
     }
+
+    [XmlIgnore]
+    public bool IsValid => !string.IsNullOrEmpty(Name);
 
     public bool Equals(AcadLayer other)
     {

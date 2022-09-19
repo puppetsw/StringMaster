@@ -63,7 +63,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
         set => SetProperty(ref _acadLayer, value);
     }
 
-    public bool IsValid() => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
+    public bool IsValid => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
 
     public object Clone() => MemberwiseClone();
 

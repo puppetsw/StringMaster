@@ -26,9 +26,9 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly IOpenDialogService _openDialogService;
     private readonly ISaveDialogService _saveDialogService;
     private readonly IMessageBoxService _messageBoxService;
+    private readonly IAcadLayerService _acadLayerService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
-
     private string _currentFileName;
 
     public string CurrentFileName
@@ -49,6 +49,8 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _descriptionKeys, value);
     }
 
+    public ObservableCollection<AcadLayer> Layers => _acadLayerService.Layers;
+
     public DescriptionKey SelectedKey { get; set; }
 
     public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
@@ -59,15 +61,17 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
     public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
                                                                               DescriptionKeys.Count > 0 &&
-                                                                              DescriptionKeys.All(x => x.IsValid()));
+                                                                              DescriptionKeys.All(x => x.IsValid));
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
-                                     IMessageBoxService messageBoxService)
+                                     IMessageBoxService messageBoxService,
+                                     IAcadLayerService acadLayerService)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
         _messageBoxService = messageBoxService;
+        _acadLayerService = acadLayerService;
 
         _openDialogService.DefaultExt = ".xml";
         _openDialogService.Filter = "XML Files (*.xml)|*.xml";
@@ -78,6 +82,24 @@ public class StringCogoPointsViewModel : ObservableObject
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
+        AddMissingLayersFromDescriptionKeys();
+    }
+
+    private void AddMissingLayersFromDescriptionKeys()
+    {
+        foreach (var descriptionKey in DescriptionKeys)
+        {
+            if (!descriptionKey.IsValid)
+                continue;
+
+            if (!descriptionKey.AcadLayer.IsValid)
+                continue;
+
+            if (Layers.Contains(descriptionKey.AcadLayer))
+                continue;
+
+            Layers.Add(descriptionKey.AcadLayer);
+        }
     }
 
     /// <summary>
@@ -123,7 +145,7 @@ public class StringCogoPointsViewModel : ObservableObject
 
         if (SelectedKey != null)
         {
-            if (SelectedKey.IsValid())
+            if (SelectedKey.IsValid)
             {
                 var dialog = _messageBoxService.ShowYesNo("Delete", "Remove this description key? This cannot be undone.");
                 if (dialog == true)
@@ -283,7 +305,7 @@ public class StringCogoPointsViewModel : ObservableObject
                 string layerName = deskeyMatch.DescriptionKey.Layer;
 
                 if (!LayerUtils.HasLayer(layerName, tr, CivilApplication.ActiveDatabase))
-                    LayerUtils.CreateLayer(layerName, tr, CivilApplication.ActiveDatabase);
+                    LayerUtils.CreateLayer(deskeyMatch.DescriptionKey.AcadLayer, tr, CivilApplication.ActiveDatabase);
 
                 foreach (var list in pointList)
                 {
@@ -425,7 +447,7 @@ public class StringCogoPointsViewModel : ObservableObject
     private void RemoveInvalidDescriptionKeys()
     {
         // Remove invalid keys
-        foreach (var itemToRemove in DescriptionKeys.Where(x => !x.IsValid()).ToList())
+        foreach (var itemToRemove in DescriptionKeys.Where(x => !x.IsValid).ToList())
             DescriptionKeys.Remove(itemToRemove);
     }
 
