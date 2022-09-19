@@ -7,6 +7,7 @@
     xmlns:helpers="clr-namespace:StringMaster.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:StringMaster.Models"
+    x:Name="UserControl"
     d:DataContext="{d:DesignData StringCogoPointsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -134,7 +135,7 @@
                                 Height="25"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
-                                ItemsSource="{Binding LayerService.Layers, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                ItemsSource="{Binding DataContext.Layers, ElementName=UserControl}"
                                 SelectedItem="{Binding AcadLayer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="models:AcadLayer">
