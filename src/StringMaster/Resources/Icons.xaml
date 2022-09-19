@@ -9,4 +9,10 @@
     <BitmapImage x:Key="AddToolBarIcon" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/add.png" />
     <BitmapImage x:Key="RemoveToolBarIcon" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/remove.bmp" />
     <BitmapImage x:Key="ExecuteToolBarIcon" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/execute.png" />
+    <BitmapImage x:Key="LayerOnImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/on.png" />
+    <BitmapImage x:Key="LayerOffImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/off.png" />
+    <BitmapImage x:Key="LayerFreezeImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/frozen.png" />
+    <BitmapImage x:Key="LayerThawImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/unfozen.png" />
+    <BitmapImage x:Key="LayerLockImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/locked.png" />
+    <BitmapImage x:Key="LayerUnlockImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/unlocked.png" />
 </ResourceDictionary>

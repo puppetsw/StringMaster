@@ -17,6 +17,7 @@ public sealed class StringMasterPlugin : IExtensionApplication
         Ioc.Register<IOpenDialogService, OpenDialogService>();
         Ioc.Register<ISaveDialogService, SaveDialogService>();
         Ioc.Register<IAcadColorPicker, AcadColorPicker>();
+        Ioc.Register<IAcadLayerService, AcadLayerService>();
 
         // TODO: ViewModels
         Ioc.Register<StringCogoPointsViewModel>();
