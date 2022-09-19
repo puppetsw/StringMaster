@@ -160,10 +160,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    Width="200"
-                    Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeaderDescription}" />
                 <DataGridCheckBoxColumn
                     Width="50"
                     Binding="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

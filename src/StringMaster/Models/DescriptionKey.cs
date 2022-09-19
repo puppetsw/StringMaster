@@ -28,12 +28,6 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     [XmlIgnore]
     public string Layer => AcadLayer.Name;
 
-    public string Description
-    {
-        get => _description;
-        set => SetProperty(ref _description, value);
-    }
-
     public bool Draw2D
     {
         get => _draw2D;
