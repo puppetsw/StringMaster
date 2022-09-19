@@ -29,12 +29,6 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
         set => SetProperty(ref _layer, value);
     }
 
-    public string Description
-    {
-        get => _description;
-        set => SetProperty(ref _description, value);
-    }
-
     public bool Draw2D
     {
         get => _draw2D;
