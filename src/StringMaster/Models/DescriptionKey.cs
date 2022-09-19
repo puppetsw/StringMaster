@@ -5,7 +5,6 @@ namespace StringMaster.Models;
 
 public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<DescriptionKey>
 {
-    private string _description;
     private bool _draw2D;
     private bool _draw3D;
     private bool _drawFeatureLine;
