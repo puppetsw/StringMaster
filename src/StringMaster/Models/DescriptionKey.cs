@@ -76,10 +76,9 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
         if (ReferenceEquals(this, other))
             return true;
 
-        return _description == other._description && _draw2D == other._draw2D && _draw3D == other._draw3D &&
-               _drawFeatureLine == other._drawFeatureLine && _key == other._key && _layer == other._layer &&
-               _midOrdinate.Equals(other._midOrdinate) && Equals(_acadColor, other._acadColor) &&
-               Equals(_acadLayer, other._acadLayer);
+        return _draw2D == other._draw2D && _draw3D == other._draw3D && _drawFeatureLine == other._drawFeatureLine &&
+               _key == other._key && _layer == other._layer && _midOrdinate.Equals(other._midOrdinate) &&
+               Equals(_acadColor, other._acadColor) && Equals(_acadLayer, other._acadLayer);
     }
 
     public override bool Equals(object obj)
@@ -91,8 +90,7 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
     {
         unchecked
         {
-            int hashCode = (_description != null ? _description.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ _draw2D.GetHashCode();
+            int hashCode = _draw2D.GetHashCode();
             hashCode = (hashCode * 397) ^ _draw3D.GetHashCode();
             hashCode = (hashCode * 397) ^ _drawFeatureLine.GetHashCode();
             hashCode = (hashCode * 397) ^ (_key != null ? _key.GetHashCode() : 0);
