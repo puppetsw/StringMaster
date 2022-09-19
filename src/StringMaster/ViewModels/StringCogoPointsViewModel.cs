@@ -54,7 +54,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
     public ICommand OpenDescriptionKeyFileCommand => new RelayCommand(OpenDescriptionKeyFile);
     public ICommand SaveDescriptionKeyFileCommand => new RelayCommand(SaveDescriptionKeyFile, () => IsUnsavedChanges);
-    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile, () => IsUnsavedChanges);
+    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile);
     public ICommand AddRowCommand => new RelayCommand(AddRow);
     public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
     public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
@@ -80,20 +80,25 @@ public class StringCogoPointsViewModel : ObservableObject
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
 
+    /// <summary>
+    /// Hook-up PropertyChanged events for sub-models.
+    /// </summary>
     private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems != null)
-            foreach (INotifyPropertyChanged descriptionKey in e.NewItems)
+            foreach (DescriptionKey descriptionKey in e.NewItems)
             {
                 descriptionKey.PropertyChanged += DescriptionKeyPropertyChanged;
-                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
+                descriptionKey.AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
+                descriptionKey.AcadLayer.PropertyChanged += DescriptionKeyPropertyChanged;
             }
 
         if (e.OldItems != null)
-            foreach (INotifyPropertyChanged descriptionKey in e.OldItems)
+            foreach (DescriptionKey descriptionKey in e.OldItems)
             {
                 descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
-                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+                descriptionKey.AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+                descriptionKey.AcadLayer.PropertyChanged -= DescriptionKeyPropertyChanged;
             }
     }
 
