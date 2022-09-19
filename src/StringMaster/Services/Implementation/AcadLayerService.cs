@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
@@ -9,16 +10,17 @@ namespace StringMaster.Services.Implementation;
 
 public class AcadLayerService : IAcadLayerService
 {
-    public ObservableCollection<AcadLayer> Layers { get; } = new();
+    public ObservableCollection<AcadLayer> Layers { get; private set; }
 
     public AcadLayerService()
     {
         GetLayers();
-        Layers = new ObservableCollection<AcadLayer>(Layers.OrderBy(x => x.Name));
     }
 
     private void GetLayers()
     {
+        var layerList = new List<AcadLayer>();
+
         using var tr = CivilApplication.StartLockedTransaction();
 
         var layerTable = (LayerTable)tr.GetObject(CivilApplication.ActiveDatabase.LayerTableId, OpenMode.ForRead);
@@ -28,9 +30,11 @@ public class AcadLayerService : IAcadLayerService
             var layer = (LayerTableRecord)tr.GetObject(objectId, OpenMode.ForRead);
             var color = layer.Color.ToAcadColor();
 
-            Layers.Add(new AcadLayer(layer.Name, layer.IsOff, layer.IsFrozen, layer.IsLocked, color));
+            layerList.Add(new AcadLayer(layer.Name, layer.IsOff, layer.IsFrozen, layer.IsLocked, color));
         }
 
         tr.Commit();
+
+        Layers = new ObservableCollection<AcadLayer>(layerList.OrderBy(x => x.Name));
     }
 }

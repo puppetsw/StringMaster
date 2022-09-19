@@ -80,20 +80,25 @@ public class StringCogoPointsViewModel : ObservableObject
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
 
+    /// <summary>
+    /// Hook-up PropertyChanged events for sub-models.
+    /// </summary>
     private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems != null)
-            foreach (INotifyPropertyChanged descriptionKey in e.NewItems)
+            foreach (DescriptionKey descriptionKey in e.NewItems)
             {
                 descriptionKey.PropertyChanged += DescriptionKeyPropertyChanged;
-                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
+                descriptionKey.AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
+                descriptionKey.AcadLayer.PropertyChanged += DescriptionKeyPropertyChanged;
             }
 
         if (e.OldItems != null)
-            foreach (INotifyPropertyChanged descriptionKey in e.OldItems)
+            foreach (DescriptionKey descriptionKey in e.OldItems)
             {
                 descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
-                ((DescriptionKey)descriptionKey).AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+                descriptionKey.AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+                descriptionKey.AcadLayer.PropertyChanged -= DescriptionKeyPropertyChanged;
             }
     }
 

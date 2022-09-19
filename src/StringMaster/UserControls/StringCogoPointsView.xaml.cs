@@ -14,9 +14,9 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
-    public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>();
+    public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>(); // Todo: Move to viewmodel. need event to command for selectionchanged?
 
-    public IAcadLayerService LayerService { get; } = Ioc.Resolve<IAcadLayerService>();
+    public IAcadLayerService LayerService { get; } = Ioc.Resolve<IAcadLayerService>(); // TODO: Move to viewmodel
 
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {

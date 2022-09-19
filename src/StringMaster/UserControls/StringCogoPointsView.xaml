@@ -22,7 +22,6 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
             <Style TargetType="Image">
                 <Setter Property="Width" Value="16" />
@@ -99,12 +98,11 @@
                             Stretch="Uniform" />
                     </Border>
                 </Button>
-                <Button Margin="10,0,0,0">
+                <Button Margin="7,0,0,0" Style="{StaticResource ToolBarButton}">
                     <Image Source="{StaticResource HelpToolBarIcon}" />
                 </Button>
             </ToolBar>
         </Grid>
-
         <DataGrid
             x:Name="DataGrid"
             HorizontalContentAlignment="Center"
@@ -128,10 +126,6 @@
                     Width="80"
                     Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Header="{helpers:ResourceHelper Name=ColumnHeaderKey}" />
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding Layer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeaderLayer}" />
                 <DataGridTemplateColumn Width="200" Header="{helpers:ResourceHelper Name=ColumnHeaderLayer}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
@@ -147,6 +141,10 @@
                                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                             <Image Source="{StaticResource LayerOnImage}" Visibility="{Binding IsOn, Mode=OneWay}" />
                                             <Image Source="{StaticResource LayerOffImage}" Visibility="{Binding IsOn, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                                            <Image Source="{StaticResource LayerFreezeImage}" Visibility="{Binding IsFrozen, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                                            <Image Source="{StaticResource LayerThawImage}" Visibility="{Binding IsFrozen, Mode=OneWay}" />
+                                            <Image Source="{StaticResource LayerLockImage}" Visibility="{Binding IsLocked, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                                            <Image Source="{StaticResource LayerUnlockImage}" Visibility="{Binding IsLocked, Mode=OneWay}" />
                                             <Label
                                                 Width="15"
                                                 Height="15"
@@ -182,7 +180,7 @@
                     Width="50"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
                     Header="{helpers:ResourceHelper Name=ColumnHeaderMidOrdinate}" />
-                <DataGridTemplateColumn Width="200" Header="{helpers:ResourceHelper Name=ColumnHeaderColor}">
+                <DataGridTemplateColumn Width="120" Header="{helpers:ResourceHelper Name=ColumnHeaderColor}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <ComboBox
@@ -192,7 +190,6 @@
                                 VerticalContentAlignment="Center"
                                 ItemsSource="{Binding ColorPicker.Colors, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 SelectedItem="{Binding AcadColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedValuePath="Name"
                                 SelectionChanged="ComboBox_OnSelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="models:AcadColor">
@@ -209,12 +206,6 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                                <!--  TODO: Replace event with command?  -->
-                                <!-- <i:Interaction.Triggers> -->
-                                <!--     <EventTrigger EventName="SelectionChanged"> -->
-                                <!--         <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/> -->
-                                <!--     </EventTrigger> -->
-                                <!-- </i:Interaction.Triggers> -->
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
