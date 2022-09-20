@@ -99,6 +99,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.4.0\lib\net461\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -113,10 +116,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CivilApplication.cs" />
+    <Compile Include="Converters\BooleanYesNoConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Dialogs\LayerCreateDialog.xaml.cs">
+      <DependentUpon>LayerCreateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LayerSelectDialog.xaml.cs">
+      <DependentUpon>LayerSelectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Helpers\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
@@ -128,18 +139,21 @@
     </Compile>
     <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
-    <Compile Include="Services\Implementation\AcadColorPicker.cs" />
+    <Compile Include="Services\Implementation\AcadColorDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
+    <Compile Include="Services\Implementation\DialogService.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
+    <Compile Include="Services\Interfaces\IDialog.cs" />
+    <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Models\AcadColor.cs" />
-    <Compile Include="Services\Interfaces\IAcadColorPicker.cs" />
+    <Compile Include="Services\Interfaces\IAcadColorDialogService.cs" />
     <Compile Include="Utilities\FeatureLineUtils.cs" />
     <Compile Include="Helpers\MathHelpers.cs" />
     <Compile Include="Helpers\PointHelpers.cs" />
@@ -168,10 +182,12 @@
     <Compile Include="UserControls\StringCogoPointsView.xaml.cs">
       <DependentUpon>StringCogoPointsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\LayerSelectDialogViewModel.cs" />
     <Compile Include="ViewModels\StringCogoPointsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -184,6 +200,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\LayerCreateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\LayerSelectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -233,6 +257,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\execute.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons\key.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

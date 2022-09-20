@@ -165,4 +165,17 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
     {
         return Id.GetHashCode();
     }
+
+    public AcadColor Clone()
+    {
+        var color = new AcadColor(Red, Green, Blue, ColorIndex)
+        {
+            IsColorPicker = IsColorPicker,
+            IsByBlock = IsByBlock,
+            IsByLayer = IsByLayer,
+            IsVisible = IsVisible
+        };
+
+        return color;
+    }
 }

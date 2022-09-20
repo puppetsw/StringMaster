@@ -1,5 +1,7 @@
-﻿using Autodesk.AutoCAD.Runtime;
+﻿using System.Reflection;
+using Autodesk.AutoCAD.Runtime;
 using StringMaster;
+using StringMaster.Dialogs;
 using StringMaster.Services.Implementation;
 using StringMaster.Services.Interfaces;
 using StringMaster.UserControls;
@@ -13,17 +15,24 @@ public sealed class StringMasterPlugin : IExtensionApplication
     public void Initialize()
     {
         // TODO: Services
-        Ioc.Register<IMessageBoxService, MessageBoxService>();
-        Ioc.Register<IOpenDialogService, OpenDialogService>();
-        Ioc.Register<ISaveDialogService, SaveDialogService>();
-        Ioc.Register<IAcadColorPicker, AcadColorPicker>();
-        Ioc.Register<IAcadLayerService, AcadLayerService>();
+        Ioc.Default.Register<IMessageBoxService, MessageBoxService>();
+        Ioc.Default.Register<IOpenDialogService, OpenDialogService>();
+        Ioc.Default.Register<ISaveDialogService, SaveDialogService>();
+        Ioc.Default.RegisterSingleton<IAcadColorDialogService, AcadColorDialogService>();
+        Ioc.Default.RegisterSingleton<IAcadLayerService, AcadLayerService>();
+        Ioc.Default.RegisterSingleton<IDialogService, DialogService>();
 
         // TODO: ViewModels
-        Ioc.Register<StringCogoPointsViewModel>();
+        Ioc.Default.Register<StringCogoPointsViewModel>();
+        // Ioc.Default.Register<LayerSelectDialogViewModel>();
 
         // TODO: Views/Controls
-        Ioc.Register<StringCogoPointsView>();
+        Ioc.Default.Register<StringCogoPointsView>();
+        // Ioc.Default.Register<LayerSelectDialog>();
+
+        Ioc.Default.Verify();
+
+
     }
 
     public void Terminate()

@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
-public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<DescriptionKey>
+public sealed class DescriptionKey : ObservableObject, IEquatable<DescriptionKey>
 {
     private Guid _id = Guid.NewGuid();
 
@@ -69,9 +69,6 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
 
     public bool IsValid => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
 
-    public object Clone() => MemberwiseClone();
-
-
     public bool Equals(DescriptionKey other)
     {
         if (ReferenceEquals(null, other))
@@ -95,4 +92,19 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
         return Id.GetHashCode();
     }
 
+    public DescriptionKey Clone()
+    {
+        var key = new DescriptionKey
+        {
+            AcadLayer = AcadLayer.Clone(),
+            AcadColor = AcadColor.Clone(),
+            Key = Key,
+            DrawFeatureLine = DrawFeatureLine,
+            Draw3D = Draw3D,
+            Draw2D = Draw2D,
+            MidOrdinate = MidOrdinate
+        };
+
+        return key;
+    }
 }

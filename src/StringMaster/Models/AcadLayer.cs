@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
-public sealed class AcadLayer : ObservableObject
+public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
 {
     private Guid _id = Guid.NewGuid();
 
@@ -125,5 +125,18 @@ public sealed class AcadLayer : ObservableObject
     public override int GetHashCode()
     {
         return Id.GetHashCode();
+    }
+
+    public AcadLayer Clone()
+    {
+        var layer = new AcadLayer(Name, IsOn, IsFrozen, IsLocked, Color.Clone())
+        {
+            LineWeight = LineWeight,
+            IsPlottable = IsPlottable,
+            IsSelected = IsSelected,
+            Linetype = Linetype,
+            PlotStyleName = PlotStyleName
+        };
+        return layer;
     }
 }
