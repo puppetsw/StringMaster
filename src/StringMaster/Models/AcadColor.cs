@@ -20,6 +20,9 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
     [XmlIgnore]
     public string Name => GetColorName();
 
+    [XmlIgnore]
+    public string NameStringLower => Name.ToLower();
+
     public bool IsColorPicker { get; set; }
 
     [XmlIgnore]
