@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
 using StringMaster.Models;
@@ -8,33 +9,62 @@ using StringMaster.Services.Interfaces;
 
 namespace StringMaster.Services.Implementation;
 
-public class AcadLayerService : IAcadLayerService
+public class AcadLayerService : ObservableObject, IAcadLayerService
 {
-    public ObservableCollection<AcadLayer> Layers { get; private set; }
-
-    public AcadLayerService()
+    public IEnumerable<AcadLayer> GetLayersFromActiveDocument()
     {
-        GetLayers();
+        var document = CivilApplication.ActiveDocument;
+        return GetLayersFromDocument(document.Name);
     }
 
-    private void GetLayers()
+    public IEnumerable<AcadLayer> GetLayersFromDocument(string documentName)
     {
+        Document document = null;
+        foreach (Document doc in CivilApplication.DocumentManager)
+        {
+            if (doc.Name != documentName)
+                continue;
+
+            document = doc;
+        }
+
+        if (document is null)
+            throw new InvalidOperationException("document was null.");
+
         var layerList = new List<AcadLayer>();
 
-        using var tr = CivilApplication.StartLockedTransaction();
+        // Start locked transaction on the correct document.
+        using var tr = document.TransactionManager.StartLockedTransaction();
 
-        var layerTable = (LayerTable)tr.GetObject(CivilApplication.ActiveDatabase.LayerTableId, OpenMode.ForRead);
+        var layerTable = (LayerTable)tr.GetObject(document.Database.LayerTableId, OpenMode.ForRead);
 
         foreach (var objectId in layerTable)
         {
             var layer = (LayerTableRecord)tr.GetObject(objectId, OpenMode.ForRead);
             var color = layer.Color.ToAcadColor();
+            var lineType = (LinetypeTableRecord)tr.GetObject(layer.LinetypeObjectId, OpenMode.ForRead);
 
-            layerList.Add(new AcadLayer(layer.Name, layer.IsOff, layer.IsFrozen, layer.IsLocked, color));
+            string lineWeightText = layer.LineWeight switch
+            {
+                LineWeight.ByLayer => "ByLayer",
+                LineWeight.ByBlock => "ByBlock",
+                LineWeight.ByLineWeightDefault => "Default",
+                _ => layer.LineWeight.ToString()
+            };
+
+            var acadLayer = new AcadLayer(layer.Name, layer.IsOff, layer.IsFrozen, layer.IsLocked, color)
+            {
+                IsPlottable = layer.IsPlottable,
+                LineWeight = lineWeightText,
+                Linetype = lineType.Name,
+                PlotStyleName = layer.PlotStyleName
+            };
+
+            layerList.Add(acadLayer);
         }
 
         tr.Commit();
 
-        Layers = new ObservableCollection<AcadLayer>(layerList.OrderBy(x => x.Name));
+        return layerList.OrderBy(x => x.Name);
     }
 }
