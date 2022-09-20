@@ -26,10 +26,11 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly IOpenDialogService _openDialogService;
     private readonly ISaveDialogService _saveDialogService;
     private readonly IMessageBoxService _messageBoxService;
-    private readonly IAcadLayerService _acadLayerService;
+    private readonly IDialogService _dialogService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
+    private DescriptionKey _selectedKey;
 
     public string CurrentFileName
     {
@@ -49,9 +50,17 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _descriptionKeys, value);
     }
 
-    public ObservableCollection<AcadLayer> Layers => _acadLayerService.Layers;
+    // public ObservableCollection<AcadLayer> Layers => _acadLayerService.Layers;
 
-    public DescriptionKey SelectedKey { get; set; }
+    public DescriptionKey SelectedKey
+    {
+        get => _selectedKey;
+        set
+        {
+            SetProperty(ref _selectedKey, value);
+            CivilApplication.Editor.WriteMessage("Changed selection");
+        }
+    }
 
     public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
     public ICommand OpenDescriptionKeyFileCommand => new RelayCommand(OpenDescriptionKeyFile);
@@ -63,15 +72,17 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                               DescriptionKeys.Count > 0 &&
                                                                               DescriptionKeys.All(x => x.IsValid));
 
+    public ICommand LayerSelectCommand => new RelayCommand(ShowLayerSelectionDialog);
+
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
                                      IMessageBoxService messageBoxService,
-                                     IAcadLayerService acadLayerService)
+                                     IDialogService dialogService)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
         _messageBoxService = messageBoxService;
-        _acadLayerService = acadLayerService;
+        _dialogService = dialogService;
 
         _openDialogService.DefaultExt = ".xml";
         _openDialogService.Filter = "XML Files (*.xml)|*.xml";
@@ -82,24 +93,6 @@ public class StringCogoPointsViewModel : ObservableObject
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
-        AddMissingLayersFromDescriptionKeys();
-    }
-
-    private void AddMissingLayersFromDescriptionKeys()
-    {
-        foreach (var descriptionKey in DescriptionKeys)
-        {
-            if (!descriptionKey.IsValid)
-                continue;
-
-            if (!descriptionKey.AcadLayer.IsValid)
-                continue;
-
-            if (Layers.Contains(descriptionKey.AcadLayer))
-                continue;
-
-            Layers.Add(descriptionKey.AcadLayer);
-        }
     }
 
     /// <summary>
@@ -126,8 +119,8 @@ public class StringCogoPointsViewModel : ObservableObject
 
     private void DescriptionKeyPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+        // If DescriptionKeys matches the cloned keys then no changes.
         IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
-        NotifyPropertyChanged(nameof(IsUnsavedChanges));
     }
 
     private void AddRow()
@@ -165,6 +158,7 @@ public class StringCogoPointsViewModel : ObservableObject
     // The below method current works, but it's very messy and not structured well.
     // The idea was to get something that was working with the 'special codes'.
     // The feature line/poly/3dpoly line system needs a bit of work also.
+    // TODO: Remove references to Civil (abstract)
     private void StringCogoPoints()
     {
         if (DescriptionKeys is null)
@@ -304,8 +298,15 @@ public class StringCogoPointsViewModel : ObservableObject
 
                 string layerName = deskeyMatch.DescriptionKey.Layer;
 
-                if (!LayerUtils.HasLayer(layerName, tr, CivilApplication.ActiveDatabase))
-                    LayerUtils.CreateLayer(deskeyMatch.DescriptionKey.AcadLayer, tr, CivilApplication.ActiveDatabase);
+                if (deskeyMatch.DescriptionKey.AcadLayer.IsSelected)
+                {
+                    if (!LayerUtils.HasLayer(layerName, tr, CivilApplication.ActiveDatabase))
+                        LayerUtils.CreateLayer(deskeyMatch.DescriptionKey.AcadLayer, tr, CivilApplication.ActiveDatabase);
+                }
+                else
+                {
+                    layerName = "0"; // use default layer if not selected.
+                }
 
                 foreach (var list in pointList)
                 {
@@ -427,7 +428,7 @@ public class StringCogoPointsViewModel : ObservableObject
                         {
                             if (!featureLine.ConvertToPolyline3d(tr, out var polyline3d, desKey.Value.DescriptionKey.MidOrdinate))
                             {
-                                Console.WriteLine("Error converting feature line to Polyline.");
+                                System.Diagnostics.Debug.WriteLine("Error converting feature line to Polyline.");
                                 continue;
                             }
 
@@ -444,6 +445,15 @@ public class StringCogoPointsViewModel : ObservableObject
         tr.Commit();
     }
 
+    private void ShowLayerSelectionDialog()
+    {
+        var vm = new LayerSelectDialogViewModel();
+        var dialog = _dialogService.ShowDialog(vm);
+
+        if (dialog == true)
+            DescriptionKeys[DescriptionKeys.IndexOf(SelectedKey)].AcadLayer = vm.SelectedLayer;
+    }
+
     private void RemoveInvalidDescriptionKeys()
     {
         // Remove invalid keys
@@ -457,6 +467,7 @@ public class StringCogoPointsViewModel : ObservableObject
         {
             descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
             descriptionKey.AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
+            descriptionKey.AcadLayer.PropertyChanged -= DescriptionKeyPropertyChanged;
         }
     }
 
@@ -477,10 +488,17 @@ public class StringCogoPointsViewModel : ObservableObject
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
         DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
 
-        ObservableCollection<DescriptionKey> keysFromFile = null;
         try
         {
-            keysFromFile = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+            var keysFromFile = XmlHelper.ReadFromXmlFile<ObservableCollection<DescriptionKey>>(fileName);
+
+            if (keysFromFile is not null)
+            {
+                SetUnchangedDescriptionKeys(keysFromFile);
+
+                foreach (DescriptionKey key in keysFromFile)
+                    DescriptionKeys.Add(key);
+            }
         }
         catch (Exception e)
         {
@@ -491,29 +509,24 @@ public class StringCogoPointsViewModel : ObservableObject
             _unchangedDescriptionKeys = new();
         }
 
-        if (keysFromFile is not null)
-        {
-            SetUnchangedDescriptionKeys(keysFromFile);
-
-            foreach (DescriptionKey key in keysFromFile)
-                DescriptionKeys.Add(key);
-        }
-
         IsUnsavedChanges = false;
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
     }
 
+    /// <summary>
+    /// Clones the a <see cref="ObservableCollection{T}"/> of type <see cref="DescriptionKey"/> to another
+    /// ObservableCollection for comparison.
+    /// </summary>
+    /// <param name="keysFromFile">ObservableCollection to clone.</param>
     private void SetUnchangedDescriptionKeys(ObservableCollection<DescriptionKey> keysFromFile)
     {
         _unchangedDescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         foreach (var item in keysFromFile)
         {
-            if (item is ICloneable cloneable)
-                _unchangedDescriptionKeys.Add((DescriptionKey)cloneable.Clone());
-            else
-                _unchangedDescriptionKeys.Add(item);
+            var clonedDesKey = item.Clone();
+            _unchangedDescriptionKeys.Add(clonedDesKey);
         }
     }
 
