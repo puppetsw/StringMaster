@@ -3,13 +3,22 @@ using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
-public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
+public sealed class AcadLayer : ObservableObject
 {
+    private Guid _id = Guid.NewGuid();
+
+    public Guid Id => _id;
+
     private string _name;
     private bool _isOn;
     private bool _isFrozen;
     private bool _isLocked;
     private AcadColor _color;
+    private bool _isPlottable;
+    private string _lineWeight;
+    private string _lineType;
+    private string _plotStyleName;
+    private bool _isSelected;
 
     public string Name
     {
@@ -22,6 +31,8 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
         get => _color;
         set => SetProperty(ref _color, value);
     }
+
+    public string ColorStringLower => Color.Name.ToLower();
 
     public bool IsOn
     {
@@ -39,6 +50,36 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
     {
         get => _isLocked;
         set => SetProperty(ref _isLocked, value);
+    }
+
+    public bool IsPlottable
+    {
+        get => _isPlottable;
+        set => SetProperty(ref _isPlottable, value);
+    }
+
+    public string LineWeight
+    {
+        get => _lineWeight;
+        set => SetProperty(ref _lineWeight, value);
+    }
+
+    public string Linetype
+    {
+        get => _lineType;
+        set => SetProperty(ref _lineType, value);
+    }
+
+    public string PlotStyleName
+    {
+        get => _plotStyleName;
+        set => SetProperty(ref _plotStyleName, value);
+    }
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
     }
 
     public AcadLayer() // For Serialization
@@ -71,7 +112,9 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
             return true;
 
         return _name == other._name && _isOn == other._isOn && _isFrozen == other._isFrozen &&
-               _isLocked == other._isLocked && Equals(_color, other._color);
+               _isLocked == other._isLocked && Equals(_color, other._color) && _isPlottable == other._isPlottable &&
+               _lineWeight == other._lineWeight && _lineType == other._lineType &&
+               _plotStyleName == other._plotStyleName && _isSelected == other._isSelected;
     }
 
     public override bool Equals(object obj)
@@ -81,14 +124,6 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
 
     public override int GetHashCode()
     {
-        unchecked
-        {
-            int hashCode = Name != null ? Name.GetHashCode() : 0;
-            hashCode = (hashCode * 397) ^ IsOn.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsFrozen.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsLocked.GetHashCode();
-            hashCode = (hashCode * 397) ^ (Color != null ? Color.GetHashCode() : 0);
-            return hashCode;
-        }
+        return Id.GetHashCode();
     }
 }
