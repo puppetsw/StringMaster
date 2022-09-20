@@ -142,10 +142,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <!--  <DataGridTextColumn  -->
-                <!--  Width="80"  -->
-                <!--  Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  -->
-                <!--  Header="{helpers:ResourceHelper Name=ColumnHeaderKey}" />  -->
                 <DataGridTemplateColumn Width="200" Header="{helpers:ResourceHelper Name=ColumnHeaderLayer}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
@@ -160,7 +156,7 @@
                                 </Grid.InputBindings>
                                 <CheckBox
                                     Grid.Column="0"
-                                    Margin="0,0,3,0"
+                                    Margin="0,0,6,0"
                                     IsChecked="{Binding AcadLayer.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Column="1" Text="{Binding AcadLayer.Name}" />
                             </Grid>
