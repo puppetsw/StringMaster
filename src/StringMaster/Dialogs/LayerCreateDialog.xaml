@@ -2,6 +2,7 @@
     x:Class="StringMaster.Dialogs.LayerCreateDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:StringMaster.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:StringMaster.Models"
@@ -20,6 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="8,8,8,0">
@@ -27,13 +29,13 @@
             <DataTemplate x:Key="TextTemplate" DataType="{x:Type properties:StringProperty}">
                 <TextBlock
                     Height="20"
-                    IsEnabled="{Binding IsReadOnly}"
+                    IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"
                     Text="{Binding Value}" />
             </DataTemplate>
             <DataTemplate x:Key="TextEditTemplate" DataType="{x:Type properties:StringProperty}">
                 <TextBox
                     Height="20"
-                    IsEnabled="{Binding IsReadOnly}"
+                    IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"
                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </DataTemplate>
             <DataTemplate x:Key="ColorTemplate" DataType="{x:Type properties:ColorProperty}">

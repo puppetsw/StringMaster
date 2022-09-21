@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -6,10 +8,11 @@ using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
 using StringMaster.Models;
 using StringMaster.Services.Interfaces;
+using StringMaster.Utilities;
 
 namespace StringMaster.Services.Implementation;
 
-public class AcadLayerService : ObservableObject, IAcadLayerService
+public class AcadLayerService : IAcadLayerService
 {
     public IEnumerable<AcadLayer> GetLayersFromActiveDocument()
     {
@@ -17,9 +20,9 @@ public class AcadLayerService : ObservableObject, IAcadLayerService
         return GetLayersFromDocument(document.Name);
     }
 
-    public IEnumerable<AcadLayer> GetLayersFromDocument(string documentName)
+    public IEnumerable<AcadLayer> GetLayersFromDocument(string? documentName)
     {
-        Document document = null;
+        Document document = null!;
         foreach (Document doc in CivilApplication.DocumentManager)
         {
             if (doc.Name != documentName)
@@ -66,5 +69,32 @@ public class AcadLayerService : ObservableObject, IAcadLayerService
         tr.Commit();
 
         return layerList.OrderBy(x => x.Name);
+    }
+
+    public void CreateLayer(AcadLayer? layer, string? documentName = null)
+    {
+        if (layer == null)
+            return;
+
+        Document document = CivilApplication.ActiveDocument;
+
+        if (!string.IsNullOrEmpty(documentName))
+        {
+            foreach (Document doc in CivilApplication.DocumentManager)
+            {
+                if (doc.Name != documentName)
+                    continue;
+
+                document = doc;
+                break;
+            }
+        }
+
+        using var tr = document.TransactionManager.StartLockedTransaction();
+
+        if (!LayerUtils.HasLayer(layer.Name, tr, document.Database))
+            LayerUtils.CreateLayer(layer, tr, document.Database);
+
+        tr.Commit();
     }
 }

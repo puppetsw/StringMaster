@@ -53,7 +53,8 @@ public class LayerSelectDialogViewModel : ObservableObject
         var dialog = _dialogService.ShowDialog(vm);
 
         // Add new layer
-        _acadLayerService.CreateLayer(vm.NewLayer);
+        _acadLayerService.CreateLayer(vm.NewLayer, _selectedDocument);
+        Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));
     }
 
     public LayerSelectDialogViewModel()
