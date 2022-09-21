@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Autodesk.AutoCAD.ApplicationServices;
 using StringMaster.Models;
 using StringMaster.Services.Interfaces;
@@ -10,6 +11,7 @@ namespace StringMaster.ViewModels;
 public class LayerSelectDialogViewModel : ObservableObject
 {
     private readonly IAcadLayerService _acadLayerService = Ioc.Default.GetInstance<IAcadLayerService>();
+    private readonly IDialogService _dialogService = Ioc.Default.GetInstance<IDialogService>();
     private ObservableCollection<AcadLayer> _layers = new();
     private AcadLayer? _selectedLayer;
     private ObservableCollection<string> _documents = new();
@@ -41,6 +43,17 @@ public class LayerSelectDialogViewModel : ObservableObject
             SetProperty(ref _selectedDocument, value);
             Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));
         }
+    }
+
+    public ICommand NewLayerCommand => new RelayCommand(ShowNewLayerDialog);
+
+    private void ShowNewLayerDialog()
+    {
+        var vm = new LayerCreateDialogViewModel();
+        var dialog = _dialogService.ShowDialog(vm);
+
+        // Add new layer
+        _acadLayerService.CreateLayer(vm.NewLayer);
     }
 
     public LayerSelectDialogViewModel()

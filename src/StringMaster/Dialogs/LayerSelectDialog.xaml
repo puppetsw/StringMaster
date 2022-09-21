@@ -16,7 +16,13 @@
     ResizeMode="CanResizeWithGrip"
     mc:Ignorable="d">
     <Window.Resources>
-        <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ComboBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
+        </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="8,8,8,0" ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -46,6 +52,7 @@
             Width="76"
             Height="21"
             HorizontalAlignment="Right"
+            Command="{Binding NewLayerCommand}"
             Content="New..." />
 
         <TextBlock

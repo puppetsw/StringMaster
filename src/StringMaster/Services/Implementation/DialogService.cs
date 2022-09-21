@@ -15,9 +15,10 @@ public class DialogService : IDialogService
 
     public DialogService()
     {
-        _dialogs = new Dictionary<Type, Func<Window>>()
+        _dialogs = new Dictionary<Type, Func<Window>>
         {
-            { typeof(LayerSelectDialogViewModel), () => new LayerSelectDialog() }
+            { typeof(LayerSelectDialogViewModel), () => new LayerSelectDialog() },
+            { typeof(LayerCreateDialogViewModel), () => new LayerCreateDialog() }
         };
     }
 
