@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolTips.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ToolBar.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Style TargetType="Image">
@@ -115,11 +116,13 @@
             CurrentItem="{Binding SelectedKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             HorizontalGridLinesBrush="{StaticResource BlueGridLine}"
             ItemsSource="{Binding DescriptionKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            RowHeaderWidth="0"
+            RowHeight="20"
             SelectionMode="Single"
             SelectionUnit="FullRow"
             VerticalGridLinesBrush="{StaticResource RedGridLine}">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Width="80" Header="{helpers:ResourceHelper Name=ColumnHeaderKey}">
+                <DataGridTemplateColumn Width="150" Header="{helpers:ResourceHelper Name=ColumnHeaderKey}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <Grid>
@@ -164,22 +167,22 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridCheckBoxColumn
-                    Width="50"
+                    Width="100"
                     Binding="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Header="{helpers:ResourceHelper Name=ColumnHeader2D}" />
                 <DataGridCheckBoxColumn
-                    Width="50"
+                    Width="100"
                     Binding="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Header="{helpers:ResourceHelper Name=ColumnHeader3D}" />
                 <DataGridCheckBoxColumn
-                    Width="50"
+                    Width="100"
                     Binding="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}" />
                 <DataGridTextColumn
-                    Width="50"
+                    Width="100"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
                     Header="{helpers:ResourceHelper Name=ColumnHeaderMidOrdinate}" />
-                <DataGridTemplateColumn Width="120" Header="{helpers:ResourceHelper Name=ColumnHeaderColor}">
+                <!--<DataGridTemplateColumn Width="120" Header="{helpers:ResourceHelper Name=ColumnHeaderColor}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <ComboBox
@@ -187,9 +190,11 @@
                                 Height="21"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
+                                Background="Transparent"
                                 ItemsSource="{Binding ColorPicker.Colors, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 SelectedItem="{Binding AcadColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                SelectionChanged="ComboBox_OnSelectionChanged">
+                                SelectionChanged="ComboBox_OnSelectionChanged"
+                                Style="{StaticResource ComboBoxFlatStyle}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="models:AcadColor">
                                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -208,7 +213,7 @@
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

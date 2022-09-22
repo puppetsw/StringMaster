@@ -30,6 +30,7 @@
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center" />
+                        <!-- <ContentPresenter HorizontalAlignment="Center" /> -->
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
