@@ -22,6 +22,8 @@ public class LayerCreateDialogViewModel : ObservableObject
 
     public ICommand NewLayerCommand => new RelayCommand(GenerateNewLayer);
 
+    // TODO: this works but its bloaty.
+
     private void GenerateNewLayer()
     {
         var name = Properties[0].Value.ToString();

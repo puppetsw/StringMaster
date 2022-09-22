@@ -14,6 +14,7 @@
     d:DesignHeight="300"
     d:DesignWidth="435"
     Background="#F0F0F0"
+    ResizeMode="CanResizeWithGrip"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
