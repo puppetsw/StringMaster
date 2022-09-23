@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using StringMaster.Extensions;
+using StringMaster.Models;
 using StringMaster.Services.Interfaces;
 using StringMaster.ViewModels;
 
@@ -33,6 +35,18 @@ namespace StringMaster.Dialogs
         {
             DialogResult = true;
             Close();
+        }
+
+        private void ComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            /*var cmb = (ComboBox)sender;
+            var color = (AcadColor)cmb.SelectedItem;
+
+            if (color is null)
+                return;
+
+            if (color.Name.Contains("Select"))
+                cmb.SelectedItem = ColorPicker.ShowDialog();*/
         }
     }
 }

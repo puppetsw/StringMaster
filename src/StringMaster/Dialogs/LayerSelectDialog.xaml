@@ -53,7 +53,7 @@
             Width="76"
             Height="21"
             HorizontalAlignment="Right"
-            Command="{Binding NewLayerCommand}"
+            Command="{Binding ShowNewLayerDialogCommand}"
             Content="New..." />
 
         <TextBlock

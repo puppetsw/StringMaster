@@ -1,56 +1,121 @@
 ﻿#nullable enable
 
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using StringMaster.Models;
+using StringMaster.Services.Interfaces;
+
+// ReSharper disable UnusedMember.Global
 
 namespace StringMaster.ViewModels;
 
 public class LayerCreateDialogViewModel : ObservableObject
 {
-    private ObservableCollection<LayerPropertyBase> _properties;
+    private ObservableCollection<PropertyBase> _properties = new();
+    private AcadColor? _acadColor;
+    private string _layerName;
+    private string _lineType;
+    private string _lineWeight;
+    private bool _isLocked;
+    private bool _isOn;
+    private bool _isFrozen;
+    private bool _isPlottable;
+
+    // TODO: ViewModel Services
+    public IAcadColorDialogService ColorDialogService { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
+    // public IAcadLineTypeService LineTypeService { get; } = Ioc.Default.GetInstance<IAcadLineTypeService>();
+
+    // TODO: LineWeights
+    // public ObservableCollection<string> LineWeights { get; set; }
 
     public ObservableCollection<string> YesNoSelect { get; } = new() { "Yes", "No" };
 
-    public ObservableCollection<LayerPropertyBase> Properties
+    public ObservableCollection<PropertyBase> Properties
     {
         get => _properties;
         set => SetProperty(ref _properties, value);
     }
 
-    public AcadLayer? NewLayer { get; private set; }
-
-    public ICommand NewLayerCommand => new RelayCommand(GenerateNewLayer);
-
-    // TODO: this works but its bloaty.
-
-    private void GenerateNewLayer()
+    public string LayerName
     {
-        var name = Properties[0].Value.ToString();
-        var isOn = Properties[5].Value.ToString() == "Yes";
-        var isFrozen = Properties[6].Value.ToString() == "Yes";
-        var isLocked = Properties[4].Value.ToString() == "Yes";
-        var color = (AcadColor)Properties[1].Value;
+        get => _layerName;
+        set => SetProperty(ref _layerName, value);
+    }
 
-        var layer = new AcadLayer(name, isOn, isFrozen, isLocked, color);
+    public AcadColor? AcadColor
+    {
+        get => _acadColor;
+        set
+        {
+            if (value is null)
+                return;
 
-        if (layer.IsValid)
-            NewLayer = layer;
+            if (value.Name.Contains("Select"))
+                SetProperty(ref _acadColor, ColorDialogService.ShowDialog());
+            else
+                SetProperty(ref _acadColor, value);
+        }
+    }
+
+    public string LineType
+    {
+        get => _lineType;
+        set => SetProperty(ref _lineType, value);
+    }
+
+    public string LineWeight
+    {
+        get => _lineWeight;
+        set => SetProperty(ref _lineWeight, value);
+    }
+
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set => SetProperty(ref _isLocked, value);
+    }
+
+    public bool IsOn
+    {
+        get => _isOn;
+        set => SetProperty(ref _isOn, value);
+    }
+
+    public bool IsFrozen
+    {
+        get => _isFrozen;
+        set => SetProperty(ref _isFrozen, value);
+    }
+
+    public bool IsPlottable
+    {
+        get => _isPlottable;
+        set => SetProperty(ref _isPlottable, value);
     }
 
     public LayerCreateDialogViewModel()
     {
-        _properties = new()
-        {
-            new StringProperty { Name = "Layer name", Value = "" },
-            new ColorProperty { Name = "Color", Value = new AcadColor(255, 0, 0, 1) }, // TODO: DIALOG needed
-            new StringProperty { Name = "Linetype", Value = "Continuous" }, // TODO: Add dialog to select
-            new StringProperty { Name = "Lineweight", Value = "Default" }, // TODO: Add dialog to select
-            new SelectYesNoProperty { Name = "Locked", Value = "No" },
-            new SelectYesNoProperty { Name = "On", Value = "Yes" },
-            new SelectYesNoProperty { Name = "Freeze", Value = "No" },
-            new StringProperty { Name = "Plot Style", Value = "", IsReadOnly = true },
-            new SelectYesNoProperty { Name = "Plot", Value = "Yes" }
-        };
+        AcadColor = new AcadColor(255, 0, 0, 1);
+        _layerName = "";
+        _lineWeight = "";
+        _lineType = "Continuous";
+        _isOn = true;
+        _isLocked = false;
+        _isFrozen = false;
+        _isPlottable = true;
+
+        AddLayerProperties();
+    }
+
+    private void AddLayerProperties()
+    {
+        Properties.Add(new LayerNameProperty());
+        Properties.Add(new LayerColorProperty());
+        Properties.Add(new LayerLineTypeProperty());
+        Properties.Add(new LayerLineWeightProperty());
+        Properties.Add(new LayerLockedProperty());
+        Properties.Add(new LayerOnProperty());
+        Properties.Add(new LayerFrozenProperty());
+        Properties.Add(new LayerPlotStyleProperty());
+        Properties.Add(new LayerPlotProperty());
     }
 }

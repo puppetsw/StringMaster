@@ -15,6 +15,7 @@ public class BooleanYesNoConverter: IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return null;
+        var yesNoValue = (string)value;
+        return yesNoValue == "Yes";
     }
 }

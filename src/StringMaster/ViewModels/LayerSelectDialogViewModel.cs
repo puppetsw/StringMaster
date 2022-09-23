@@ -12,9 +12,11 @@ public class LayerSelectDialogViewModel : ObservableObject
 {
     private readonly IAcadLayerService _acadLayerService = Ioc.Default.GetInstance<IAcadLayerService>();
     private readonly IDialogService _dialogService = Ioc.Default.GetInstance<IDialogService>();
+
     private ObservableCollection<AcadLayer> _layers = new();
-    private AcadLayer? _selectedLayer;
     private ObservableCollection<string> _documents = new();
+
+    private AcadLayer? _selectedLayer;
     private string? _selectedDocument;
 
     public ObservableCollection<AcadLayer> Layers
@@ -23,16 +25,16 @@ public class LayerSelectDialogViewModel : ObservableObject
         set => SetProperty(ref _layers, value);
     }
 
-    public AcadLayer? SelectedLayer
-    {
-        get => _selectedLayer;
-        set => SetProperty(ref _selectedLayer, value);
-    }
-
     public ObservableCollection<string> Documents
     {
         get => _documents;
         set => SetProperty(ref _documents, value);
+    }
+
+    public AcadLayer? SelectedLayer
+    {
+        get => _selectedLayer;
+        set => SetProperty(ref _selectedLayer, value);
     }
 
     public string? SelectedDocument
@@ -45,7 +47,7 @@ public class LayerSelectDialogViewModel : ObservableObject
         }
     }
 
-    public ICommand NewLayerCommand => new RelayCommand(ShowNewLayerDialog);
+    public ICommand ShowNewLayerDialogCommand => new RelayCommand(ShowNewLayerDialog);
 
     private void ShowNewLayerDialog()
     {
@@ -53,8 +55,8 @@ public class LayerSelectDialogViewModel : ObservableObject
         var dialog = _dialogService.ShowDialog(vm);
 
         // Add new layer
-        _acadLayerService.CreateLayer(vm.NewLayer, _selectedDocument);
-        Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));
+        /*_acadLayerService.CreateLayer(vm.NewLayer, _selectedDocument);
+        Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));*/
     }
 
     public LayerSelectDialogViewModel()

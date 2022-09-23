@@ -670,6 +670,7 @@
 
 
     <Style x:Key="ComboBoxFlatStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="Margin" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
@@ -691,7 +692,7 @@
 
                         <ContentPresenter
                             Name="ContentSite"
-                            Margin="5,3,23,3"
+                            Margin="5,0,23,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Content="{TemplateBinding ComboBox.SelectionBoxItem}"
@@ -700,7 +701,7 @@
                             IsHitTestVisible="False" />
                         <TextBox
                             Name="PART_EditableTextBox"
-                            Margin="3,3,23,3"
+                            Margin="3,0,23,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="Transparent"

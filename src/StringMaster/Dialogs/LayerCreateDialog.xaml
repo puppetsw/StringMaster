@@ -4,13 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:StringMaster.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:StringMaster.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="clr-namespace:StringMaster.Models"
-    xmlns:resources="clr-namespace:StringMaster.Resources"
+    xmlns:models="clr-namespace:StringMaster.Models"
+    xmlns:viewModels="clr-namespace:StringMaster.ViewModels"
     Title="Create Layer"
     Width="435"
     Height="300"
     MinWidth="435"
+    MinHeight="300"
+    d:DataContext="{d:DesignInstance viewModels:LayerCreateDialogViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="435"
     Background="#F0F0F0"
@@ -20,50 +23,146 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/FlatComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/DataGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
+            <Style x:Key="DataGridValue" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="8,8,8,0">
         <Grid.Resources>
-            <DataTemplate x:Key="TextTemplate" DataType="{x:Type properties:StringProperty}">
-                <TextBlock
-                    Height="20"
-                    IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"
-                    Text="{Binding Value}" />
+
+            <!--  Layer Name  -->
+            <DataTemplate x:Key="LayerNameTemplate" DataType="{x:Type models:LayerNameProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.LayerName, RelativeSource={RelativeSource AncestorType=Window}}" />
             </DataTemplate>
-            <DataTemplate x:Key="TextEditTemplate" DataType="{x:Type properties:StringProperty}">
-                <TextBox
-                    Height="20"
-                    IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"
-                    Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <DataTemplate x:Key="LayerNameEditTemplate" DataType="{x:Type models:LayerNameProperty}">
+                <TextBox Text="{Binding DataContext.LayerName, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </DataTemplate>
-            <DataTemplate x:Key="ColorTemplate" DataType="{x:Type properties:ColorProperty}">
-                <StackPanel Height="20" Orientation="Horizontal">
+
+            <!--  AcadColor  -->
+            <DataTemplate x:Key="LayerColorTemplate">
+                <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
                     <Label
                         Width="15"
                         Height="14"
                         Margin="0,0,8,0"
-                        Background="{Binding Value.ColorBrush}"
+                        Background="{Binding DataContext.AcadColor.ColorBrush, RelativeSource={RelativeSource AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="Black"
                         BorderThickness="1" />
-                    <TextBlock Text="{Binding Value.NameStringLower}" />
+                    <TextBlock Text="{Binding DataContext.AcadColor.NameStringLower, RelativeSource={RelativeSource AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </DataTemplate>
-            <DataTemplate x:Key="SelectYesNoTemplate" DataType="{x:Type properties:SelectYesNoProperty}">
+            <DataTemplate x:Key="LayerColorEditTemplate">
                 <ComboBox
-                    Height="20"
+                    x:Name="ComboBox"
+                    HorizontalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    ItemsSource="{Binding DataContext.ColorDialogService.Colors, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding DataContext.AcadColor, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxFlatStyle}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="models:AcadColor">
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <Label
+                                    Width="15"
+                                    Height="14"
+                                    Margin="0,0,8,0"
+                                    Background="{Binding ColorBrush}"
+                                    BorderBrush="Black"
+                                    BorderThickness="1" />
+                                <TextBlock Text="{Binding NameStringLower}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DataTemplate>
+
+            <!--  LineType  -->
+            <DataTemplate x:Key="LayerLineTypeTemplate" DataType="{x:Type models:LayerLineTypeProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.LineType, RelativeSource={RelativeSource AncestorType=Window}}" />
+            </DataTemplate>
+
+            <!--  LineWeight  -->
+            <DataTemplate x:Key="LayerLineWeightTemplate" DataType="{x:Type models:LayerLineWeightProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.LineWeight, RelativeSource={RelativeSource AncestorType=Window}}" />
+            </DataTemplate>
+
+            <!--  IsOn  -->
+            <DataTemplate x:Key="LayerOnTemplate" DataType="{x:Type models:LayerOnProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.IsOn, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanYesNoConverter}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="LayerOnEditTemplate" DataType="{x:Type models:LayerOnProperty}">
+                <ComboBox
                     ItemsSource="{Binding DataContext.YesNoSelect, RelativeSource={RelativeSource AncestorType=Window}}"
-                    SelectedItem="{Binding Value, Mode=TwoWay}"
+                    SelectedItem="{Binding DataContext.IsOn, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, Converter={StaticResource BooleanYesNoConverter}}"
                     Style="{StaticResource ComboBoxFlatStyle}" />
             </DataTemplate>
-            <resources:PropertyTemplateSelector
+
+            <!--  IsLocked  -->
+            <DataTemplate x:Key="LayerLockedTemplate" DataType="{x:Type models:LayerLockedProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.IsLocked, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanYesNoConverter}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="LayerLockedEditTemplate" DataType="{x:Type models:LayerLockedProperty}">
+                <ComboBox
+                    ItemsSource="{Binding DataContext.YesNoSelect, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding DataContext.IsLocked, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, Converter={StaticResource BooleanYesNoConverter}}"
+                    Style="{StaticResource ComboBoxFlatStyle}" />
+            </DataTemplate>
+
+            <!--  IsFrozen  -->
+            <DataTemplate x:Key="LayerFrozenTemplate" DataType="{x:Type models:LayerFrozenProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.IsFrozen, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanYesNoConverter}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="LayerFrozenEditTemplate" DataType="{x:Type models:LayerFrozenProperty}">
+                <ComboBox
+                    ItemsSource="{Binding DataContext.YesNoSelect, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding DataContext.IsFrozen, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, Converter={StaticResource BooleanYesNoConverter}}"
+                    Style="{StaticResource ComboBoxFlatStyle}" />
+            </DataTemplate>
+
+            <!--  PlotStyle  -->
+            <DataTemplate x:Key="LayerPlotStyleTemplate" DataType="{x:Type models:LayerPlotStyleProperty}">
+                <TextBlock Text="" />
+            </DataTemplate>
+
+            <!--  IsPlottable  -->
+            <DataTemplate x:Key="LayerPlottableTemplate" DataType="{x:Type models:LayerPlotProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.IsPlottable, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanYesNoConverter}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="LayerPlottableEditTemplate" DataType="{x:Type models:LayerPlotProperty}">
+                <ComboBox
+                    ItemsSource="{Binding DataContext.YesNoSelect, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding DataContext.IsPlottable, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, Converter={StaticResource BooleanYesNoConverter}}"
+                    Style="{StaticResource ComboBoxFlatStyle}" />
+            </DataTemplate>
+
+            <helpers:LayerPropertiesTemplateSelector
                 x:Key="PropertyTemplateSelector"
-                ColorTemplate="{StaticResource ColorTemplate}"
-                SelectYesNoTemplate="{StaticResource SelectYesNoTemplate}"
-                TextTemplate="{StaticResource TextTemplate}" />
-            <resources:PropertyEditTemplateSelector x:Key="PropertyEditTemplateSelector" TextTemplate="{StaticResource TextEditTemplate}" />
+                LayerColorTemplate="{StaticResource LayerColorTemplate}"
+                LayerFreezeTemplate="{StaticResource LayerFrozenTemplate}"
+                LayerLineTypeTemplate="{StaticResource LayerLineTypeTemplate}"
+                LayerLineWeightTemplate="{StaticResource LayerLineWeightTemplate}"
+                LayerLockedTemplate="{StaticResource LayerLockedTemplate}"
+                LayerNameTemplate="{StaticResource LayerNameTemplate}"
+                LayerOnTemplate="{StaticResource LayerOnTemplate}"
+                LayerPlotStyleTemplate="{StaticResource LayerPlotStyleTemplate}"
+                LayerPlotTemplate="{StaticResource LayerPlottableTemplate}" />
+            <helpers:LayerPropertiesTemplateSelector
+                x:Key="PropertyEditTemplateSelector"
+                LayerColorTemplate="{StaticResource LayerColorEditTemplate}"
+                LayerFreezeTemplate="{StaticResource LayerFrozenEditTemplate}"
+                LayerLockedTemplate="{StaticResource LayerLockedEditTemplate}"
+                LayerNameTemplate="{StaticResource LayerNameEditTemplate}"
+                LayerOnTemplate="{StaticResource LayerOnEditTemplate}"
+                LayerPlotTemplate="{StaticResource LayerPlottableEditTemplate}" />
+            <!--
+                LayerLineTypeTemplate="{StaticResource LayerLineTypeEditTemplate}"
+                LayerLineWeightTemplate="{StaticResource LayerLineWeightEditTemplate}"
+            -->
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
@@ -87,15 +186,36 @@
             HorizontalGridLinesBrush="#E3E3E3"
             ItemsSource="{Binding Properties}"
             RowHeaderWidth="0"
+            RowHeight="20"
+            SelectionMode="Single"
+            SelectionUnit="Cell"
             VerticalGridLinesBrush="#E3E3E3">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="200"
+                    Width="1*"
                     Binding="{Binding Name}"
                     Header="Property"
-                    IsReadOnly="True" />
+                    IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <!--  ReSharper disable once Xaml.BindingWithContextNotResolved  -->
+                                <DataTrigger Binding="{Binding IsReadOnly}" Value="True">
+                                    <Setter Property="Foreground" Value="#989898" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn
-                    Width="200"
+                    Width="*"
                     CellEditingTemplateSelector="{StaticResource PropertyEditTemplateSelector}"
                     CellTemplateSelector="{StaticResource PropertyTemplateSelector}"
                     Header="Values" />
@@ -109,15 +229,12 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
-                x:Name="ButtonOK"
                 Width="76"
                 Height="21"
                 Margin="8,0,8,0"
                 Click="ButtonOK_Click"
-                Command="{Binding NewLayerCommand}"
                 Content="OK" />
             <Button
-                x:Name="ButtonCancel"
                 Width="76"
                 Height="21"
                 Click="ButtonCancel_Click"
