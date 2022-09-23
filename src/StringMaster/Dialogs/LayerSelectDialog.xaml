@@ -20,6 +20,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/DataGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
         </ResourceDictionary>
@@ -61,59 +62,69 @@
             Margin="0,10,0,3"
             Text="Layers: " />
 
-        <ListView
+        <DataGrid
             Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            ItemsSource="{Binding Layers}"
-            SelectedItem="{Binding SelectedLayer}"
-            SelectionMode="Single">
-            <ListView.ItemsPanel>
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridCellCenter}"
+            ColumnHeaderStyle="{StaticResource DataGridHeader}"
+            GridLinesVisibility="None"
+            IsReadOnly="True"
+            ItemsSource="{Binding Layers, UpdateSourceTrigger=PropertyChanged}"
+            RowHeaderWidth="0"
+            RowHeight="20"
+            SelectedItem="{Binding SelectedLayer, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+            <DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel />
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
-                        Width="190"
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="Layer" />
-                    <GridViewColumn Width="80" Header="Color">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label
-                                        Width="15"
-                                        Height="14"
-                                        Margin="0,0,3,0"
-                                        Background="{Binding Color.ColorBrush}"
-                                        BorderBrush="Black"
-                                        BorderThickness="1" />
-                                    <TextBlock Text="{Binding ColorStringLower}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding Linetype}"
-                        Header="Linetype" />
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding LineWeight}"
-                        Header="Lineweight" />
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding PlotStyleName}"
-                        Header="Plot Style" />
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding IsPlottable, Converter={StaticResource BooleanYesNoConverter}}"
-                        Header="Plot" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+            </DataGrid.ItemsPanel>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="190"
+                    Binding="{Binding Name}"
+                    Header="Name" />
+                <DataGridTemplateColumn Width="80" Header="Color">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label
+                                    Width="15"
+                                    Height="14"
+                                    Margin="0,0,3,0"
+                                    Background="{Binding Color.ColorBrush}"
+                                    BorderBrush="Black"
+                                    BorderThickness="1" />
+                                <TextBlock Text="{Binding ColorStringLower}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding Linetype}"
+                    Header="Linetype" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding LineWeight}"
+                    Header="Lineweight" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding PlotStyleName}"
+                    Header="Plot Style" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding IsPlottable, Converter={StaticResource BooleanYesNoConverter}}"
+                    Header="Plot" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <StackPanel
             Grid.Row="4"
