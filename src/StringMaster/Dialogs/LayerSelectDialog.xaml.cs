@@ -21,6 +21,8 @@ public partial class LayerSelectDialog : Window, IDialog<LayerSelectDialogViewMo
         InitializeComponent();
 
         SourceInitialized += (_, _) => this.HideMinimizeAndMaximizeButtons();
+
+        DataGrid.Focus();
     }
 
     private void ButtonCancel_Click(object sender, RoutedEventArgs e)
