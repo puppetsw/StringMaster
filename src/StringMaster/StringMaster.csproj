@@ -132,6 +132,7 @@
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
     <Compile Include="Models\AcadLayer.cs" />
+    <Compile Include="Models\AcadLineweight.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -141,11 +142,13 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Services\Implementation\AcadColorDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
+    <Compile Include="Services\Implementation\AcadLineweightService.cs" />
     <Compile Include="Services\Implementation\DialogService.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
+    <Compile Include="Services\Interfaces\IAcadLineweightService.cs" />
     <Compile Include="Services\Interfaces\IDialog.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />

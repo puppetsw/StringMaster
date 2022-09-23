@@ -58,7 +58,7 @@ public class AcadLayerService : IAcadLayerService
             var acadLayer = new AcadLayer(layer.Name, layer.IsOff, layer.IsFrozen, layer.IsLocked, color)
             {
                 IsPlottable = layer.IsPlottable,
-                LineWeight = lineWeightText,
+                Lineweight = lineWeightText,
                 Linetype = lineType.Name,
                 PlotStyleName = layer.PlotStyleName
             };

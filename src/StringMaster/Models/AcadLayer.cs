@@ -15,7 +15,7 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
     private bool _isLocked;
     private AcadColor _color;
     private bool _isPlottable;
-    private string _lineWeight;
+    private string _lineweight;
     private string _lineType;
     private string _plotStyleName;
     private bool _isSelected;
@@ -58,10 +58,10 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
         set => SetProperty(ref _isPlottable, value);
     }
 
-    public string LineWeight
+    public string Lineweight
     {
-        get => _lineWeight;
-        set => SetProperty(ref _lineWeight, value);
+        get => _lineweight;
+        set => SetProperty(ref _lineweight, value);
     }
 
     public string Linetype
@@ -113,7 +113,7 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
 
         return _name == other._name && _isOn == other._isOn && _isFrozen == other._isFrozen &&
                _isLocked == other._isLocked && Equals(_color, other._color) && _isPlottable == other._isPlottable &&
-               _lineWeight == other._lineWeight && _lineType == other._lineType &&
+               _lineweight == other._lineweight && _lineType == other._lineType &&
                _plotStyleName == other._plotStyleName && _isSelected == other._isSelected;
     }
 
@@ -131,7 +131,7 @@ public sealed class AcadLayer : ObservableObject, IEquatable<AcadLayer>
     {
         var layer = new AcadLayer(Name, IsOn, IsFrozen, IsLocked, Color.Clone())
         {
-            LineWeight = LineWeight,
+            Lineweight = Lineweight,
             IsPlottable = IsPlottable,
             IsSelected = IsSelected,
             Linetype = Linetype,

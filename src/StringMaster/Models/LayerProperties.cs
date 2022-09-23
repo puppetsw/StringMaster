@@ -26,8 +26,8 @@ public abstract class PropertyBase : ObservableObject
 
 public sealed class LayerNameProperty : PropertyBase { public LayerNameProperty() : base("Layer name") { } }
 public sealed class LayerColorProperty : PropertyBase { public LayerColorProperty() : base("Color") { } }
-public sealed class LayerLineTypeProperty : PropertyBase { public LayerLineTypeProperty() : base("Linetype") { } }
-public sealed class LayerLineWeightProperty : PropertyBase { public LayerLineWeightProperty() : base("Lineweight") { } }
+public sealed class LayerLinetypeProperty : PropertyBase { public LayerLinetypeProperty() : base("Linetype") { } }
+public sealed class LayerLineweightProperty : PropertyBase { public LayerLineweightProperty() : base("Lineweight") { } }
 public sealed class LayerLockedProperty : PropertyBase { public LayerLockedProperty() : base("Locked") { } }
 public sealed class LayerOnProperty : PropertyBase { public LayerOnProperty() : base("On") { } }
 public sealed class LayerFrozenProperty : PropertyBase { public LayerFrozenProperty() : base("Frozen") { } }

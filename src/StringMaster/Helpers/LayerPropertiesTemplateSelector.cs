@@ -9,8 +9,8 @@ public class LayerPropertiesTemplateSelector : DataTemplateSelector
 {
     public DataTemplate LayerNameTemplate { get; set; }
     public DataTemplate LayerColorTemplate { get; set; }
-    public DataTemplate LayerLineTypeTemplate { get; set; }
-    public DataTemplate LayerLineWeightTemplate { get; set; }
+    public DataTemplate LayerLinetypeTemplate { get; set; }
+    public DataTemplate LayerLineweightTemplate { get; set; }
     public DataTemplate LayerLockedTemplate { get; set; }
     public DataTemplate LayerOnTemplate { get; set; }
     public DataTemplate LayerFreezeTemplate { get; set; }
@@ -23,8 +23,8 @@ public class LayerPropertiesTemplateSelector : DataTemplateSelector
         {
             LayerNameProperty => LayerNameTemplate,
             LayerColorProperty => LayerColorTemplate,
-            LayerLineTypeProperty => LayerLineTypeTemplate,
-            LayerLineWeightProperty => LayerLineWeightTemplate,
+            LayerLinetypeProperty => LayerLinetypeTemplate,
+            LayerLineweightProperty => LayerLineweightTemplate,
             LayerLockedProperty => LayerLockedTemplate,
             LayerOnProperty => LayerOnTemplate,
             LayerFrozenProperty => LayerFreezeTemplate,

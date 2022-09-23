@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using Autodesk.AutoCAD.Runtime;
+﻿using Autodesk.AutoCAD.Runtime;
 using StringMaster;
-using StringMaster.Dialogs;
 using StringMaster.Services.Implementation;
 using StringMaster.Services.Interfaces;
 using StringMaster.UserControls;
@@ -20,6 +18,7 @@ public sealed class StringMasterPlugin : IExtensionApplication
         Ioc.Default.Register<ISaveDialogService, SaveDialogService>();
         Ioc.Default.RegisterSingleton<IAcadColorDialogService, AcadColorDialogService>();
         Ioc.Default.RegisterSingleton<IAcadLayerService, AcadLayerService>();
+        Ioc.Default.RegisterSingleton<IAcadLineweightService, AcadLineweightService>();
         Ioc.Default.RegisterSingleton<IDialogService, DialogService>();
 
         // TODO: ViewModels

@@ -6,6 +6,8 @@ using Autodesk.AutoCAD.ApplicationServices;
 using StringMaster.Models;
 using StringMaster.Services.Interfaces;
 
+// ReSharper disable UnusedMember.Global
+
 namespace StringMaster.ViewModels;
 
 public class LayerSelectDialogViewModel : ObservableObject
@@ -54,9 +56,22 @@ public class LayerSelectDialogViewModel : ObservableObject
         var vm = new LayerCreateDialogViewModel();
         var dialog = _dialogService.ShowDialog(vm);
 
+        if (dialog == false)
+            return;
+
         // Add new layer
-        /*_acadLayerService.CreateLayer(vm.NewLayer, _selectedDocument);
-        Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));*/
+        var layer = new AcadLayer(vm.LayerName, vm.IsOn, vm.IsFrozen, vm.IsLocked, vm.AcadColor)
+        {
+            Lineweight = vm.Lineweight.Name,
+            IsPlottable = vm.IsPlottable,
+            Linetype = vm.Linetype
+        };
+
+        if (!layer.IsValid)
+            return;
+
+        _acadLayerService.CreateLayer(layer, _selectedDocument);
+        Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));
     }
 
     public LayerSelectDialogViewModel()

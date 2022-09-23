@@ -82,13 +82,34 @@
             </DataTemplate>
 
             <!--  LineType  -->
-            <DataTemplate x:Key="LayerLineTypeTemplate" DataType="{x:Type models:LayerLineTypeProperty}">
-                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.LineType, RelativeSource={RelativeSource AncestorType=Window}}" />
+            <DataTemplate x:Key="LayerLineTypeTemplate" DataType="{x:Type models:LayerLinetypeProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.Linetype, RelativeSource={RelativeSource AncestorType=Window}}" />
             </DataTemplate>
 
             <!--  LineWeight  -->
-            <DataTemplate x:Key="LayerLineWeightTemplate" DataType="{x:Type models:LayerLineWeightProperty}">
-                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.LineWeight, RelativeSource={RelativeSource AncestorType=Window}}" />
+            <DataTemplate x:Key="LayerLineWeightTemplate" DataType="{x:Type models:LayerLineweightProperty}">
+                <TextBlock Style="{StaticResource DataGridValue}" Text="{Binding DataContext.Lineweight.Name, RelativeSource={RelativeSource AncestorType=Window}}" />
+            </DataTemplate>
+            <DataTemplate x:Key="LayerLineWeightEditTemplate" DataType="{x:Type models:LayerLineweightProperty}">
+                <ComboBox
+                    ItemsSource="{Binding DataContext.Lineweights, RelativeSource={RelativeSource AncestorType=Window}}"
+                    SelectedItem="{Binding DataContext.Lineweight, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxFlatStyle}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="models:AcadLineweight">
+                            <StackPanel Orientation="Horizontal">
+                                <!--<Line
+                                    Stroke="Black"
+                                    StrokeThickness="{Binding WeightValue}"
+                                    X1="11"
+                                    X2="60"
+                                    Y1="11"
+                                    Y2="11" />-->
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </DataTemplate>
 
             <!--  IsOn  -->
@@ -144,8 +165,8 @@
                 x:Key="PropertyTemplateSelector"
                 LayerColorTemplate="{StaticResource LayerColorTemplate}"
                 LayerFreezeTemplate="{StaticResource LayerFrozenTemplate}"
-                LayerLineTypeTemplate="{StaticResource LayerLineTypeTemplate}"
-                LayerLineWeightTemplate="{StaticResource LayerLineWeightTemplate}"
+                LayerLinetypeTemplate="{StaticResource LayerLineTypeTemplate}"
+                LayerLineweightTemplate="{StaticResource LayerLineWeightTemplate}"
                 LayerLockedTemplate="{StaticResource LayerLockedTemplate}"
                 LayerNameTemplate="{StaticResource LayerNameTemplate}"
                 LayerOnTemplate="{StaticResource LayerOnTemplate}"
@@ -155,13 +176,13 @@
                 x:Key="PropertyEditTemplateSelector"
                 LayerColorTemplate="{StaticResource LayerColorEditTemplate}"
                 LayerFreezeTemplate="{StaticResource LayerFrozenEditTemplate}"
+                LayerLineweightTemplate="{StaticResource LayerLineWeightEditTemplate}"
                 LayerLockedTemplate="{StaticResource LayerLockedEditTemplate}"
                 LayerNameTemplate="{StaticResource LayerNameEditTemplate}"
                 LayerOnTemplate="{StaticResource LayerOnEditTemplate}"
                 LayerPlotTemplate="{StaticResource LayerPlottableEditTemplate}" />
             <!--
                 LayerLineTypeTemplate="{StaticResource LayerLineTypeEditTemplate}"
-                LayerLineWeightTemplate="{StaticResource LayerLineWeightEditTemplate}"
             -->
         </Grid.Resources>
 

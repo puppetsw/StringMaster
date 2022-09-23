@@ -13,19 +13,24 @@ public class LayerCreateDialogViewModel : ObservableObject
     private ObservableCollection<PropertyBase> _properties = new();
     private AcadColor? _acadColor;
     private string _layerName;
-    private string _lineType;
-    private string _lineWeight;
+    private string _linetype;
+    private AcadLineweight _lineweight;
     private bool _isLocked;
     private bool _isOn;
     private bool _isFrozen;
     private bool _isPlottable;
+    private ObservableCollection<AcadLineweight> _lineweights;
 
     // TODO: ViewModel Services
     public IAcadColorDialogService ColorDialogService { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
     // public IAcadLineTypeService LineTypeService { get; } = Ioc.Default.GetInstance<IAcadLineTypeService>();
+    public IAcadLineweightService LineWeightService { get; } = Ioc.Default.GetInstance<IAcadLineweightService>();
 
-    // TODO: LineWeights
-    // public ObservableCollection<string> LineWeights { get; set; }
+    public ObservableCollection<AcadLineweight> Lineweights
+    {
+        get => _lineweights;
+        set => SetProperty(ref _lineweights, value);
+    }
 
     public ObservableCollection<string> YesNoSelect { get; } = new() { "Yes", "No" };
 
@@ -41,7 +46,7 @@ public class LayerCreateDialogViewModel : ObservableObject
         set => SetProperty(ref _layerName, value);
     }
 
-    public AcadColor? AcadColor
+    public AcadColor? AcadColor // BUG: Dialog opens twice.
     {
         get => _acadColor;
         set
@@ -56,16 +61,16 @@ public class LayerCreateDialogViewModel : ObservableObject
         }
     }
 
-    public string LineType
+    public string Linetype
     {
-        get => _lineType;
-        set => SetProperty(ref _lineType, value);
+        get => _linetype;
+        set => SetProperty(ref _linetype, value);
     }
 
-    public string LineWeight
+    public AcadLineweight Lineweight
     {
-        get => _lineWeight;
-        set => SetProperty(ref _lineWeight, value);
+        get => _lineweight;
+        set => SetProperty(ref _lineweight, value);
     }
 
     public bool IsLocked
@@ -94,10 +99,12 @@ public class LayerCreateDialogViewModel : ObservableObject
 
     public LayerCreateDialogViewModel()
     {
+        _lineweights = new ObservableCollection<AcadLineweight>(LineWeightService.GetLineweightsFromActiveDocument());
+
         AcadColor = new AcadColor(255, 0, 0, 1);
         _layerName = "";
-        _lineWeight = "";
-        _lineType = "Continuous";
+        _lineweight = Lineweights[2]; // Default Lineweight
+        _linetype = "Continuous";
         _isOn = true;
         _isLocked = false;
         _isFrozen = false;
@@ -110,8 +117,8 @@ public class LayerCreateDialogViewModel : ObservableObject
     {
         Properties.Add(new LayerNameProperty());
         Properties.Add(new LayerColorProperty());
-        Properties.Add(new LayerLineTypeProperty());
-        Properties.Add(new LayerLineWeightProperty());
+        Properties.Add(new LayerLinetypeProperty());
+        Properties.Add(new LayerLineweightProperty());
         Properties.Add(new LayerLockedProperty());
         Properties.Add(new LayerOnProperty());
         Properties.Add(new LayerFrozenProperty());
