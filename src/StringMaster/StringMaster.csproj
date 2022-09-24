@@ -105,6 +105,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -132,7 +133,6 @@
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Ioc.cs" />
     <Compile Include="Models\AcadLayer.cs" />
-    <Compile Include="Models\AcadLineweight.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -142,13 +142,15 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Services\Implementation\AcadColorDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
-    <Compile Include="Services\Implementation\AcadLineweightService.cs" />
+    <Compile Include="Services\Implementation\AcadLinetypeDialogService.cs" />
+    <Compile Include="Services\Implementation\AcadLineweightDialogService.cs" />
     <Compile Include="Services\Implementation\DialogService.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
-    <Compile Include="Services\Interfaces\IAcadLineweightService.cs" />
+    <Compile Include="Services\Interfaces\IAcadLinetypeDialogService.cs" />
+    <Compile Include="Services\Interfaces\IAcadLineweightDialogService.cs" />
     <Compile Include="Services\Interfaces\IDialog.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
@@ -278,6 +280,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\key.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons\dotsbutton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

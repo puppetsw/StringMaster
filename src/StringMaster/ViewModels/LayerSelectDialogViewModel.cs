@@ -62,7 +62,7 @@ public class LayerSelectDialogViewModel : ObservableObject
         // Add new layer
         var layer = new AcadLayer(vm.LayerName, vm.IsOn, vm.IsFrozen, vm.IsLocked, vm.AcadColor)
         {
-            Lineweight = vm.Lineweight.Name,
+            Lineweight = vm.Lineweight,
             IsPlottable = vm.IsPlottable,
             Linetype = vm.Linetype
         };

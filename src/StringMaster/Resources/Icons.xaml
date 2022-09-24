@@ -16,4 +16,5 @@
     <BitmapImage x:Key="LayerLockImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/locked.png" />
     <BitmapImage x:Key="LayerUnlockImage" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/unlocked.png" />
     <BitmapImage x:Key="KeyIcon" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/key.png" />
+    <BitmapImage x:Key="DotsButton" UriSource="pack://application:,,,/StringMaster;component/Resources/Icons/dotsbutton.png" />
 </ResourceDictionary>

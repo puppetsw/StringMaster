@@ -18,7 +18,8 @@ public sealed class StringMasterPlugin : IExtensionApplication
         Ioc.Default.Register<ISaveDialogService, SaveDialogService>();
         Ioc.Default.RegisterSingleton<IAcadColorDialogService, AcadColorDialogService>();
         Ioc.Default.RegisterSingleton<IAcadLayerService, AcadLayerService>();
-        Ioc.Default.RegisterSingleton<IAcadLineweightService, AcadLineweightService>();
+        Ioc.Default.RegisterSingleton<IAcadLineweightDialogService, AcadLineweightDialogService>();
+        Ioc.Default.RegisterSingleton<IAcadLinetypeDialogService, AcadLinetypeDialogService>();
         Ioc.Default.RegisterSingleton<IDialogService, DialogService>();
 
         // TODO: ViewModels
