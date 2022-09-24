@@ -5,9 +5,9 @@ using Autodesk.AutoCAD.Geometry;
 using StringMaster.Models;
 using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
 
-namespace StringMaster.Utilities;
+namespace StringMaster.Helpers;
 
-public static class PolylineUtils
+public static class PolylineHelpers
 {
     public static ObjectId DrawPolyline3d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {

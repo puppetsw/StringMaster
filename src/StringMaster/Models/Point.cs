@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace StringMaster.Models;
 
 [DebuggerDisplay("{X}"+ "," + "{Y}" + "," + "{Z}")]
-public class Point : ICloneable
+public sealed class Point : ICloneable
 {
     public double X { get; set; }
     public double Y { get; set; }

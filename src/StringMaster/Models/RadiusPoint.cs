@@ -2,7 +2,7 @@
 
 namespace StringMaster.Models;
 
-public class RadiusPoint
+public sealed class RadiusPoint
 {
     public double Radius { get; set; }
 

@@ -7,7 +7,7 @@ namespace StringMaster.Models;
 /// <summary>
 /// DescriptionKeyMatch class
 /// </summary>
-public class DescriptionKeyMatch
+public sealed class DescriptionKeyMatch
 {
     public DescriptionKey DescriptionKey { get; }
 

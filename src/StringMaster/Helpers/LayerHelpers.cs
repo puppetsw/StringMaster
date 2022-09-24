@@ -3,9 +3,9 @@ using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
 using StringMaster.Models;
 
-namespace StringMaster.Utilities;
+namespace StringMaster.Helpers;
 
-public static class LayerUtils
+public static class LayerHelpers
 {
     /// <summary>
     /// Check if the database contains the specified layer
@@ -41,14 +41,31 @@ public static class LayerUtils
         if (layerTable.Has(layer.Name))
             return;
 
+        LinetypeTableRecord lineType = null;
+
+        var ltTable = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        if (ltTable.Has(layer.Linetype))
+        {
+            foreach (ObjectId objectId in ltTable)
+            {
+                lineType = (LinetypeTableRecord)tr.GetObject(objectId, OpenMode.ForRead);
+                if (lineType.Name == layer.Linetype)
+                    break;
+            }
+        }
+
         var ltr = new LayerTableRecord
         {
             Name = layer.Name,
             Color = layer.Color.ToColor(),
             IsLocked = layer.IsLocked,
             IsFrozen = layer.IsFrozen,
-            IsOff = !layer.IsOn
+            IsOff = !layer.IsOn,
+            LineWeight = LineweightHelpers.LineweightStringtoLineweight(layer.Lineweight)
         };
+
+        if (lineType != null)
+            ltr.LinetypeObjectId = lineType.ObjectId;
 
         layerTable.UpgradeOpen();
         layerTable.Add(ltr);

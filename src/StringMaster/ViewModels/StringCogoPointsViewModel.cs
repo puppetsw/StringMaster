@@ -14,7 +14,6 @@ using StringMaster.Extensions;
 using StringMaster.Helpers;
 using StringMaster.Models;
 using StringMaster.Services.Interfaces;
-using StringMaster.Utilities;
 
 // ReSharper disable UnusedMember.Global
 
@@ -300,8 +299,8 @@ public class StringCogoPointsViewModel : ObservableObject
 
                 if (deskeyMatch.DescriptionKey.AcadLayer.IsSelected)
                 {
-                    if (!LayerUtils.HasLayer(layerName, tr, CivilApplication.ActiveDatabase))
-                        LayerUtils.CreateLayer(deskeyMatch.DescriptionKey.AcadLayer, tr, CivilApplication.ActiveDatabase);
+                    if (!LayerHelpers.HasLayer(layerName, tr, CivilApplication.ActiveDatabase))
+                        LayerHelpers.CreateLayer(deskeyMatch.DescriptionKey.AcadLayer, tr, CivilApplication.ActiveDatabase);
                 }
                 else
                 {
@@ -369,10 +368,10 @@ public class StringCogoPointsViewModel : ObservableObject
 
                     // Draw the polylines.
                     if (deskeyMatch.DescriptionKey.Draw2D && !hasCurve)
-                        PolylineUtils.DrawPolyline2d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
+                        PolylineHelpers.DrawPolyline2d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
 
                     if (deskeyMatch.DescriptionKey.Draw3D && !hasCurve)
-                        PolylineUtils.DrawPolyline3d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
+                        PolylineHelpers.DrawPolyline3d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
 
                     if (deskeyMatch.DescriptionKey.DrawFeatureLine && !hasCurve)
                     {

@@ -6,9 +6,9 @@ using System.Linq;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
+using StringMaster.Helpers;
 using StringMaster.Models;
 using StringMaster.Services.Interfaces;
-using StringMaster.Utilities;
 
 namespace StringMaster.Services.Implementation;
 
@@ -92,8 +92,8 @@ public class AcadLayerService : IAcadLayerService
 
         using var tr = document.TransactionManager.StartLockedTransaction();
 
-        if (!LayerUtils.HasLayer(layer.Name, tr, document.Database))
-            LayerUtils.CreateLayer(layer, tr, document.Database);
+        if (!LayerHelpers.HasLayer(layer.Name, tr, document.Database))
+            LayerHelpers.CreateLayer(layer, tr, document.Database);
 
         tr.Commit();
     }

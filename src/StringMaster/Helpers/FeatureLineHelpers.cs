@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Documents;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.Civil;
@@ -10,9 +9,9 @@ using Autodesk.Civil.DatabaseServices.Styles;
 using StringMaster.Extensions;
 using DBObject = Autodesk.AutoCAD.DatabaseServices.DBObject;
 
-namespace StringMaster.Utilities;
+namespace StringMaster.Helpers;
 
-public static class FeatureLineUtils
+public static class FeatureLineHelpers
 {
     public static ObjectId CreateFeatureLineFromPoly(this Site site, Polyline poly, FeatureLineStyle style)
     {

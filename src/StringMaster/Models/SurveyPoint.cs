@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace StringMaster.Models;
 
-public class SurveyPointList : List<SurveyPoint> { }
+public sealed class SurveyPointList : List<SurveyPoint> { }
 
-public class SurveyPoint : IEquatable<SurveyPoint>, ICloneable
+public sealed class SurveyPoint : IEquatable<SurveyPoint>, ICloneable
 {
     public Point Point { get; set; }
 
