@@ -129,7 +129,7 @@
                 <DataGridTemplateColumn Width="150" Header="{helpers:ResourceHelper Name=ColumnHeaderKey}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
-                            <Grid>
+                            <Grid Margin="3,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="16" />
                                     <ColumnDefinition Width="*" />
@@ -148,14 +148,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
-                            <TextBox Text="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Margin="3,0,0,0" Text="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="200" Header="{helpers:ResourceHelper Name=ColumnHeaderLayer}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
-                            <Grid>
+                            <Grid Margin="3,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
@@ -174,11 +174,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeader2D}">
+                <DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeader2D}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox
-                                HorizontalAlignment="Center"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center"
                                 Content="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanYesNoConverter}}"
                                 Cursor="{StaticResource CheckCursor}"
@@ -186,11 +187,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeader3D}">
+                <DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeader3D}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox
-                                HorizontalAlignment="Center"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center"
                                 Content="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanYesNoConverter}}"
                                 Cursor="{StaticResource CheckCursor}"
@@ -198,11 +200,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
+                <DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox
-                                HorizontalAlignment="Center"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalContentAlignment="Center"
                                 Content="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanYesNoConverter}}"
                                 Cursor="{StaticResource CheckCursor}"

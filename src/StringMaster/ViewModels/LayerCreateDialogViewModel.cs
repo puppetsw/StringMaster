@@ -21,10 +21,10 @@ public class LayerCreateDialogViewModel : ObservableObject
     private bool _isFrozen;
     private bool _isPlottable;
 
+    public ICommand ShowColorDialogCommand { get; }
     public ICommand ShowLineweightDialogCommand { get; }
     public ICommand ShowLinetypeDialogCommand { get; }
 
-    // TODO: ViewModel Services
     public IAcadColorDialogService ColorDialogService { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
     public IAcadLinetypeDialogService LinetypeDialogService { get; } = Ioc.Default.GetInstance<IAcadLinetypeDialogService>();
     public IAcadLineweightDialogService LineweightDialogService { get; } = Ioc.Default.GetInstance<IAcadLineweightDialogService>();
@@ -43,19 +43,10 @@ public class LayerCreateDialogViewModel : ObservableObject
         set => SetProperty(ref _layerName, value);
     }
 
-    public AcadColor? AcadColor // BUG: Dialog opens twice.
+    public AcadColor? AcadColor
     {
         get => _acadColor;
-        set
-        {
-            if (value is null)
-                return;
-
-            if (value.Name.Contains("Select"))
-                SetProperty(ref _acadColor, ColorDialogService.ShowDialog());
-            else
-                SetProperty(ref _acadColor, value);
-        }
+        set => SetProperty(ref _acadColor, value);
     }
 
     public string? Linetype
@@ -105,11 +96,14 @@ public class LayerCreateDialogViewModel : ObservableObject
         _isFrozen = false;
         _isPlottable = true;
 
+        ShowColorDialogCommand = new RelayCommand(ShowColorDialog);
         ShowLineweightDialogCommand = new RelayCommand(ShowLineweightDialog);
         ShowLinetypeDialogCommand = new RelayCommand(ShowLinetypeDialog);
 
         AddLayerProperties();
     }
+
+    private void ShowColorDialog() => AcadColor = ColorDialogService.ShowDialog();
 
     private void ShowLinetypeDialog() => Linetype = LinetypeDialogService.ShowDialog(Linetype);
 
