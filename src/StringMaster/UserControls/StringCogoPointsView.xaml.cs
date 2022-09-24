@@ -27,16 +27,4 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
     {
         DismissPaletteEvent?.Invoke(sender, e);
     }
-
-    private void ComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        var cmb = (ComboBox)sender;
-        var color = (AcadColor)cmb.SelectedItem;
-
-        if (color is null)
-            return;
-
-        if (color.Name.Contains("Select"))
-            cmb.SelectedItem = ColorPicker.ShowDialog();
-    }
 }

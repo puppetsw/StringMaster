@@ -70,7 +70,7 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2D.
+        ///   Looks up a localized string similar to 2D Polyline.
         /// </summary>
         internal static string ColumnHeader2D {
             get {
@@ -79,7 +79,7 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3D.
+        ///   Looks up a localized string similar to 3D Polyline.
         /// </summary>
         internal static string ColumnHeader3D {
             get {
@@ -106,7 +106,7 @@ namespace StringMaster.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FeatureLine.
+        ///   Looks up a localized string similar to Feature Line.
         /// </summary>
         internal static string ColumnHeaderFeatureLine {
             get {

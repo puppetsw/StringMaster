@@ -121,10 +121,10 @@
     <value>Add</value>
   </data>
   <data name="ColumnHeader2D" xml:space="preserve">
-    <value>2D</value>
+    <value>2D Polyline</value>
   </data>
   <data name="ColumnHeader3D" xml:space="preserve">
-    <value>3D</value>
+    <value>3D Polyline</value>
   </data>
   <data name="ColumnHeaderColor" xml:space="preserve">
     <value>Color</value>
@@ -133,7 +133,7 @@
     <value>Description</value>
   </data>
   <data name="ColumnHeaderFeatureLine" xml:space="preserve">
-    <value>FeatureLine</value>
+    <value>Feature Line</value>
   </data>
   <data name="ColumnHeaderKey" xml:space="preserve">
     <value>Key</value>
