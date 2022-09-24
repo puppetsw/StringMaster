@@ -283,6 +283,7 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\dotsbutton.png" />
   </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\Cursors\checkmark.cur" />
   </ItemGroup>
   <ItemGroup>
