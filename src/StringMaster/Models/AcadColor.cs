@@ -13,9 +13,15 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
     private bool _isByBlock;
     private bool _isVisible = true;
     private int? _colorIndex;
+    private Guid _id = Guid.NewGuid();
+
+    public Guid Id => _id;
 
     [XmlIgnore]
     public string Name => GetColorName();
+
+    [XmlIgnore]
+    public string NameStringLower => Name.ToLower();
 
     public bool IsColorPicker { get; set; }
 
@@ -160,16 +166,19 @@ public sealed class AcadColor : ObservableObject, IEquatable<AcadColor>
 
     public override int GetHashCode()
     {
-        unchecked
+        return Id.GetHashCode();
+    }
+
+    public AcadColor Clone()
+    {
+        var color = new AcadColor(Red, Green, Blue, ColorIndex)
         {
-            int hashCode = Red.GetHashCode();
-            hashCode = (hashCode * 397) ^ Green.GetHashCode();
-            hashCode = (hashCode * 397) ^ Blue.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsByLayer.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsByBlock.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsVisible.GetHashCode();
-            hashCode = (hashCode * 397) ^ IsColorPicker.GetHashCode();
-            return hashCode;
-        }
+            IsColorPicker = IsColorPicker,
+            IsByBlock = IsByBlock,
+            IsByLayer = IsByLayer,
+            IsVisible = IsVisible
+        };
+
+        return color;
     }
 }

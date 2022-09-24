@@ -1,11 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿#nullable enable
+
+using System.Collections.ObjectModel;
 using StringMaster.Models;
 
 namespace StringMaster.Services.Interfaces;
 
-public interface IAcadColorPicker
+public interface IAcadColorDialogService
 {
     ObservableCollection<AcadColor> Colors { get; }
 
-    AcadColor GetAcadColor();
+    AcadColor? ShowDialog();
 }

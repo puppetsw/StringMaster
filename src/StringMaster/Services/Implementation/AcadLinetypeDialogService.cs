@@ -1,0 +1,47 @@
+﻿using System.Windows.Forms;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.GraphicsInterface;
+using Autodesk.AutoCAD.Windows;
+using StringMaster.Extensions;
+using StringMaster.Services.Interfaces;
+
+namespace StringMaster.Services.Implementation;
+
+public class AcadLinetypeDialogService : IAcadLinetypeDialogService
+{
+    public string ShowDialog(string linetype = null)
+    {
+        var ltd = new LinetypeDialog();
+
+        using var tr = CivilApplication.ActiveDocument.TransactionManager.StartLockedTransaction();
+
+        var ltid = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        if (!ltid.Has(linetype))
+        {
+            foreach (ObjectId objectId in ltid)
+            {
+                var ltr = (LinetypeTableRecord)tr.GetObject(objectId, OpenMode.ForRead);
+                if (ltr.Name == linetype)
+                {
+                    ltd.Linetype = ltr.ObjectId;
+                    break;
+                }
+            }
+        }
+
+
+        var dr = ltd.ShowDialog();
+
+
+        var lineType = (LinetypeTableRecord)tr.GetObject(ltd.Linetype, OpenMode.ForRead);
+        string layerName = lineType.Name;
+
+        tr.Commit();
+
+        if (dr == DialogResult.OK)
+            return layerName;
+        if (string.IsNullOrEmpty(linetype))
+            return "Continuous";
+        return linetype;
+    }
+}

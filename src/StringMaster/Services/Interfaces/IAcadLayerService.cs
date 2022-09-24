@@ -1,9 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using StringMaster.Models;
 
 namespace StringMaster.Services.Interfaces;
 
 public interface IAcadLayerService
 {
-    ObservableCollection<AcadLayer> Layers { get; }
+    IEnumerable<AcadLayer> GetLayersFromActiveDocument();
+    IEnumerable<AcadLayer> GetLayersFromDocument(string? documentName);
+    void CreateLayer(AcadLayer? layer, string? documentName = null);
 }

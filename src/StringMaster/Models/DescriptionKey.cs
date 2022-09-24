@@ -3,8 +3,12 @@ using System.Xml.Serialization;
 
 namespace StringMaster.Models;
 
-public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<DescriptionKey>
+public sealed class DescriptionKey : ObservableObject, IEquatable<DescriptionKey>
 {
+    private Guid _id = Guid.NewGuid();
+
+    public Guid Id => _id;
+
     private bool _draw2D;
     private bool _draw3D;
     private bool _drawFeatureLine;
@@ -65,9 +69,6 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
 
     public bool IsValid => !string.IsNullOrEmpty(_key) && !string.IsNullOrEmpty(Layer);
 
-    public object Clone() => MemberwiseClone();
-
-
     public bool Equals(DescriptionKey other)
     {
         if (ReferenceEquals(null, other))
@@ -88,17 +89,22 @@ public sealed class DescriptionKey : ObservableObject, ICloneable, IEquatable<De
 
     public override int GetHashCode()
     {
-        unchecked
+        return Id.GetHashCode();
+    }
+
+    public DescriptionKey Clone()
+    {
+        var key = new DescriptionKey
         {
-            int hashCode = _draw2D.GetHashCode();
-            hashCode = (hashCode * 397) ^ _draw3D.GetHashCode();
-            hashCode = (hashCode * 397) ^ _drawFeatureLine.GetHashCode();
-            hashCode = (hashCode * 397) ^ (_key != null ? _key.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (_layer != null ? _layer.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ _midOrdinate.GetHashCode();
-            hashCode = (hashCode * 397) ^ (_acadColor != null ? _acadColor.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (_acadLayer != null ? _acadLayer.GetHashCode() : 0);
-            return hashCode;
-        }
+            AcadLayer = AcadLayer.Clone(),
+            AcadColor = AcadColor.Clone(),
+            Key = Key,
+            DrawFeatureLine = DrawFeatureLine,
+            Draw3D = Draw3D,
+            Draw2D = Draw2D,
+            MidOrdinate = MidOrdinate
+        };
+
+        return key;
     }
 }

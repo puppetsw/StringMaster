@@ -14,9 +14,7 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
-    public IAcadColorPicker ColorPicker { get; } = Ioc.Resolve<IAcadColorPicker>(); // Todo: Move to viewmodel. need event to command for selectionchanged?
-
-    //public IAcadLayerService LayerService { get; } = Ioc.Resolve<IAcadLayerService>(); // TODO: Move to viewmodel
+    public IAcadColorDialogService ColorPicker { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
 
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
@@ -35,7 +33,10 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
         var cmb = (ComboBox)sender;
         var color = (AcadColor)cmb.SelectedItem;
 
+        if (color is null)
+            return;
+
         if (color.Name.Contains("Select"))
-            cmb.SelectedItem = ColorPicker.GetAcadColor();
+            cmb.SelectedItem = ColorPicker.ShowDialog();
     }
 }

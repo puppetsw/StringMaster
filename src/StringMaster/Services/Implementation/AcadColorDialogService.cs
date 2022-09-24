@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.ObjectModel;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.Windows;
@@ -12,11 +14,11 @@ namespace StringMaster.Services.Implementation;
 /// Inspired by the control created by Balaji Ramamoorthy
 /// https://adndevblog.typepad.com/autocad/2013/07/wpf-implementation-to-mimic-color-layer-controls.html
 /// </summary>
-public class AcadColorPicker : IAcadColorPicker
+public class AcadColorDialogService : IAcadColorDialogService
 {
     public ObservableCollection<AcadColor> Colors { get; } = new();
 
-    public AcadColorPicker()
+    public AcadColorDialogService()
     {
         // Add default ACAD colors
         Colors.Add(AcadColor.ByLayer);              // ByLayer
@@ -32,7 +34,7 @@ public class AcadColorPicker : IAcadColorPicker
         Colors.Add(AcadColor.ColorPicker);
     }
 
-    public AcadColor GetAcadColor()
+    public AcadColor? ShowDialog()
     {
         var dialog = new ColorDialog();
 
