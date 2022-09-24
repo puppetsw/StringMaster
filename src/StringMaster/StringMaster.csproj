@@ -283,5 +283,10 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\dotsbutton.png" />
   </ItemGroup>
+    <Resource Include="Resources\Cursors\checkmark.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cursors\pluscursor.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

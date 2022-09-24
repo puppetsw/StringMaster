@@ -27,6 +27,8 @@
                 <Setter Property="Width" Value="16" />
                 <Setter Property="Height" Value="16" />
             </Style>
+            <Cursor x:Key="PlusCursor">pack://application:,,,/StringMaster;component/Resources/Cursors/pluscursor.cur</Cursor>
+            <Cursor x:Key="CheckCursor">pack://application:,,,/StringMaster;component/Resources/Cursors/checkmark.cur</Cursor>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel Margin="8,0,0,0">
@@ -114,6 +116,7 @@
             CellStyle="{StaticResource DataGridCellCenter}"
             ColumnHeaderStyle="{StaticResource DataGridHeader}"
             CurrentItem="{Binding SelectedKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Cursor="{StaticResource PlusCursor}"
             HorizontalGridLinesBrush="{StaticResource BlueGridLine}"
             ItemsSource="{Binding DescriptionKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             RowHeaderWidth="0"
@@ -166,18 +169,39 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridCheckBoxColumn
-                    Width="100"
-                    Binding="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeader2D}" />
-                <DataGridCheckBoxColumn
-                    Width="100"
-                    Binding="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeader3D}" />
-                <DataGridCheckBoxColumn
-                    Width="100"
-                    Binding="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}" />
+                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeader2D}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                HorizontalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Cursor="{StaticResource CheckCursor}"
+                                IsChecked="{Binding Draw2D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeader3D}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                HorizontalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Cursor="{StaticResource CheckCursor}"
+                                IsChecked="{Binding Draw3D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="50" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                HorizontalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Cursor="{StaticResource CheckCursor}"
+                                IsChecked="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
