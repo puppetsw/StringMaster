@@ -25,9 +25,9 @@ public class LayerCreateDialogViewModel : ObservableObject
     public ICommand ShowLineweightDialogCommand { get; }
     public ICommand ShowLinetypeDialogCommand { get; }
 
-    public IAcadColorDialogService ColorDialogService { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
-    public IAcadLinetypeDialogService LinetypeDialogService { get; } = Ioc.Default.GetInstance<IAcadLinetypeDialogService>();
-    public IAcadLineweightDialogService LineweightDialogService { get; } = Ioc.Default.GetInstance<IAcadLineweightDialogService>();
+    public IAcadColorDialogService ColorDialogService => StaticServices.ColorDialogService;
+    public IAcadLinetypeDialogService LinetypeDialogService => StaticServices.LinetypeDialogService;
+    public IAcadLineweightDialogService LineweightDialogService => StaticServices.LineweightDialogService;
 
     public ObservableCollection<string> YesNoSelect { get; } = new() { "Yes", "No" };
 

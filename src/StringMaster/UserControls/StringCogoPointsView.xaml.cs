@@ -14,7 +14,7 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
-    public IAcadColorDialogService ColorPicker { get; } = Ioc.Default.GetInstance<IAcadColorDialogService>();
+    public IAcadColorDialogService ColorPicker => StaticServices.ColorDialogService;
 
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
