@@ -129,7 +129,6 @@
     <Compile Include="Helpers\LineweightHelpers.cs" />
     <Compile Include="Helpers\ResourceExtension.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
-    <Compile Include="Ioc.cs" />
     <Compile Include="Models\AcadLayer.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -162,6 +161,7 @@
     <Compile Include="Helpers\PointHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="StaticServices.cs" />
     <Compile Include="StringMasterPalette.cs" />
     <Compile Include="StringMasterPlugin.cs" />
     <Compile Include="Helpers\LayerHelpers.cs" />
@@ -285,11 +285,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Cursors\pluscursor.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="SimpleInjector">
-      <Version>5.4.0</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

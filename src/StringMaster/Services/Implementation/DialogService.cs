@@ -43,9 +43,10 @@ public class DialogService : IDialogService
             var dialog = GetDialog(viewModel);
             return Application.ShowModalWindow(dialog as Window);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return false;
+            CivilApplication.Editor.WriteMessage($"StringMaster exception: {e.Message}");
+            throw;
         }
     }
 }

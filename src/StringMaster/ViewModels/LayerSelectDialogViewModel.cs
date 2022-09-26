@@ -12,8 +12,8 @@ namespace StringMaster.ViewModels;
 
 public class LayerSelectDialogViewModel : ObservableObject
 {
-    private readonly IAcadLayerService _acadLayerService = Ioc.Default.GetInstance<IAcadLayerService>();
-    private readonly IDialogService _dialogService = Ioc.Default.GetInstance<IDialogService>();
+    private readonly IAcadLayerService _acadLayerService = StaticServices.LayerService;
+    private readonly IDialogService _dialogService = StaticServices.DialogService;
 
     private ObservableCollection<AcadLayer> _layers = new();
     private ObservableCollection<string> _documents = new();

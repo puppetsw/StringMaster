@@ -30,7 +30,12 @@ public class StringMasterPalette : PaletteSet
     private void Initialize()
     {
         // BUG: Probably some memory leak bug here if we had more than one palette?
-        _stringCogoPointsView = Ioc.Default.GetInstance<StringCogoPointsView>();
+        _stringCogoPointsView = new StringCogoPointsView(
+            new StringCogoPointsViewModel(
+                new OpenDialogService(),
+                new SaveDialogService(),
+                new MessageBoxService(),
+                StaticServices.DialogService));
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);
