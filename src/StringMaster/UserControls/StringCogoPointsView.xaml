@@ -46,37 +46,37 @@
                         </Style.Triggers>
                     </Style>
                 </ToolBar.Resources>
-                <Button Command="{Binding NewDescriptionKeyFileCommand}">
+                <Button Command="{Binding NewDescriptionKeyFileCommand}" Style="{StaticResource ToolBarButton}">
                     <Image Source="{StaticResource NewToolBarIcon}" />
                 </Button>
-                <Button Command="{Binding OpenDescriptionKeyFileCommand}">
+                <Button Command="{Binding OpenDescriptionKeyFileCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource OpenDocumentToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource OpenToolBarIcon}" />
                 </Button>
-                <Button Command="{Binding SaveDescriptionKeyFileCommand}">
+                <Button Command="{Binding SaveDescriptionKeyFileCommand}" Style="{StaticResource ToolBarButton}">
                     <Image Source="{StaticResource SaveToolBarIcon}" Style="{StaticResource ImageEnabled}" />
                 </Button>
-                <Button Command="{Binding SaveAsDescriptionKeyFileCommand}">
+                <Button Command="{Binding SaveAsDescriptionKeyFileCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource SaveDocumentToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource SaveAsToolBarIcon}" Style="{StaticResource ImageEnabled}" />
                 </Button>
-                <Button Command="{Binding AddRowCommand}">
+                <Button Command="{Binding AddRowCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource AddRowToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource AddToolBarIcon}" />
                 </Button>
-                <Button Command="{Binding RemoveRowCommand}">
+                <Button Command="{Binding RemoveRowCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource RemoveRowToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource RemoveToolBarIcon}" />
                 </Button>
-                <Button Command="{Binding StringCommand}">
+                <Button Command="{Binding StringCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource StringCogoPointsToolTipContent}" />
                     </Button.ToolTip>
