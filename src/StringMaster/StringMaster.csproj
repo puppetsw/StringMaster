@@ -182,7 +182,7 @@
       <DependentUpon>ResourceStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\TransactionExtensions.cs" />
-    <Compile Include="UserControls\StringCogoPointsView.xaml.cs">
+    <Compile Include="Palettes\StringCogoPointsView.xaml.cs">
       <DependentUpon>StringCogoPointsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\LayerCreateDialogViewModel.cs" />
@@ -245,7 +245,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\StringCogoPointsView.xaml">
+    <Page Include="Palettes\StringCogoPointsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

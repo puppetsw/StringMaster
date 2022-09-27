@@ -49,8 +49,6 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _descriptionKeys, value);
     }
 
-    // public ObservableCollection<AcadLayer> Layers => _acadLayerService.Layers;
-
     public DescriptionKey SelectedKey
     {
         get => _selectedKey;
@@ -61,16 +59,13 @@ public class StringCogoPointsViewModel : ObservableObject
         }
     }
 
-    public ICommand NewDescriptionKeyFileCommand => new RelayCommand(NewDescriptionKeyFile);
-    public ICommand OpenDescriptionKeyFileCommand => new RelayCommand(OpenDescriptionKeyFile);
-    public ICommand SaveDescriptionKeyFileCommand => new RelayCommand(SaveDescriptionKeyFile, () => IsUnsavedChanges);
-    public ICommand SaveAsDescriptionKeyFileCommand => new RelayCommand(SaveAsDescriptionKeyFile);
-    public ICommand AddRowCommand => new RelayCommand(AddRow);
-    public ICommand RemoveRowCommand => new RelayCommand(RemoveRow);
-    public ICommand StringCommand => new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
-                                                                              DescriptionKeys.Count > 0 &&
-                                                                              DescriptionKeys.All(x => x.IsValid));
-
+    public ICommand NewDescriptionKeyFileCommand { get; }
+    public ICommand OpenDescriptionKeyFileCommand { get; }
+    public ICommand SaveDescriptionKeyFileCommand { get; }
+    public ICommand SaveAsDescriptionKeyFileCommand { get; }
+    public ICommand AddRowCommand { get; }
+    public ICommand RemoveRowCommand { get; }
+    public ICommand StringCommand { get; }
     public ICommand LayerSelectCommand => new RelayCommand(ShowLayerSelectionDialog);
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
@@ -90,6 +85,17 @@ public class StringCogoPointsViewModel : ObservableObject
         _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
 
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
+
+        // Initialize commands
+        NewDescriptionKeyFileCommand = new RelayCommand(NewDescriptionKeyFile);
+        OpenDescriptionKeyFileCommand = new RelayCommand(OpenDescriptionKeyFile);
+        SaveDescriptionKeyFileCommand = new RelayCommand(SaveDescriptionKeyFile, () => IsUnsavedChanges);
+        SaveAsDescriptionKeyFileCommand = new RelayCommand(SaveAsDescriptionKeyFile);
+        AddRowCommand = new RelayCommand(AddRow);
+        RemoveRowCommand = new RelayCommand(RemoveRow);
+        StringCommand = new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
+                                                                 DescriptionKeys.Count > 0 &&
+                                                                 DescriptionKeys.All(x => x.IsValid));
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }

@@ -2,7 +2,6 @@
 using StringMaster;
 using StringMaster.Services.Implementation;
 using StringMaster.Services.Interfaces;
-using StringMaster.UserControls;
 using StringMaster.ViewModels;
 
 [assembly: ExtensionApplication(typeof(StringMasterPlugin))]

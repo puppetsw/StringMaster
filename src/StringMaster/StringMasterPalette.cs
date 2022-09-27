@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
+using StringMaster.Palettes;
 using StringMaster.Services.Implementation;
-using StringMaster.UserControls;
 using StringMaster.ViewModels;
 
 namespace StringMaster;

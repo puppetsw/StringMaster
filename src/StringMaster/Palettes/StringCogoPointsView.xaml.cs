@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using StringMaster.Models;
 using StringMaster.Services.Interfaces;
 using StringMaster.ViewModels;
 
-namespace StringMaster.UserControls;
+namespace StringMaster.Palettes;
 
 /// <summary>
 /// Interaction logic for StringMasterUC.xaml
