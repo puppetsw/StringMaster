@@ -16,7 +16,7 @@ public sealed class DescriptionKey : ObservableObject, IEquatable<DescriptionKey
     private string _layer = "0";
     private double _midOrdinate = 0.01;
     private AcadColor _acadColor = AcadColor.ByLayer;
-    private AcadLayer _acadLayer;
+    private AcadLayer _acadLayer = new();
 
     /// <summary>
     /// Gets the key value.
