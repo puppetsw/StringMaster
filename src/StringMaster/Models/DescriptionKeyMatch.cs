@@ -111,9 +111,9 @@ public sealed class DescriptionKeyMatch
     }
 
     /// <summary>
-    /// Adds the <paramref name="civilPoint"/> to the <see cref="SurveyPoints"/>
+    /// Adds the <paramref name="point"/> to the <see cref="SurveyPoints"/>
     /// </summary>
-    /// <param name="cogoPoint"></param>
+    /// <param name="point"></param>
     /// <param name="lineNumber"></param>
     /// <param name="specialCode"></param>
     /// <remarks>
@@ -121,20 +121,18 @@ public sealed class DescriptionKeyMatch
     /// for the point. If it does, add the current point to that dictionary using the key
     /// else, create a new list of points and add it using the key.
     /// </remarks>
-    public void AddCogoPoint(Point cogoPoint, string lineNumber, string specialCode)
+    public void AddCogoPoint(Point point, string lineNumber, string specialCode) //TODO: rename cogoPoint
     {
-        var joinablePoint = new SurveyPoint(cogoPoint, specialCode);
+        var joinablePoint = new SurveyPoint(point, specialCode);
 
         if (SurveyPoints.ContainsKey(lineNumber))
         {
             SurveyPoints[lineNumber].Add(joinablePoint);
-            // Console.WriteLine($"Adding to existing list {joinablePoint.CogoPoint.RawDescription}");
         }
         else
         {
             var cogoPoints = new List<SurveyPoint> { joinablePoint };
             SurveyPoints.Add(lineNumber, cogoPoints);
-            // Console.WriteLine($"Creating new list {joinablePoint.CogoPoint.RawDescription}");
         }
     }
 }
