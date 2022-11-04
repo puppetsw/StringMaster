@@ -95,8 +95,7 @@ public sealed class DescriptionKeyMatch
     /// </summary>
     /// <param name="rawDescription">The raw description from the CogoPoint.</param>
     /// <param name="descriptionKey">The <see cref="DescriptionKey"/> to match against.</param>
-    /// <param name="logger">Optional logger.</param>
-    /// <returns></returns>
+    /// <returns>bool</returns>
     public static bool IsMatch(string rawDescription, DescriptionKey descriptionKey)
     {
         var matchPattern = BuildPattern(descriptionKey, true);
@@ -121,7 +120,7 @@ public sealed class DescriptionKeyMatch
     /// for the point. If it does, add the current point to that dictionary using the key
     /// else, create a new list of points and add it using the key.
     /// </remarks>
-    public void AddCogoPoint(Point point, string lineNumber, string specialCode) //TODO: rename cogoPoint
+    public void AddPoint(Point point, string lineNumber, string specialCode)
     {
         var joinablePoint = new SurveyPoint(point, specialCode);
 

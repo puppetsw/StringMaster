@@ -8,8 +8,15 @@ using System.Linq;
 using System.Windows.Input;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
+
+
+#if CIVIL
+
 using Autodesk.Civil;
 using Autodesk.Civil.DatabaseServices;
+
+#endif
+
 using StringMaster.Extensions;
 using StringMaster.Helpers;
 using StringMaster.Models;
@@ -26,6 +33,7 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly ISaveDialogService _saveDialogService;
     private readonly IMessageBoxService _messageBoxService;
     private readonly IDialogService _dialogService;
+    private readonly IImportService _importService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
@@ -63,6 +71,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand OpenDescriptionKeyFileCommand { get; }
     public ICommand SaveDescriptionKeyFileCommand { get; }
     public ICommand SaveAsDescriptionKeyFileCommand { get; }
+    public ICommand ImportCommand { get; }
     public ICommand AddRowCommand { get; }
     public ICommand RemoveRowCommand { get; }
     public ICommand StringCommand { get; }
@@ -71,12 +80,14 @@ public class StringCogoPointsViewModel : ObservableObject
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
                                      IMessageBoxService messageBoxService,
-                                     IDialogService dialogService)
+                                     IDialogService dialogService,
+                                     IImportService importService)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
         _messageBoxService = messageBoxService;
         _dialogService = dialogService;
+        _importService = importService;
 
         _openDialogService.DefaultExt = ".xml";
         _openDialogService.Filter = "XML Files (*.xml)|*.xml";
@@ -96,6 +107,7 @@ public class StringCogoPointsViewModel : ObservableObject
         StringCommand = new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
+        ImportCommand = new RelayCommand(ImportPointsFromFile);
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
@@ -127,6 +139,8 @@ public class StringCogoPointsViewModel : ObservableObject
         // If DescriptionKeys matches the cloned keys then no changes.
         IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
     }
+
+    private void ImportPointsFromFile() => _openDialogService.ShowDialog();
 
     private void AddRow()
     {
@@ -177,20 +191,18 @@ public class StringCogoPointsViewModel : ObservableObject
         using Transaction tr = CivilApplication.StartLockedTransaction();
         var desMapping = new Dictionary<string, DescriptionKeyMatch>();
 
-        foreach (ObjectId pointId in CivilApplication.ActiveCivilDocument.CogoPoints)
-        {
-            var cogoPoint = pointId.GetObject(OpenMode.ForRead) as CogoPoint;
-            if (cogoPoint == null)
-                continue;
+        var civilPoints = _importService.PointsFromFile(_openDialogService.FileName).ToList();
 
+        foreach (var civilPoint in civilPoints)
+        {
             foreach (DescriptionKey descriptionKey in DescriptionKeys)
             {
-                if (!DescriptionKeyMatch.IsMatch(cogoPoint.RawDescription, descriptionKey))
+                if (!DescriptionKeyMatch.IsMatch(civilPoint.RawDescription, descriptionKey))
                     continue;
 
-                string description = DescriptionKeyMatch.Description(cogoPoint.RawDescription, descriptionKey);
-                string lineNumber = DescriptionKeyMatch.LineNumber(cogoPoint.RawDescription, descriptionKey);
-                string specialCode = DescriptionKeyMatch.SpecialCode(cogoPoint.RawDescription, descriptionKey);
+                string description = DescriptionKeyMatch.Description(civilPoint.RawDescription, descriptionKey);
+                string lineNumber = DescriptionKeyMatch.LineNumber(civilPoint.RawDescription, descriptionKey);
+                string specialCode = DescriptionKeyMatch.SpecialCode(civilPoint.RawDescription, descriptionKey);
 
                 DescriptionKeyMatch deskeyMatch;
                 if (desMapping.ContainsKey(description))
@@ -203,7 +215,7 @@ public class StringCogoPointsViewModel : ObservableObject
                     desMapping.Add(description, deskeyMatch);
                 }
 
-                deskeyMatch.AddCogoPoint(cogoPoint.ToPoint(), lineNumber, specialCode);
+                deskeyMatch.AddPoint(civilPoint.ToPoint(), lineNumber, specialCode);
             }
         }
 
@@ -379,6 +391,7 @@ public class StringCogoPointsViewModel : ObservableObject
                     if (deskeyMatch.DescriptionKey.Draw3D && !hasCurve)
                         PolylineHelpers.DrawPolyline3d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
 
+                    #if CIVIL
                     if (deskeyMatch.DescriptionKey.DrawFeatureLine && !hasCurve)
                     {
                         var polylineId = btr.AppendEntity(polyline);
@@ -443,7 +456,9 @@ public class StringCogoPointsViewModel : ObservableObject
 
                         if (!deskeyMatch.DescriptionKey.DrawFeatureLine)
                             featureLine.Erase();
+
                     }
+                    #endif
                 }
             }
         }

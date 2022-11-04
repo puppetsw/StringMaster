@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if CIVIL
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -147,3 +149,5 @@ public static class FeatureLineHelpers
         return polyline;
     }
 }
+
+#endif

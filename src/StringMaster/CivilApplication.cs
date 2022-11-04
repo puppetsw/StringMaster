@@ -2,7 +2,13 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
+
+#if CIVIL
+
 using Autodesk.Civil.ApplicationServices;
+
+#endif
+
 using StringMaster.Extensions;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
@@ -35,10 +41,11 @@ public static class CivilApplication
     /// </summary>
     public static Editor Editor => ActiveDocument.Editor;
 
+#if CIVIL
     public static CivilDocument ActiveCivilDocument => Autodesk.Civil.ApplicationServices.CivilApplication.ActiveDocument;
 
     public static bool IsCivil3DLoaded() => SystemObjects.DynamicLinker.GetLoadedModules().Contains("AecBase.dbx".ToLower());
-
+#endif
 
 
     /// <summary>

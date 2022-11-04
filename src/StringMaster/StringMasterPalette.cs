@@ -3,6 +3,7 @@ using System.Drawing;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.Palettes;
 using StringMaster.Services.Implementation;
+using StringMaster.Services.Interfaces;
 using StringMaster.ViewModels;
 
 namespace StringMaster;
@@ -35,7 +36,8 @@ public class StringMasterPalette : PaletteSet
                 new OpenDialogService(),
                 new SaveDialogService(),
                 new MessageBoxService(),
-                StaticServices.DialogService));
+                StaticServices.DialogService,
+                new ImportService()));
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);

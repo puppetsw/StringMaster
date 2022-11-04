@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.Geometry;
 using StringMaster.Models;
+using StringMaster.Services.Interfaces;
 
 namespace StringMaster.Extensions;
 
@@ -57,4 +58,6 @@ public static class PointExtensions
 
         return points;
     }
+
+    public static Point ToPoint(this CivilPoint civilPoint) => new(civilPoint.Easting, civilPoint.Northing, civilPoint.Elevation);
 }

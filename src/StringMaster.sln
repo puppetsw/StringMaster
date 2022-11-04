@@ -7,12 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringMaster", "StringMaste
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Civil|Any CPU = Debug Civil|Any CPU
+		Debug Civil|x64 = Debug Civil|x64
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug Civil|Any CPU.ActiveCfg = Debug Civil|Any CPU
+		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug Civil|Any CPU.Build.0 = Debug Civil|Any CPU
+		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug Civil|x64.ActiveCfg = Debug Civil|x64
+		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug Civil|x64.Build.0 = Debug Civil|x64
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Debug|x64.ActiveCfg = Debug|x64

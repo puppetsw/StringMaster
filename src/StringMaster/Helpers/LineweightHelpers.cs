@@ -66,7 +66,8 @@ public static class LineweightHelpers
             case "ByDIPs":
                 return LineWeight.ByDIPs;
             default:
-                throw new ArgumentOutOfRangeException(nameof(lineweight), lineweight, null);
+                return LineWeight.ByLayer;
+                //throw new ArgumentOutOfRangeException(nameof(lineweight), lineweight, null);
         }
     }
 }

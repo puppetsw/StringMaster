@@ -82,6 +82,12 @@
                     </Button.ToolTip>
                     <Image Source="{StaticResource ExecuteToolBarIcon}" />
                 </Button>
+                <Button Command="{Binding ImportCommand}" Style="{StaticResource ToolBarButton}">
+                    <Button.ToolTip>
+                        <ToolTip ContentTemplate="{StaticResource ImportPointsToolTipContent}" />
+                    </Button.ToolTip>
+                    <Image Source="{StaticResource ImportToolBarIcon}" />
+                </Button>
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"
@@ -200,7 +206,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
+                <!--<DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox
@@ -212,7 +218,7 @@
                                 IsChecked="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn-->
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"

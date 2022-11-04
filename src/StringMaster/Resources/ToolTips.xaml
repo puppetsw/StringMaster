@@ -32,4 +32,10 @@
             <TextBlock Text="{helpers:ResourceHelper Name=StringCogoPointsToolTipContent}" />
         </StackPanel>
     </DataTemplate>
+    <DataTemplate x:Key="ImportPointsToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="" />
+            <TextBlock Text="" />
+        </StackPanel>
+    </DataTemplate>
 </ResourceDictionary>
