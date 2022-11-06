@@ -15,4 +15,5 @@ public static class StaticServices
 
     public static IAcadLinetypeDialogService LinetypeDialogService { get; } = new AcadLinetypeDialogService();
 
+    public static IAcadApplicationService AcadApplicationService { get; } = new AcadApplicationService();
 }

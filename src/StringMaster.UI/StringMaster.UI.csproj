@@ -75,6 +75,7 @@
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Models\AcadColor.cs" />
+    <Compile Include="Models\AcadDocument.cs" />
     <Compile Include="Models\AcadLayer.cs" />
     <Compile Include="Models\Angle.cs" />
     <Compile Include="Models\DescriptionKey.cs" />
@@ -102,6 +103,7 @@
     </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\Implementation\CsvService.cs" />
+    <Compile Include="Services\Interfaces\IAcadApplicationService.cs" />
     <Compile Include="Services\Interfaces\IAcadColorDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
     <Compile Include="Services\Interfaces\IAcadLinetypeDialogService.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
+    <Compile Include="Services\Interfaces\IStringCivilPointsService.cs" />
     <Compile Include="Strings\ResourceStrings.Designer.cs">
       <DependentUpon>ResourceStrings.resx</DependentUpon>
       <AutoGen>True</AutoGen>

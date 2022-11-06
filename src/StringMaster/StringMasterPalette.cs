@@ -31,13 +31,20 @@ public class StringMasterPalette : PaletteSet
     private void Initialize()
     {
         // BUG: Probably some memory leak bug here if we had more than one palette?
+        // TODO: Inject services to main view model. Use DI?
         _stringCogoPointsView = new StringCogoPointsView(
             new StringCogoPointsViewModel(
                 new OpenDialogService(),
                 new SaveDialogService(),
                 new MessageBoxService(),
                 StaticServices.DialogService,
-                new ImportService()));
+                new ImportService(),
+                new StringCivilPointsService(),
+                StaticServices.AcadApplicationService,
+                StaticServices.ColorDialogService,
+                StaticServices.LayerService,
+                StaticServices.LinetypeDialogService,
+                StaticServices.LineweightDialogService));
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);

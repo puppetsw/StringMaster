@@ -12,9 +12,9 @@ public class AcadLinetypeDialogService : IAcadLinetypeDialogService
     {
         var ltd = new LinetypeDialog();
 
-        using var tr = CivilApplication.ActiveDocument.TransactionManager.StartLockedTransaction();
+        using var tr = AcadApplication.ActiveDocument.TransactionManager.StartLockedTransaction();
 
-        var ltid = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        var ltid = (LinetypeTable)tr.GetObject(AcadApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
         if (!ltid.Has(linetype))
         {
             foreach (ObjectId objectId in ltid)

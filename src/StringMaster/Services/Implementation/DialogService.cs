@@ -45,7 +45,7 @@ public class DialogService : IDialogService
         }
         catch (Exception e)
         {
-            CivilApplication.Editor.WriteMessage($"StringMaster exception: {e.Message}");
+            AcadApplication.Editor.WriteMessage($"StringMaster exception: {e.Message}");
             throw;
         }
     }

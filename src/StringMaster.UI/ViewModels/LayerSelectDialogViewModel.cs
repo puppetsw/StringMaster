@@ -5,12 +5,14 @@ using System.Windows.Input;
 using StringMaster.UI.Models;
 using StringMaster.UI.Services.Interfaces;
 
+// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Global
 
 namespace StringMaster.UI.ViewModels;
 
 public class LayerSelectDialogViewModel : ObservableObject
 {
+    private readonly IAcadApplicationService _acadApplicationService;
     private readonly IAcadLayerService _acadLayerService;// = StaticServices.LayerService;
     private readonly IDialogService _dialogService;// = StaticServices.DialogService;
 
@@ -50,7 +52,7 @@ public class LayerSelectDialogViewModel : ObservableObject
 
     public ICommand ShowNewLayerDialogCommand => new RelayCommand(ShowNewLayerDialog);
 
-    private void ShowNewLayerDialog()
+    private void ShowNewLayerDialog() // BUG: something was null. to investigate.
     {
         var vm = new LayerCreateDialogViewModel();
         var dialog = _dialogService.ShowDialog(vm);
@@ -73,12 +75,19 @@ public class LayerSelectDialogViewModel : ObservableObject
         Layers = new(_acadLayerService.GetLayersFromDocument(_selectedDocument));
     }
 
-    public LayerSelectDialogViewModel()
+    // TODO: Dependency Injection
+    public LayerSelectDialogViewModel(IAcadLayerService acadLayerService,
+                                      IDialogService dialogService,
+                                      IAcadApplicationService acadApplicationService)
     {
-        // foreach (Document document in CivilApplication.DocumentManager)
-        //     Documents.Add(document.Name);
-        //
-        // SelectedDocument = CivilApplication.ActiveDocument.Name;
+        _acadLayerService = acadLayerService;
+        _dialogService = dialogService;
+        _acadApplicationService = acadApplicationService;
+
+        foreach (AcadDocument document in _acadApplicationService.Documents)
+            Documents.Add(document.Name);
+
+        SelectedDocument = _acadApplicationService.ActiveDocument.Name;
 
         SelectedLayer = Layers[0];
     }

@@ -82,64 +82,27 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AecBaseMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AecBaseMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AeccDbMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\C3D\AeccDbMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Autodesk.AEC.Interop.Base">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\ACA\Autodesk.AEC.Interop.Base.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AEC.Interop.UIBase">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\ACA\Autodesk.AEC.Interop.UIBase.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AECC.Interop.Land">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\C3D\Autodesk.AECC.Interop.Land.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AECC.Interop.UiLand">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\C3D\Autodesk.AECC.Interop.UiLand.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\Autodesk.AutoCAD.Interop.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Autodesk.AutoCAD.Interop.Common">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\Autodesk.AutoCAD.Interop.Common.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CivilApplication.cs" />
+    <Compile Include="AcadApplication.cs" />
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Helpers\LineweightHelpers.cs" />
-    <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\CogoPointExtensions.cs" />
     <Compile Include="Commands.cs" />
+    <Compile Include="Services\Implementation\AcadApplicationService.cs" />
     <Compile Include="Services\Implementation\AcadColorDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
     <Compile Include="Services\Implementation\AcadLinetypeDialogService.cs" />
@@ -148,10 +111,7 @@
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
-    <Compile Include="Helpers\FeatureLineHelpers.cs" />
-    <Compile Include="Helpers\MathHelpers.cs" />
-    <Compile Include="Helpers\PointHelpers.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Services\Implementation\StringCivilPointsService.cs" />
     <Compile Include="StaticServices.cs" />
     <Compile Include="StringMasterPalette.cs" />
     <Compile Include="StringMasterPlugin.cs" />

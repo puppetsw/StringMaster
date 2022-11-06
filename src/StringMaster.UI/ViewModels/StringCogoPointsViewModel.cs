@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using StringMaster.UI.Helpers;
 using StringMaster.UI.Models;
 using StringMaster.UI.Services.Interfaces;
 
-// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace StringMaster.UI.ViewModels;
 
@@ -23,6 +22,12 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly IMessageBoxService _messageBoxService;
     private readonly IDialogService _dialogService;
     private readonly IImportService _importService;
+    private readonly IStringCivilPointsService _stringCivilPointsService;
+    private readonly IAcadApplicationService _acadApplicationService;
+    public IAcadColorDialogService ACADColorDialogService { get; }
+    private readonly IAcadLayerService _acadLayerService;
+    private readonly IAcadLinetypeDialogService _acadLinetypeDialogService;
+    private readonly IAcadLineweightDialogService _acadLineweightDialogService;
     private ObservableCollection<DescriptionKey> _descriptionKeys;
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
@@ -49,10 +54,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public DescriptionKey SelectedKey
     {
         get => _selectedKey;
-        set
-        {
-            SetProperty(ref _selectedKey, value);
-        }
+        set => SetProperty(ref _selectedKey, value);
     }
 
     public ICommand NewDescriptionKeyFileCommand { get; }
@@ -63,19 +65,31 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand AddRowCommand { get; }
     public ICommand RemoveRowCommand { get; }
     public ICommand StringCommand { get; }
-    public ICommand LayerSelectCommand => new RelayCommand(ShowLayerSelectionDialog);
+    public ICommand LayerSelectCommand { get; }
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
                                      IMessageBoxService messageBoxService,
                                      IDialogService dialogService,
-                                     IImportService importService)
+                                     IImportService importService,
+                                     IStringCivilPointsService stringCivilPointsService,
+                                     IAcadApplicationService acadApplicationService,
+                                     IAcadColorDialogService acadColorDialogService,
+                                     IAcadLayerService acadLayerService,
+                                     IAcadLinetypeDialogService acadLinetypeDialogService,
+                                     IAcadLineweightDialogService acadLineweightDialogService)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
         _messageBoxService = messageBoxService;
         _dialogService = dialogService;
         _importService = importService;
+        _stringCivilPointsService = stringCivilPointsService;
+        _acadApplicationService = acadApplicationService;
+        ACADColorDialogService = acadColorDialogService;
+        _acadLayerService = acadLayerService;
+        _acadLinetypeDialogService = acadLinetypeDialogService;
+        _acadLineweightDialogService = acadLineweightDialogService;
 
         _openDialogService.DefaultExt = ".xml";
         _openDialogService.Filter = "XML Files (*.xml)|*.xml";
@@ -96,6 +110,7 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
         ImportCommand = new RelayCommand(ImportPointsFromFile);
+        LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
@@ -106,20 +121,24 @@ public class StringCogoPointsViewModel : ObservableObject
     private void DescriptionKeysOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems != null)
+        {
             foreach (DescriptionKey descriptionKey in e.NewItems)
             {
                 descriptionKey.PropertyChanged += DescriptionKeyPropertyChanged;
                 descriptionKey.AcadColor.PropertyChanged += DescriptionKeyPropertyChanged;
                 descriptionKey.AcadLayer.PropertyChanged += DescriptionKeyPropertyChanged;
             }
+        }
 
         if (e.OldItems != null)
+        {
             foreach (DescriptionKey descriptionKey in e.OldItems)
             {
                 descriptionKey.PropertyChanged -= DescriptionKeyPropertyChanged;
                 descriptionKey.AcadColor.PropertyChanged -= DescriptionKeyPropertyChanged;
                 descriptionKey.AcadLayer.PropertyChanged -= DescriptionKeyPropertyChanged;
             }
+        }
     }
 
     private void DescriptionKeyPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -128,6 +147,7 @@ public class StringCogoPointsViewModel : ObservableObject
         IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
     }
 
+    // TODO: remove this, make it part of the stringcogoPoints method.
     private void ImportPointsFromFile() => _openDialogService.ShowDialog();
 
     private void AddRow()
@@ -161,19 +181,23 @@ public class StringCogoPointsViewModel : ObservableObject
         DescriptionKeyPropertyChanged(null, null);
     }
 
-    // TODO: This method requires a massive cleanup.
-    // The below method current works, but it's very messy and not structured well.
-    // The idea was to get something that was working with the 'special codes'.
-    // The feature line/poly/3dpoly line system needs a bit of work also.
-    // TODO: Remove references to Civil (abstract)
     private void StringCogoPoints()
     {
-        
+        if (DescriptionKeys is null)
+            return;
+
+        RemoveInvalidDescriptionKeys();
+
+        if (DescriptionKeys.Count is 0) // If cleanup leaves us with none.
+            return;
+
+        var civilPoints = _importService.PointsFromFile(_openDialogService.FileName).ToList();
+        _stringCivilPointsService.StringCivilPoints(civilPoints);
     }
 
     private void ShowLayerSelectionDialog()
     {
-        var vm = new LayerSelectDialogViewModel();
+        var vm = new LayerSelectDialogViewModel(_acadLayerService, _dialogService, _acadApplicationService);
         var dialog = _dialogService.ShowDialog(vm);
 
         if (dialog == true)
@@ -228,8 +252,8 @@ public class StringCogoPointsViewModel : ObservableObject
         }
         catch (Exception e)
         {
-            //CivilApplication.Editor.WriteMessage("\nUnable to load description key file. ");
-            //CivilApplication.Editor.WriteMessage($"\n{e.Message}");
+            _acadApplicationService.WriteMessage("\nUnable to load description key file. ");
+            _acadApplicationService.WriteMessage($"\n{e.Message}");
             Console.WriteLine(e);
             // Clone didn't work so we set it to empty
             _unchangedDescriptionKeys = new();

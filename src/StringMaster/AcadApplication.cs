@@ -19,7 +19,7 @@ namespace StringMaster;
 /// in the AutoCAD Civil 3D runtime environment.
 /// Registers services for dependency injection.
 /// </summary>
-public static class CivilApplication
+public static class AcadApplication
 {
     /// <summary>
     /// Gets the <see cref="DocumentManager"/>.

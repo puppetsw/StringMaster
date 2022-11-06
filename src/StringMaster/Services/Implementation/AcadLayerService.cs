@@ -16,14 +16,14 @@ public class AcadLayerService : IAcadLayerService
 {
     public IEnumerable<AcadLayer> GetLayersFromActiveDocument()
     {
-        var document = CivilApplication.ActiveDocument;
+        var document = AcadApplication.ActiveDocument;
         return GetLayersFromDocument(document.Name);
     }
 
     public IEnumerable<AcadLayer> GetLayersFromDocument(string? documentName)
     {
         Document document = null!;
-        foreach (Document doc in CivilApplication.DocumentManager)
+        foreach (Document doc in AcadApplication.DocumentManager)
         {
             if (doc.Name != documentName)
                 continue;
@@ -76,11 +76,11 @@ public class AcadLayerService : IAcadLayerService
         if (layer == null)
             return;
 
-        Document document = CivilApplication.ActiveDocument;
+        Document document = AcadApplication.ActiveDocument;
 
         if (!string.IsNullOrEmpty(documentName))
         {
-            foreach (Document doc in CivilApplication.DocumentManager)
+            foreach (Document doc in AcadApplication.DocumentManager)
             {
                 if (doc.Name != documentName)
                     continue;

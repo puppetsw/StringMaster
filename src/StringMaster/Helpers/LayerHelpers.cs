@@ -43,7 +43,7 @@ public static class LayerHelpers
 
         LinetypeTableRecord lineType = null;
 
-        var ltTable = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        var ltTable = (LinetypeTable)tr.GetObject(AcadApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
         if (ltTable.Has(layer.Linetype))
         {
             foreach (ObjectId objectId in ltTable)

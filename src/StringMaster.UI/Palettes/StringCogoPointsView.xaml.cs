@@ -13,7 +13,14 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
 {
     public event EventHandler DismissPaletteEvent;
 
-    //public IAcadColorDialogService ColorPicker => StaticServices.ColorDialogService;
+    public IAcadColorDialogService ColorPicker => ViewModel.ACADColorDialogService;
+
+    public StringCogoPointsViewModel ViewModel
+    {
+        get => (StringCogoPointsViewModel)DataContext;
+        set => DataContext = value;
+    }
+
 
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
