@@ -1,6 +1,7 @@
 ﻿using System;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
+using StringMaster.Services.Implementation;
 using StringMaster.UI.Models;
 
 namespace StringMaster.Helpers;
@@ -43,7 +44,7 @@ public static class LayerHelpers
 
         LinetypeTableRecord lineType = null;
 
-        var ltTable = (LinetypeTable)tr.GetObject(AcadApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        var ltTable = (LinetypeTable)tr.GetObject(AcadApplicationService.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
         if (ltTable.Has(layer.Linetype))
         {
             foreach (ObjectId objectId in ltTable)

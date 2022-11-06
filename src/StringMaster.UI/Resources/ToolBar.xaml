@@ -88,7 +88,7 @@
     </Style>
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/StringMaster;component/Resources/Brushes.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/Brushes.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

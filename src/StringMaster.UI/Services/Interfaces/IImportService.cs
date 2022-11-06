@@ -27,7 +27,7 @@ public class ImportService : IImportService
         //     HasHeaderRecord = false,
         // };
 
-        List<CivilPoint> pointList = null;
+        List<CivilPoint> pointList = new();
 
         // using var reader = new StreamReader(fileName);
         // using var csv = new CsvReader(reader, config);

@@ -7,13 +7,13 @@ public static class StaticServices
 {
     public static IDialogService DialogService { get; } = new DialogService();
 
-    public static IAcadColorDialogService ColorDialogService { get; } = new AcadColorDialogService();
+    public static IAcadColorDialogService AcadColorDialogService { get; } = new AcadColorDialogService();
 
-    public static IAcadLayerService LayerService { get; } = new AcadLayerService();
+    public static IAcadLayerService AcadLayerService { get; } = new AcadLayerService();
 
-    public static IAcadLineweightDialogService LineweightDialogService { get; } = new AcadLineweightDialogService();
+    public static IAcadLineweightDialogService AcadLineweightDialogService { get; } = new AcadLineweightDialogService();
 
-    public static IAcadLinetypeDialogService LinetypeDialogService { get; } = new AcadLinetypeDialogService();
+    public static IAcadLinetypeDialogService AcadLinetypeDialogService { get; } = new AcadLinetypeDialogService();
 
     public static IAcadApplicationService AcadApplicationService { get; } = new AcadApplicationService();
 }

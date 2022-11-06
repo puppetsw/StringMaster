@@ -41,10 +41,10 @@ public class StringMasterPalette : PaletteSet
                 new ImportService(),
                 new StringCivilPointsService(),
                 StaticServices.AcadApplicationService,
-                StaticServices.ColorDialogService,
-                StaticServices.LayerService,
-                StaticServices.LinetypeDialogService,
-                StaticServices.LineweightDialogService));
+                StaticServices.AcadColorDialogService,
+                StaticServices.AcadLayerService,
+                StaticServices.AcadLinetypeDialogService,
+                StaticServices.AcadLineweightDialogService));
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);

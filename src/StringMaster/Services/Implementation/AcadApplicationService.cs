@@ -13,17 +13,17 @@ public class AcadApplicationService : IAcadApplicationService
     /// <summary>
     /// Gets the <see cref="DocumentManager"/>.
     /// </summary>
-    internal static DocumentCollection DocumentManager => Application.DocumentManager;
+    public static DocumentCollection DocumentManager => Application.DocumentManager;
 
     /// <summary>
     /// Gets the active <see cref="Database"/> object.
     /// </summary>
-    internal static Database ActiveDatabase => DocumentManager.MdiActiveDocument.Database;
+    public static Database ActiveDatabase => DocumentManager.MdiActiveDocument.Database;
 
     /// <summary>
     /// Gets the active <see cref="Editor"/> object.
     /// </summary>
-    internal static Editor Editor => DocumentManager.MdiActiveDocument.Editor;
+    public static Editor Editor => DocumentManager.MdiActiveDocument.Editor;
 
     public IEnumerable<AcadDocument> Documents
     {
