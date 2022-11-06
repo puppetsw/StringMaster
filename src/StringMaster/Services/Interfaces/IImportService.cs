@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using CsvHelper;
-using CsvHelper.Configuration;
 using StringMaster.Models;
 
 namespace StringMaster.Services.Interfaces;
@@ -26,20 +24,21 @@ public class ImportService : IImportService
         if (!file.Exists)
             throw new FileNotFoundException($"File not found at {fileName}");
 
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            HasHeaderRecord = false,
-        };
+        // var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        // {
+        //     HasHeaderRecord = false,
+        // };
 
-        var pointList = new List<CivilPoint>();
+        List<CivilPoint> pointList = null;
 
-        using var reader = new StreamReader(fileName);
-        using var csv = new CsvReader(reader, config);
-        {
-            csv.Context.RegisterClassMap<CivilPointMap>();
-            var points = csv.GetRecords<CivilPoint>();
-            pointList = points.ToList();
-        }
+        // using var reader = new StreamReader(fileName);
+        // using var csv = new CsvReader(reader, config);
+        // {
+        //     csv.Context.RegisterClassMap<CivilPointMap>();
+        //     var points = csv.GetRecords<CivilPoint>();
+        //     pointList = points.ToList();
+        // }
+
         return pointList;
     }
 }
@@ -98,14 +97,3 @@ public sealed class CivilPoint : ObservableObject
     }
 }
 
-public sealed class CivilPointMap : ClassMap<CivilPoint>
-{
-    public CivilPointMap()
-    {
-        Map(m => m.PointNumber).Index(0);
-        Map(m => m.Easting).Index(1);
-        Map(m => m.Northing).Index(2);
-        Map(m => m.Elevation).Index(3);
-        Map(m => m.RawDescription).Index(4);
-    }
-}
