@@ -7,8 +7,8 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
 using StringMaster.Helpers;
-using StringMaster.Models;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Models;
+using StringMaster.UI.Services.Interfaces;
 
 namespace StringMaster.Services.Implementation;
 

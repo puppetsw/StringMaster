@@ -1,8 +1,5 @@
 ﻿using Autodesk.AutoCAD.Runtime;
 using StringMaster;
-using StringMaster.Services.Implementation;
-using StringMaster.Services.Interfaces;
-using StringMaster.ViewModels;
 
 [assembly: ExtensionApplication(typeof(StringMasterPlugin))]
 namespace StringMaster;

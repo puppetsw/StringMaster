@@ -1,9 +1,8 @@
 ﻿using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.Extensions;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Services.Interfaces;
 
 namespace StringMaster.Services.Implementation;
 

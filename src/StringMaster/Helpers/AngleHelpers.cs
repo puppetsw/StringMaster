@@ -1,5 +1,5 @@
 ﻿using System;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 
 namespace StringMaster.Helpers;
 

@@ -2,7 +2,7 @@
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
 
 namespace StringMaster.Helpers;

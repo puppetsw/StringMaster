@@ -1,7 +1,7 @@
 ﻿using System;
 using Autodesk.AutoCAD.DatabaseServices;
 using StringMaster.Extensions;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 
 namespace StringMaster.Helpers;
 

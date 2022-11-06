@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringMaster", "StringMaster\StringMaster.csproj", "{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringMaster.UI", "StringMaster.UI\StringMaster.UI.csproj", "{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Civil|Any CPU = Debug Civil|Any CPU
@@ -27,6 +29,18 @@ Global
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Release|x64.ActiveCfg = Release|x64
 		{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}.Release|x64.Build.0 = Release|x64
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug Civil|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug Civil|Any CPU.Build.0 = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug Civil|x64.ActiveCfg = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug Civil|x64.Build.0 = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Debug|x64.Build.0 = Debug|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Release|x64.ActiveCfg = Release|Any CPU
+		{E7E68E77-3B95-4977-A84A-FD4A3EB0D713}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

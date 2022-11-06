@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
-using StringMaster.Dialogs;
-using StringMaster.Services.Interfaces;
-using StringMaster.ViewModels;
+using StringMaster.UI.Dialogs;
+using StringMaster.UI.Services.Interfaces;
+using StringMaster.UI.ViewModels;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace StringMaster.Services.Implementation;

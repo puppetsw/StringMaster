@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 
 namespace StringMaster.Helpers;
 

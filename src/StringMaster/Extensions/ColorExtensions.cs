@@ -1,5 +1,5 @@
 ﻿using Autodesk.AutoCAD.Colors;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 
 namespace StringMaster.Extensions;
 

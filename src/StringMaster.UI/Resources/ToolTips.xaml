@@ -1,0 +1,41 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="clr-namespace:StringMaster.UI.Helpers">
+    <DataTemplate x:Key="AddRowToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="Add Row" />
+            <TextBlock Text="Add new row to the table." />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="RemoveRowToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="Remove Row" />
+            <TextBlock Text="Removes selected row from the table." />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="OpenDocumentToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="Load Description Key Set" />
+            <TextBlock Text="Loads a description key set from a file." />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="SaveDocumentToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="Save Description Key Set" />
+            <TextBlock Text="Saves a description key set to a file." />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="StringCogoPointsToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="{helpers:ResourceHelper Name=StringCogoPoints}" />
+            <TextBlock Text="{helpers:ResourceHelper Name=StringCogoPointsToolTipContent}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="ImportPointsToolTipContent">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="" />
+            <TextBlock Text="" />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

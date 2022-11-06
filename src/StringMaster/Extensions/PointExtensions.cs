@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.Geometry;
-using StringMaster.Models;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Models;
+using StringMaster.UI.Services.Interfaces;
 
 namespace StringMaster.Extensions;
 

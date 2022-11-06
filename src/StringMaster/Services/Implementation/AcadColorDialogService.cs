@@ -3,8 +3,8 @@
 using System;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.Windows;
-using StringMaster.Models;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Models;
+using StringMaster.UI.Services.Interfaces;
 
 namespace StringMaster.Services.Implementation;
 

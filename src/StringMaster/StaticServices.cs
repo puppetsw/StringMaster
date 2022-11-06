@@ -1,5 +1,5 @@
 ﻿using StringMaster.Services.Implementation;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Services.Interfaces;
 
 namespace StringMaster;
 
