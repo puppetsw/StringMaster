@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using StringMaster.UI.Models;
 
 namespace StringMaster.UI.Services.Interfaces;
 
 public interface IStringCivilPointsService
 {
-    void StringCivilPoints(IEnumerable<CivilPoint> civilPoints);
+    void StringCivilPoints(IList<DescriptionKey> descriptionKeys);
 }

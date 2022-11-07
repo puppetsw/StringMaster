@@ -116,6 +116,7 @@
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
+    <Compile Include="Services\Interfaces\IServiceCollection.cs" />
     <Compile Include="Services\Interfaces\IStringCivilPointsService.cs" />
     <Compile Include="Strings\ResourceStrings.Designer.cs">
       <DependentUpon>ResourceStrings.resx</DependentUpon>

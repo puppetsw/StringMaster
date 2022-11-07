@@ -24,6 +24,7 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/ComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
             <Style TargetType="Image">
                 <Setter Property="Width" Value="16" />
                 <Setter Property="Height" Value="16" />
@@ -206,7 +207,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!--<DataGridTemplateColumn Width="90" Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}">
+                <DataGridTemplateColumn
+                    Width="90"
+                    Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}"
+                    Visibility="{Binding IsCivil, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox
@@ -218,7 +222,7 @@
                                 IsChecked="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn-->
+                </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"

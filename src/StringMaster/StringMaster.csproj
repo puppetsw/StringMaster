@@ -95,12 +95,6 @@
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Helpers\LineweightHelpers.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Commands.cs" />
     <Compile Include="Services\Implementation\AcadApplicationService.cs" />
     <Compile Include="Services\Implementation\AcadColorDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
@@ -110,22 +104,13 @@
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
-    <Compile Include="Services\Implementation\StringCivilPointsService.cs" />
     <Compile Include="StaticServices.cs" />
     <Compile Include="StringMasterPalette.cs" />
-    <Compile Include="StringMasterPlugin.cs" />
     <Compile Include="Helpers\LayerHelpers.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Helpers\PolylineHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\TransactionExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StringMaster.UI\StringMaster.UI.csproj">

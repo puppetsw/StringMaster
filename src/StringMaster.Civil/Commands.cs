@@ -1,7 +1,8 @@
 ﻿using Autodesk.AutoCAD.Runtime;
+using StringMaster.Civil;
 
-[assembly: CommandClass(typeof(StringMaster.Commands))]
-namespace StringMaster;
+[assembly: CommandClass(typeof(Commands))]
+namespace StringMaster.Civil;
 
 public static class Commands
 {
@@ -11,7 +12,7 @@ public static class Commands
     public static void ShowStringMaster()
     {
         if (s_palette == null)
-            s_palette = new StringMasterPalette();
+            s_palette = new StringMasterPalette(new StringCivilPointService());
 
         s_palette.Visible = true;
     }

@@ -32,6 +32,7 @@ public class StringCogoPointsViewModel : ObservableObject
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
     private DescriptionKey _selectedKey;
+    private bool _isCivil;
 
     public string CurrentFileName
     {
@@ -55,6 +56,12 @@ public class StringCogoPointsViewModel : ObservableObject
     {
         get => _selectedKey;
         set => SetProperty(ref _selectedKey, value);
+    }
+
+    public bool IsCivil
+    {
+        get => _isCivil;
+        set => SetProperty(ref _isCivil, value);
     }
 
     public ICommand NewDescriptionKeyFileCommand { get; }
@@ -191,8 +198,7 @@ public class StringCogoPointsViewModel : ObservableObject
         if (DescriptionKeys.Count is 0) // If cleanup leaves us with none.
             return;
 
-        var civilPoints = _importService.PointsFromFile(_openDialogService.FileName).ToList();
-        _stringCivilPointsService.StringCivilPoints(civilPoints);
+        _stringCivilPointsService.StringCivilPoints(DescriptionKeys);
     }
 
     private void ShowLayerSelectionDialog()

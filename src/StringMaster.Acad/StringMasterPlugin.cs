@@ -1,8 +1,8 @@
 ﻿using Autodesk.AutoCAD.Runtime;
-using StringMaster;
+using StringMaster.Acad;
 
 [assembly: ExtensionApplication(typeof(StringMasterPlugin))]
-namespace StringMaster;
+namespace StringMaster.Acad;
 
 public sealed class StringMasterPlugin : IExtensionApplication
 {
