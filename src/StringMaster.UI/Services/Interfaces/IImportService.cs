@@ -22,20 +22,28 @@ public class ImportService : IImportService
         if (!file.Exists)
             throw new FileNotFoundException($"File not found at {fileName}");
 
-        // var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        // {
-        //     HasHeaderRecord = false,
-        // };
-
         List<CivilPoint> pointList = new();
 
-        // using var reader = new StreamReader(fileName);
-        // using var csv = new CsvReader(reader, config);
-        // {
-        //     csv.Context.RegisterClassMap<CivilPointMap>();
-        //     var points = csv.GetRecords<CivilPoint>();
-        //     pointList = points.ToList();
-        // }
+        using var reader = new StreamReader(fileName);
+
+        while (!reader.EndOfStream)
+        {
+            var line = reader.ReadLine();
+
+            if (string.IsNullOrEmpty(line))
+                continue;
+
+            var values = line.Split(',');
+
+            pointList.Add(new CivilPoint
+            {
+                PointNumber = values[0],
+                Easting = Convert.ToDouble(values[1]),
+                Northing = Convert.ToDouble(values[2]),
+                Elevation = Convert.ToDouble(values[3]),
+                RawDescription = values[4]
+            });
+        }
 
         return pointList;
     }
