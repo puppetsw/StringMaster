@@ -78,6 +78,7 @@
     <Compile Include="Models\AcadDocument.cs" />
     <Compile Include="Models\AcadLayer.cs" />
     <Compile Include="Models\Angle.cs" />
+    <Compile Include="Models\ColumnContext.cs" />
     <Compile Include="Models\DescriptionKey.cs" />
     <Compile Include="Models\DescriptionKeyMatch.cs" />
     <Compile Include="Models\LayerProperties.cs" />

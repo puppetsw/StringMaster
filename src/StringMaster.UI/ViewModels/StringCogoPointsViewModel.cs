@@ -9,9 +9,6 @@ using StringMaster.UI.Helpers;
 using StringMaster.UI.Models;
 using StringMaster.UI.Services.Interfaces;
 
-// ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable MemberCanBePrivate.Global
-
 namespace StringMaster.UI.ViewModels;
 
 public class StringCogoPointsViewModel : ObservableObject
@@ -24,7 +21,6 @@ public class StringCogoPointsViewModel : ObservableObject
     private readonly IImportService _importService;
     private readonly IStringCivilPointsService _stringCivilPointsService;
     private readonly IAcadApplicationService _acadApplicationService;
-    public IAcadColorDialogService ACADColorDialogService { get; }
     private readonly IAcadLayerService _acadLayerService;
     private readonly IAcadLinetypeDialogService _acadLinetypeDialogService;
     private readonly IAcadLineweightDialogService _acadLineweightDialogService;
@@ -33,6 +29,8 @@ public class StringCogoPointsViewModel : ObservableObject
     private string _currentFileName;
     private DescriptionKey _selectedKey;
     private bool _isCivil;
+
+    public IAcadColorDialogService ACADColorDialogService { get; }
 
     public string CurrentFileName
     {
@@ -84,7 +82,8 @@ public class StringCogoPointsViewModel : ObservableObject
                                      IAcadColorDialogService acadColorDialogService,
                                      IAcadLayerService acadLayerService,
                                      IAcadLinetypeDialogService acadLinetypeDialogService,
-                                     IAcadLineweightDialogService acadLineweightDialogService)
+                                     IAcadLineweightDialogService acadLineweightDialogService,
+                                     bool isCivil = false)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
@@ -104,6 +103,8 @@ public class StringCogoPointsViewModel : ObservableObject
         _saveDialogService.DefaultExt = ".xml";
         _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
 
+        IsCivil = isCivil;
+
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         // Initialize commands
@@ -116,7 +117,6 @@ public class StringCogoPointsViewModel : ObservableObject
         StringCommand = new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
-        ImportCommand = new RelayCommand(ImportPointsFromFile);
         LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
 
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
@@ -153,9 +153,6 @@ public class StringCogoPointsViewModel : ObservableObject
         // If DescriptionKeys matches the cloned keys then no changes.
         IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
     }
-
-    // TODO: remove this, make it part of the stringcogoPoints method.
-    private void ImportPointsFromFile() => _openDialogService.ShowDialog();
 
     private void AddRow()
     {

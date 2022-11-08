@@ -21,7 +21,6 @@ public partial class StringCogoPointsView : UserControl, IPaletteControl
         set => DataContext = value;
     }
 
-
     public StringCogoPointsView(StringCogoPointsViewModel viewModel)
     {
         InitializeComponent();

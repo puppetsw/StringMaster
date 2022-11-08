@@ -21,6 +21,7 @@ public sealed class SurveyPoint : IEquatable<SurveyPoint>, ICloneable
 
     public bool IsProcessed { get; set; }
 
+    //TODO: replace special code
     public SurveyPoint(Point point, string specialCode)
     {
         Point = point;

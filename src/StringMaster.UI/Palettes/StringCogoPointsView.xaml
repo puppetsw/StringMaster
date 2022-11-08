@@ -7,8 +7,9 @@
     xmlns:helpers="clr-namespace:StringMaster.UI.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:StringMaster.UI.Models"
+    xmlns:viewmodels="clr-namespace:StringMaster.UI.ViewModels"
     x:Name="UserControl"
-    d:DataContext="{d:DesignData StringCogoPointsViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:StringCogoPointsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource DarkBackground}"
@@ -31,6 +32,8 @@
             </Style>
             <Cursor x:Key="PlusCursor">pack://application:,,,/StringMaster.UI;component/Resources/Cursors/pluscursor.cur</Cursor>
             <Cursor x:Key="CheckCursor">pack://application:,,,/StringMaster.UI;component/Resources/Cursors/checkmark.cur</Cursor>
+
+            <models:ColumnContext x:Key="proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel Margin="8,0,0,0">
@@ -82,12 +85,6 @@
                         <ToolTip ContentTemplate="{StaticResource StringCogoPointsToolTipContent}" />
                     </Button.ToolTip>
                     <Image Source="{StaticResource ExecuteToolBarIcon}" />
-                </Button>
-                <Button Command="{Binding ImportCommand}" Style="{StaticResource ToolBarButton}">
-                    <Button.ToolTip>
-                        <ToolTip ContentTemplate="{StaticResource ImportPointsToolTipContent}" />
-                    </Button.ToolTip>
-                    <Image Source="{StaticResource ImportToolBarIcon}" />
                 </Button>
             </ToolBar>
             <ToolBar
@@ -210,7 +207,7 @@
                 <DataGridTemplateColumn
                     Width="90"
                     Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}"
-                    Visibility="{Binding IsCivil, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    Visibility="{Binding Source={StaticResource proxy}, Path=Data.IsCivil, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:DescriptionKey">
                             <CheckBox

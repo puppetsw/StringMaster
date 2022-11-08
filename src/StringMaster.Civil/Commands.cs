@@ -12,7 +12,7 @@ public static class Commands
     public static void ShowStringMaster()
     {
         if (s_palette == null)
-            s_palette = new StringMasterPalette(new StringCivilPointService());
+            s_palette = new StringMasterPalette(new StringCivilPointService(), true);
 
         s_palette.Visible = true;
     }
