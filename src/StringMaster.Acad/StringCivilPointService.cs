@@ -30,6 +30,11 @@ public class StringCivilPointService : IStringCivilPointsService
         using Transaction tr = doc.TransactionManager.StartLockedTransaction();
         var desMapping = new Dictionary<string, DescriptionKeyMatch>();
 
+        _openDialogService.ShowDialog();
+
+        if (string.IsNullOrEmpty(_openDialogService.FileName))
+            return;
+
         var civilPoints = _importService.PointsFromFile(_openDialogService.FileName).ToList();
 
         foreach (var civilPoint in civilPoints)
@@ -229,75 +234,6 @@ public class StringCivilPointService : IStringCivilPointsService
 
                     if (deskeyMatch.DescriptionKey.Draw3D && !hasCurve)
                         PolylineHelpers.DrawPolyline3d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);
-
-                    #if CIVIL
-                    if (deskeyMatch.DescriptionKey.DrawFeatureLine && !hasCurve)
-                    {
-                        var polylineId = btr.AppendEntity(polyline);
-                        tr.AddNewlyCreatedDBObject(polyline, true);
-                        var flId = FeatureLine.Create(string.Empty, polylineId);
-                        var featureLine = (FeatureLine)tr.GetObject(flId, OpenMode.ForWrite);
-
-                        // Set properties
-                        featureLine.Layer = layerName;
-                        featureLine.Color = deskeyMatch.DescriptionKey.AcadColor.ToColor();
-
-                        featureLine.DowngradeOpen();
-                        polyline.Erase();
-                    }
-
-                    // Draw featureline if curve is found.
-                    if ((deskeyMatch.DescriptionKey.Draw2D || deskeyMatch.DescriptionKey.Draw3D ||
-                         deskeyMatch.DescriptionKey.DrawFeatureLine) && hasCurve)
-                    {
-                        var polylineId = btr.AppendEntity(polyline);
-                        tr.AddNewlyCreatedDBObject(polyline, true);
-
-                        var featureLineId = FeatureLine.Create(string.Empty, polylineId);
-                        var featureLine = (FeatureLine)tr.GetObject(featureLineId, OpenMode.ForWrite);
-
-                        // Set layer.
-                        featureLine.Layer = layerName;
-                        featureLine.Color = deskeyMatch.DescriptionKey.AcadColor.ToColor();
-
-                        // Set elevations.
-                        for (int i = 0; i < featureLine.GetPoints(FeatureLinePointType.AllPoints).Count; i++)
-                            featureLine.SetPointElevation(i, pointCollection[i].Z);
-
-                        // Add midpoint for curve.
-                        for (int i = 0; i < midPointCollection.Count; i++)
-                        {
-                            // Get position of the featureline
-                            var pointOnFeatureLine = featureLine.GetClosestPointTo(midPointCollection[i], false);
-                            // Create a new point using the correct height and position.
-                            var midPoint = new Point3d(pointOnFeatureLine.X, pointOnFeatureLine.Y, midPointCollection[i].Z);
-                            featureLine.InsertElevationPoint(midPoint);
-                        }
-
-                        // Delete the temporary polyline if 2D is not selected.
-                        // As we already use a polyline to create the FL.
-                        if (deskeyMatch.DescriptionKey.Draw2D)
-                            polyline.Layer = layerName;
-                        else
-                            polyline.Erase();
-
-                        if (deskeyMatch.DescriptionKey.Draw3D)
-                        {
-                            if (!featureLine.ConvertToPolyline3d(tr, out var polyline3d, desKey.Value.DescriptionKey.MidOrdinate))
-                            {
-                                System.Diagnostics.Debug.WriteLine("Error converting feature line to Polyline.");
-                                continue;
-                            }
-
-                            btr.AppendEntity(polyline3d);
-                            tr.AddNewlyCreatedDBObject(polyline3d, true);
-                        }
-
-                        if (!deskeyMatch.DescriptionKey.DrawFeatureLine)
-                            featureLine.Erase();
-
-                    }
-                    #endif
                 }
             }
         }

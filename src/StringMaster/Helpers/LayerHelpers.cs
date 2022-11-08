@@ -61,7 +61,7 @@ public static class LayerHelpers
             Color = layer.Color.ToColor(),
             IsLocked = layer.IsLocked,
             IsFrozen = layer.IsFrozen,
-            IsOff = !layer.IsOn,
+            IsOff = true, // HACK: always turn on new layer.
             LineWeight = LineweightHelpers.LineweightStringtoLineweight(layer.Lineweight)
         };
 
