@@ -99,9 +99,9 @@
       <Project>{e7e68e77-3b95-4977-a84a-fd4a3eb0d713}</Project>
       <Name>StringMaster.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StringMaster\StringMaster.csproj">
+    <ProjectReference Include="..\StringMaster\StringMaster.Common.csproj">
       <Project>{6589eb3d-ea6b-4a98-89dc-53dd3204dd14}</Project>
-      <Name>StringMaster</Name>
+      <Name>StringMaster.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

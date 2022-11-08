@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\Implementation\CsvService.cs" />
+    <Compile Include="Models\CivilPoint.cs" />
     <Compile Include="Services\Interfaces\IAcadApplicationService.cs" />
     <Compile Include="Services\Interfaces\IAcadColorDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />

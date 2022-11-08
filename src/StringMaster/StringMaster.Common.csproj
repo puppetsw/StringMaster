@@ -7,8 +7,8 @@
     <ProjectGuid>{6589EB3D-EA6B-4A98-89DC-53DD3204DD14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StringMaster</RootNamespace>
-    <AssemblyName>StringMaster</AssemblyName>
+    <RootNamespace>StringMaster.Common</RootNamespace>
+    <AssemblyName>StringMaster.Common</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
