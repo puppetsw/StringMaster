@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
-using StringMaster.Extensions;
-using StringMaster.Helpers;
+using StringMaster.Common.Extensions;
+using StringMaster.Common.Helpers;
 using StringMaster.UI.Models;
 using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadLayerService : IAcadLayerService
 {

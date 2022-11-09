@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autodesk.AutoCAD.Geometry;
 
-namespace StringMaster.Extensions;
+namespace StringMaster.Common.Extensions;
 
 public static class CircularArcExtensions
 {

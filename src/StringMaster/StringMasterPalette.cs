@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
-using StringMaster.Services.Implementation;
+using StringMaster.Common.Services.Implementation;
 using StringMaster.UI.Palettes;
 using StringMaster.UI.Services.Interfaces;
 using StringMaster.UI.ViewModels;
 
-namespace StringMaster;
+namespace StringMaster.Common;
 
 public class StringMasterPalette : PaletteSet
 {
@@ -42,14 +42,14 @@ public class StringMasterPalette : PaletteSet
             new OpenDialogService(),
             new SaveDialogService(),
             new MessageBoxService(),
-            StaticServices.DialogService,
+            new DialogService(),
             new ImportService(),
             _stringCivilPointsService,
-            StaticServices.AcadApplicationService,
-            StaticServices.AcadColorDialogService,
-            StaticServices.AcadLayerService,
-            StaticServices.AcadLinetypeDialogService,
-            StaticServices.AcadLineweightDialogService)
+            new AcadApplicationService(),
+            new AcadColorDialogService(),
+            new AcadLayerService(),
+            new AcadLinetypeDialogService(),
+            new AcadLineweightDialogService())
         {
             IsCivil = _isCivil
         };
@@ -73,10 +73,10 @@ public class StringMasterPalette : PaletteSet
         _currentPalette = e.Activated;
     }
 
-    protected override void Dispose(bool A_0)
+    protected override void Dispose(bool dispose)
     {
         _stringCogoPointsView.DismissPaletteEvent -= DismissPalette;
         PaletteActivated -= MyPaletteSet_PaletteActivated;
-        base.Dispose(A_0);
+        base.Dispose(dispose);
     }
 }

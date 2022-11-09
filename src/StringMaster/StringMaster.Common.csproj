@@ -104,7 +104,6 @@
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />
     <Compile Include="Services\Implementation\SaveDialogService.cs" />
-    <Compile Include="StaticServices.cs" />
     <Compile Include="StringMasterPalette.cs" />
     <Compile Include="Helpers\LayerHelpers.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />

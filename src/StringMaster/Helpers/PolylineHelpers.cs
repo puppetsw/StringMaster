@@ -5,7 +5,7 @@ using Autodesk.AutoCAD.Geometry;
 using StringMaster.UI.Models;
 using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class PolylineHelpers
 {

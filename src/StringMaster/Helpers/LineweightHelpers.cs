@@ -1,7 +1,6 @@
-﻿using System;
-using Autodesk.AutoCAD.DatabaseServices;
+﻿using Autodesk.AutoCAD.DatabaseServices;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class LineweightHelpers
 {

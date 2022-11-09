@@ -6,7 +6,7 @@ using StringMaster.UI.Models;
 using StringMaster.UI.Services.Interfaces;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadApplicationService : IAcadApplicationService
 {

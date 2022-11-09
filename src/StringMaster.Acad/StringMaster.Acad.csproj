@@ -64,9 +64,8 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="StringMaster, Version=1.0.7.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\StringMaster\bin\Debug\StringMaster.dll</HintPath>
+    <Reference Include="StringMaster.Common">
+      <HintPath>..\StringMaster\bin\Debug\StringMaster.Common.dll</HintPath>
     </Reference>
     <Reference Include="StringMaster.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

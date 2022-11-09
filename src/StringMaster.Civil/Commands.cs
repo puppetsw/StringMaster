@@ -1,5 +1,6 @@
 ﻿using Autodesk.AutoCAD.Runtime;
 using StringMaster.Civil;
+using StringMaster.Common;
 
 [assembly: CommandClass(typeof(Commands))]
 namespace StringMaster.Civil;

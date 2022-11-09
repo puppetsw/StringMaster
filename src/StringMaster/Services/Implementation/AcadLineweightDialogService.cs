@@ -4,7 +4,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadLineweightDialogService : IAcadLineweightDialogService
 {

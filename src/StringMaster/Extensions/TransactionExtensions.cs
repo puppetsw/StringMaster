@@ -4,7 +4,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 using TransactionManager = Autodesk.AutoCAD.ApplicationServices.TransactionManager;
 
-namespace StringMaster.Extensions;
+namespace StringMaster.Common.Extensions;
 
 public static class TransactionExtensions
 {

@@ -1,10 +1,10 @@
 ﻿using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Windows;
-using StringMaster.Extensions;
+using StringMaster.Common.Extensions;
 using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadLinetypeDialogService : IAcadLinetypeDialogService
 {

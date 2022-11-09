@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class SaveDialogService : ISaveDialogService
 {

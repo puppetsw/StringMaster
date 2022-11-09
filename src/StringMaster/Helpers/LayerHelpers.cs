@@ -1,10 +1,10 @@
 ﻿using System;
 using Autodesk.AutoCAD.DatabaseServices;
-using StringMaster.Extensions;
-using StringMaster.Services.Implementation;
+using StringMaster.Common.Extensions;
+using StringMaster.Common.Services.Implementation;
 using StringMaster.UI.Models;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class LayerHelpers
 {

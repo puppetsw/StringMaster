@@ -6,8 +6,8 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.Civil;
 using Autodesk.Civil.DatabaseServices;
 using Autodesk.Civil.DatabaseServices.Styles;
-using StringMaster.Extensions;
-using StringMaster.Helpers;
+using StringMaster.Common.Extensions;
+using StringMaster.Common.Helpers;
 using DBObject = Autodesk.AutoCAD.DatabaseServices.DBObject;
 
 namespace StringMaster.Civil.Helpers;

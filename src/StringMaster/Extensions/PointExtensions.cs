@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.Geometry;
 using StringMaster.UI.Models;
-using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Extensions;
+namespace StringMaster.Common.Extensions;
 
 public static class PointExtensions
 {

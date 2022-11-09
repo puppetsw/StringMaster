@@ -7,7 +7,7 @@ using StringMaster.UI.Services.Interfaces;
 using StringMaster.UI.ViewModels;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class DialogService : IDialogService
 {
