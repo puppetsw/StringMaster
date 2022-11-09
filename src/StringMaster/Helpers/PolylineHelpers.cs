@@ -2,40 +2,37 @@
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class PolylineHelpers
 {
     public static ObjectId DrawPolyline3d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
-        ObjectId id;
-
-        using (var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed) { Layer = layerName, Color = color })
+        using var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed)
         {
-            id = btr.AppendEntity(pLine3d);
-            tr.AddNewlyCreatedDBObject(pLine3d, true);
-        }
+            Layer = layerName,
+            Color = color
+        };
+
+        ObjectId id = btr.AppendEntity(pLine3d);
+        tr.AddNewlyCreatedDBObject(pLine3d, true);
         return id;
     }
 
     public static ObjectId DrawPolyline2d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
-        ObjectId id;
-        using (var pLine2d = new Polyline2d(Poly2dType.SimplePoly, points, 0, closed, 0, 0, null))
-        {
-            using (var pLine = new Polyline())
-            {
-                pLine.ConvertFrom(pLine2d, false);
-                pLine.Layer = layerName;
-                pLine.Color = color;
-                pLine.Elevation = 0;
-                id = btr.AppendEntity(pLine);
-                tr.AddNewlyCreatedDBObject(pLine, true);
-            }
-        }
+        using var pLine2d = new Polyline2d(Poly2dType.SimplePoly, points, 0, closed, 0, 0, null);
+        using var pLine = new Polyline();
+        pLine.ConvertFrom(pLine2d, false);
+        pLine.Layer = layerName;
+        pLine.Color = color;
+        pLine.Elevation = 0;
+        ObjectId id = btr.AppendEntity(pLine);
+        tr.AddNewlyCreatedDBObject(pLine, true);
+
         return id;
     }
 

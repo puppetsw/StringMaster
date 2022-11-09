@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
-using StringMaster.Palettes;
-using StringMaster.Services.Implementation;
-using StringMaster.ViewModels;
+using StringMaster.Common.Services.Implementation;
+using StringMaster.UI.Palettes;
+using StringMaster.UI.Services.Interfaces;
+using StringMaster.UI.ViewModels;
 
-namespace StringMaster;
+namespace StringMaster.Common;
 
 public class StringMasterPalette : PaletteSet
 {
+    private readonly IStringCivilPointsService _stringCivilPointsService;
+    private readonly bool _isCivil;
     private Palette _currentPalette;
 
     private StringCogoPointsView _stringCogoPointsView;
 
-    public StringMasterPalette() : base("StringMasterPalette", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
+    public StringMasterPalette(IStringCivilPointsService stringCivilPointsService, bool isCivil = false)
+        : base("StringMasterPalette", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
     {
+        _stringCivilPointsService = stringCivilPointsService;
+        _isCivil = isCivil;
         Style = PaletteSetStyles.ShowAutoHideButton | PaletteSetStyles.ShowCloseButton | PaletteSetStyles.Snappable |
                 PaletteSetStyles.UsePaletteNameAsTitleForSingle | PaletteSetStyles.ShowPropertiesMenu;
         Opacity = 100;
@@ -30,12 +36,25 @@ public class StringMasterPalette : PaletteSet
     private void Initialize()
     {
         // BUG: Probably some memory leak bug here if we had more than one palette?
-        _stringCogoPointsView = new StringCogoPointsView(
-            new StringCogoPointsViewModel(
-                new OpenDialogService(),
-                new SaveDialogService(),
-                new MessageBoxService(),
-                StaticServices.DialogService));
+        // TODO: Inject services to main view model. Use DI?
+
+        var viewModel = new StringCogoPointsViewModel(
+            new OpenDialogService(),
+            new SaveDialogService(),
+            new MessageBoxService(),
+            new DialogService(),
+            new ImportService(),
+            _stringCivilPointsService,
+            new AcadApplicationService(),
+            new AcadColorDialogService(),
+            new AcadLayerService(),
+            new AcadLinetypeDialogService(),
+            new AcadLineweightDialogService())
+        {
+            IsCivil = _isCivil
+        };
+
+        _stringCogoPointsView = new StringCogoPointsView(viewModel);
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);
@@ -54,10 +73,10 @@ public class StringMasterPalette : PaletteSet
         _currentPalette = e.Activated;
     }
 
-    protected override void Dispose(bool A_0)
+    protected override void Dispose(bool dispose)
     {
         _stringCogoPointsView.DismissPaletteEvent -= DismissPalette;
         PaletteActivated -= MyPaletteSet_PaletteActivated;
-        base.Dispose(A_0);
+        base.Dispose(dispose);
     }
 }

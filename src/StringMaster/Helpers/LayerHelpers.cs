@@ -1,9 +1,10 @@
 ﻿using System;
 using Autodesk.AutoCAD.DatabaseServices;
-using StringMaster.Extensions;
-using StringMaster.Models;
+using StringMaster.Common.Extensions;
+using StringMaster.Common.Services.Implementation;
+using StringMaster.UI.Models;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class LayerHelpers
 {
@@ -43,7 +44,7 @@ public static class LayerHelpers
 
         LinetypeTableRecord lineType = null;
 
-        var ltTable = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        var ltTable = (LinetypeTable)tr.GetObject(AcadApplicationService.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
         if (ltTable.Has(layer.Linetype))
         {
             foreach (ObjectId objectId in ltTable)
@@ -60,7 +61,7 @@ public static class LayerHelpers
             Color = layer.Color.ToColor(),
             IsLocked = layer.IsLocked,
             IsFrozen = layer.IsFrozen,
-            IsOff = !layer.IsOn,
+            IsOff = true, // HACK: always turn on new layer.
             LineWeight = LineweightHelpers.LineweightStringtoLineweight(layer.Lineweight)
         };
 

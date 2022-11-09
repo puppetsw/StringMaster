@@ -5,25 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
-using StringMaster.Extensions;
-using StringMaster.Helpers;
-using StringMaster.Models;
-using StringMaster.Services.Interfaces;
+using StringMaster.Common.Extensions;
+using StringMaster.Common.Helpers;
+using StringMaster.UI.Models;
+using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadLayerService : IAcadLayerService
 {
     public IEnumerable<AcadLayer> GetLayersFromActiveDocument()
     {
-        var document = CivilApplication.ActiveDocument;
+        var document = AcadApplicationService.DocumentManager.MdiActiveDocument;
         return GetLayersFromDocument(document.Name);
     }
 
     public IEnumerable<AcadLayer> GetLayersFromDocument(string? documentName)
     {
         Document document = null!;
-        foreach (Document doc in CivilApplication.DocumentManager)
+        foreach (Document doc in AcadApplicationService.DocumentManager)
         {
             if (doc.Name != documentName)
                 continue;
@@ -76,11 +76,11 @@ public class AcadLayerService : IAcadLayerService
         if (layer == null)
             return;
 
-        Document document = CivilApplication.ActiveDocument;
+        Document document = AcadApplicationService.DocumentManager.MdiActiveDocument;
 
         if (!string.IsNullOrEmpty(documentName))
         {
-            foreach (Document doc in CivilApplication.DocumentManager)
+            foreach (Document doc in AcadApplicationService.DocumentManager)
             {
                 if (doc.Name != documentName)
                     continue;

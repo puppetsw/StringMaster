@@ -1,7 +1,6 @@
-﻿using System;
-using Autodesk.AutoCAD.DatabaseServices;
+﻿using Autodesk.AutoCAD.DatabaseServices;
 
-namespace StringMaster.Helpers;
+namespace StringMaster.Common.Helpers;
 
 public static class LineweightHelpers
 {
@@ -66,7 +65,8 @@ public static class LineweightHelpers
             case "ByDIPs":
                 return LineWeight.ByDIPs;
             default:
-                throw new ArgumentOutOfRangeException(nameof(lineweight), lineweight, null);
+                return LineWeight.ByLayer;
+                //throw new ArgumentOutOfRangeException(nameof(lineweight), lineweight, null);
         }
     }
 }

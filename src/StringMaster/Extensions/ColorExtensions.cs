@@ -1,7 +1,7 @@
 ﻿using Autodesk.AutoCAD.Colors;
-using StringMaster.Models;
+using StringMaster.UI.Models;
 
-namespace StringMaster.Extensions;
+namespace StringMaster.Common.Extensions;
 
 public static class ColorExtensions
 {

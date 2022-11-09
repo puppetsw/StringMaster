@@ -1,11 +1,10 @@
 ﻿using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.Windows;
-using StringMaster.Extensions;
-using StringMaster.Services.Interfaces;
+using StringMaster.Common.Extensions;
+using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class AcadLinetypeDialogService : IAcadLinetypeDialogService
 {
@@ -13,9 +12,9 @@ public class AcadLinetypeDialogService : IAcadLinetypeDialogService
     {
         var ltd = new LinetypeDialog();
 
-        using var tr = CivilApplication.ActiveDocument.TransactionManager.StartLockedTransaction();
+        using var tr = AcadApplicationService.DocumentManager.MdiActiveDocument.TransactionManager.StartLockedTransaction();
 
-        var ltid = (LinetypeTable)tr.GetObject(CivilApplication.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
+        var ltid = (LinetypeTable)tr.GetObject(AcadApplicationService.ActiveDatabase.LinetypeTableId, OpenMode.ForRead);
         if (!ltid.Has(linetype))
         {
             foreach (ObjectId objectId in ltid)

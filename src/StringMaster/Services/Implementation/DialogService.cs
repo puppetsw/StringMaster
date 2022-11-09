@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
-using StringMaster.Dialogs;
-using StringMaster.Services.Interfaces;
-using StringMaster.ViewModels;
+using StringMaster.UI.Dialogs;
+using StringMaster.UI.Services.Interfaces;
+using StringMaster.UI.ViewModels;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class DialogService : IDialogService
 {
@@ -45,7 +45,7 @@ public class DialogService : IDialogService
         }
         catch (Exception e)
         {
-            CivilApplication.Editor.WriteMessage($"StringMaster exception: {e.Message}");
+            AcadApplicationService.Editor.WriteMessage($"StringMaster exception: {e.Message}");
             throw;
         }
     }

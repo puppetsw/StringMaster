@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
-using StringMaster.Services.Interfaces;
+using StringMaster.UI.Services.Interfaces;
 
-namespace StringMaster.Services.Implementation;
+namespace StringMaster.Common.Services.Implementation;
 
 public class MessageBoxService : IMessageBoxService
 {
