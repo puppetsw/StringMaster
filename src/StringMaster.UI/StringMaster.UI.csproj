@@ -103,14 +103,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="Services\Implementation\CsvService.cs" />
     <Compile Include="Models\CivilPoint.cs" />
     <Compile Include="Services\Interfaces\IAcadApplicationService.cs" />
     <Compile Include="Services\Interfaces\IAcadColorDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
     <Compile Include="Services\Interfaces\IAcadLinetypeDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLineweightDialogService.cs" />
-    <Compile Include="Services\Interfaces\ICsvService.cs" />
     <Compile Include="Services\Interfaces\IDialog.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IImportService.cs" />
@@ -118,7 +116,6 @@
     <Compile Include="Services\Interfaces\IOpenDialogService.cs" />
     <Compile Include="Services\Interfaces\IPaletteControl.cs" />
     <Compile Include="Services\Interfaces\ISaveDialogService.cs" />
-    <Compile Include="Services\Interfaces\IServiceCollection.cs" />
     <Compile Include="Services\Interfaces\IStringCivilPointsService.cs" />
     <Compile Include="Strings\ResourceStrings.Designer.cs">
       <DependentUpon>ResourceStrings.resx</DependentUpon>
