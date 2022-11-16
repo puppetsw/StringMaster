@@ -12,7 +12,6 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:StringCogoPointsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{DynamicResource DarkBackground}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -38,7 +37,7 @@
     </UserControl.Resources>
     <DockPanel Margin="8,0,0,0">
         <Grid DockPanel.Dock="Top">
-            <ToolBar Background="{StaticResource DarkBackground}" Style="{DynamicResource ToolBarStyle}">
+            <ToolBar Background="Transparent" Style="{DynamicResource ToolBarStyle}">
                 <ToolBar.Resources>
                     <Style x:Key="ImageEnabled" TargetType="Image">
                         <Setter Property="Width" Value="16" />

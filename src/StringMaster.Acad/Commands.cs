@@ -1,6 +1,7 @@
 ﻿using Autodesk.AutoCAD.Runtime;
 using StringMaster.Acad;
-using StringMaster.Services.Implementation;
+using StringMaster.Common;
+using StringMaster.Common.Services.Implementation;
 using StringMaster.UI.Services.Interfaces;
 
 [assembly: CommandClass(typeof(Commands))]

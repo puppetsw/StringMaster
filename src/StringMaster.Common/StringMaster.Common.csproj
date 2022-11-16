@@ -82,6 +82,18 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AcWindows">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AcWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdUiPalettes">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AdUiPalettes.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -94,6 +106,7 @@
   <ItemGroup>
     <Compile Include="Extensions\CircularArcExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Helpers\ColorHelpers.cs" />
     <Compile Include="Helpers\LineweightHelpers.cs" />
     <Compile Include="Services\Implementation\AcadApplicationService.cs" />
     <Compile Include="Services\Implementation\AcadColorDialogService.cs" />

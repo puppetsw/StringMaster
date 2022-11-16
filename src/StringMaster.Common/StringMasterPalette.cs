@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Autodesk.AutoCAD.Windows;
+using StringMaster.Common.Helpers;
 using StringMaster.Common.Services.Implementation;
 using StringMaster.UI.Palettes;
 using StringMaster.UI.Services.Interfaces;
@@ -55,6 +56,7 @@ public class StringMasterPalette : PaletteSet
         };
 
         _stringCogoPointsView = new StringCogoPointsView(viewModel);
+        _stringCogoPointsView.Background = ColorHelpers.GetBackgroundColor();
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
         AddVisual("StringMaster", _stringCogoPointsView);
