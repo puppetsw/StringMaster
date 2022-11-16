@@ -35,14 +35,21 @@ public class ImportService : IImportService
 
             var values = line.Split(',');
 
-            pointList.Add(new CivilPoint
+            try
             {
-                PointNumber = values[0],
-                Easting = Convert.ToDouble(values[1]),
-                Northing = Convert.ToDouble(values[2]),
-                Elevation = Convert.ToDouble(values[3]),
-                RawDescription = values[4]
-            });
+                pointList.Add(new CivilPoint
+                {
+                    PointNumber = values[0],
+                    Easting = Convert.ToDouble(values[1]),
+                    Northing = Convert.ToDouble(values[2]),
+                    Elevation = Convert.ToDouble(values[3]),
+                    RawDescription = values[4]
+                });
+            }
+            catch (Exception e)
+            {
+            }
+            
         }
 
         return pointList;
