@@ -35,7 +35,7 @@ public class StringCivilPointService : IStringCivilPointsService
         if (string.IsNullOrEmpty(_openDialogService.FileName))
             return;
 
-        var civilPoints = _importService.PointsFromFile(_openDialogService.FileName).ToList();
+        var civilPoints = _importService.PointsFromFile(_openDialogService.FileName, out _).ToList();
 
         foreach (var civilPoint in civilPoints)
         {

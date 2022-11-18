@@ -7,13 +7,15 @@ namespace StringMaster.UI.Services.Interfaces;
 
 public interface IImportService
 {
-    IEnumerable<CivilPoint> PointsFromFile(string fileName);
+    IEnumerable<CivilPoint> PointsFromFile(string fileName, out IList<string> errorMessages);
 }
 
 public class ImportService : IImportService
 {
-    public IEnumerable<CivilPoint> PointsFromFile(string fileName)
+    public IEnumerable<CivilPoint> PointsFromFile(string fileName, out IList<string> errorMessages)
     {
+        errorMessages = new List<string>();
+
         if (string.IsNullOrEmpty(fileName))
             throw new ArgumentNullException(nameof(fileName), "Filename was null or empty.");
 
@@ -23,11 +25,12 @@ public class ImportService : IImportService
             throw new FileNotFoundException($"File not found at {fileName}");
 
         List<CivilPoint> pointList = new();
-
+        var currentLine = 0;
         using var reader = new StreamReader(fileName);
 
         while (!reader.EndOfStream)
         {
+            currentLine++;
             var line = reader.ReadLine();
 
             if (string.IsNullOrEmpty(line))
@@ -46,10 +49,10 @@ public class ImportService : IImportService
                     RawDescription = values[4]
                 });
             }
-            catch (Exception e)
+            catch (FormatException e)
             {
+                errorMessages.Add($"Line: {currentLine}, Format error.");
             }
-            
         }
 
         return pointList;

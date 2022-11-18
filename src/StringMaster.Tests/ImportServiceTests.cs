@@ -12,7 +12,7 @@ public class ImportServiceTests
     {
         const string fileName = "sample files\\valid_import_file.csv";
         IImportService importService = new ImportService();
-        var points = importService.PointsFromFile(fileName);
+        var points = importService.PointsFromFile(fileName, out _);
         Assert.IsTrue(points.Any());
     }
 
@@ -21,7 +21,7 @@ public class ImportServiceTests
     {
         const string fileName = "sample files\\invalid_import_file_row1.csv";
         IImportService importService = new ImportService();
-        var points = importService.PointsFromFile(fileName);
+        var points = importService.PointsFromFile(fileName, out _);
         Assert.IsTrue(points.Any());
     }
 }
