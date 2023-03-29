@@ -203,26 +203,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="90"
-                    Header="{helpers:ResourceHelper Name=ColumnHeaderFeatureLine}"
-                    Visibility="{Binding Source={StaticResource proxy}, Path=Data.IsCivil, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:DescriptionKey">
-                            <CheckBox
-                                Margin="3,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-                                Content="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanYesNoConverter}}"
-                                Cursor="{StaticResource CheckCursor}"
-                                IsChecked="{Binding DrawFeatureLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    Width="100"
-                    Binding="{Binding MidOrdinate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0.01}"
-                    Header="{helpers:ResourceHelper Name=ColumnHeaderMidOrdinate}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
