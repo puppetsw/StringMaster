@@ -67,18 +67,6 @@
                     </Button.ToolTip>
                     <Image Source="{StaticResource SaveAsToolBarIcon}" Style="{StaticResource ImageEnabled}" />
                 </Button>
-                <Button Command="{Binding AddRowCommand}" Style="{StaticResource ToolBarButton}">
-                    <Button.ToolTip>
-                        <ToolTip ContentTemplate="{StaticResource AddRowToolTipContent}" />
-                    </Button.ToolTip>
-                    <Image Source="{StaticResource AddToolBarIcon}" />
-                </Button>
-                <Button Command="{Binding RemoveRowCommand}" Style="{StaticResource ToolBarButton}">
-                    <Button.ToolTip>
-                        <ToolTip ContentTemplate="{StaticResource RemoveRowToolTipContent}" />
-                    </Button.ToolTip>
-                    <Image Source="{StaticResource RemoveToolBarIcon}" />
-                </Button>
                 <Button Command="{Binding StringCommand}" Style="{StaticResource ToolBarButton}">
                     <Button.ToolTip>
                         <ToolTip ContentTemplate="{StaticResource StringCogoPointsToolTipContent}" />
@@ -204,6 +192,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding AddRowCommand}" Header="New..." />
+                    <MenuItem Command="{Binding CopyRowCommand}" Header="Copy..." />
+                    <Separator />
+                    <MenuItem Command="{Binding RemoveRowCommand}" Header="Delete..." />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
     </DockPanel>
 </UserControl>

@@ -28,7 +28,6 @@ public class StringCogoPointsViewModel : ObservableObject
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
     private DescriptionKey _selectedKey;
-    private bool _isCivil;
 
     public IAcadColorDialogService ACADColorDialogService { get; }
 
@@ -56,12 +55,6 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _selectedKey, value);
     }
 
-    public bool IsCivil
-    {
-        get => _isCivil;
-        set => SetProperty(ref _isCivil, value);
-    }
-
     public ICommand NewDescriptionKeyFileCommand { get; }
     public ICommand OpenDescriptionKeyFileCommand { get; }
     public ICommand SaveDescriptionKeyFileCommand { get; }
@@ -69,6 +62,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand ImportCommand { get; }
     public ICommand AddRowCommand { get; }
     public ICommand RemoveRowCommand { get; }
+    public ICommand CopyRowCommand { get; }
     public ICommand StringCommand { get; }
     public ICommand LayerSelectCommand { get; }
 
@@ -82,8 +76,7 @@ public class StringCogoPointsViewModel : ObservableObject
                                      IAcadColorDialogService acadColorDialogService,
                                      IAcadLayerService acadLayerService,
                                      IAcadLinetypeDialogService acadLinetypeDialogService,
-                                     IAcadLineweightDialogService acadLineweightDialogService,
-                                     bool isCivil = false)
+                                     IAcadLineweightDialogService acadLineweightDialogService)
     {
         _openDialogService = openDialogService;
         _saveDialogService = saveDialogService;
@@ -103,8 +96,6 @@ public class StringCogoPointsViewModel : ObservableObject
         _saveDialogService.DefaultExt = ".xml";
         _saveDialogService.Filter = "XML Files (*.xml)|*.xml";
 
-        IsCivil = isCivil;
-
         DescriptionKeys = new ObservableCollection<DescriptionKey>();
 
         // Initialize commands
@@ -114,6 +105,7 @@ public class StringCogoPointsViewModel : ObservableObject
         SaveAsDescriptionKeyFileCommand = new RelayCommand(SaveAsDescriptionKeyFile);
         AddRowCommand = new RelayCommand(AddRow);
         RemoveRowCommand = new RelayCommand(RemoveRow);
+        CopyRowCommand = new RelayCommand(CopyRow);
         StringCommand = new RelayCommand(StringCogoPoints, () => DescriptionKeys is not null &&
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
@@ -157,7 +149,25 @@ public class StringCogoPointsViewModel : ObservableObject
     private void AddRow()
     {
         DescriptionKeys ??= new();
-        DescriptionKeys.Add(new DescriptionKey());
+
+        var desKey = new DescriptionKey
+        {
+            Key = "New DescKey"
+        };
+
+        int count = 1;
+        while (true)
+        {
+            if (DescriptionKeys.All(p => p.Key != desKey.Key))
+            {
+                DescriptionKeys.Add(desKey);
+                break;
+            }
+
+            desKey.Key += count;
+            count++;
+        }
+
         IsUnsavedChanges = true;
         DescriptionKeyPropertyChanged(null, null);
     }
@@ -179,6 +189,23 @@ public class StringCogoPointsViewModel : ObservableObject
             {
                 DescriptionKeys?.Remove(SelectedKey);
             }
+        }
+
+        IsUnsavedChanges = true;
+        DescriptionKeyPropertyChanged(null, null);
+    }
+
+    private void CopyRow()
+    {
+        if (DescriptionKeys is null)
+            return;
+
+        if (SelectedKey != null)
+        {
+            var keyCopy = SelectedKey.Clone();
+            keyCopy.Key = "Copy of " + keyCopy.Key;
+            DescriptionKeys.Add(keyCopy);
+            SelectedKey = DescriptionKeys[DescriptionKeys.Count - 1];
         }
 
         IsUnsavedChanges = true;

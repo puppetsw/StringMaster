@@ -50,10 +50,7 @@ public class StringMasterPalette : PaletteSet
             new AcadColorDialogService(),
             new AcadLayerService(),
             new AcadLinetypeDialogService(),
-            new AcadLineweightDialogService())
-        {
-            IsCivil = _isCivil
-        };
+            new AcadLineweightDialogService());
 
         _stringCogoPointsView = new StringCogoPointsView(viewModel);
         _stringCogoPointsView.Background = ColorHelpers.GetBackgroundColor();
