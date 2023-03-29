@@ -76,12 +76,15 @@
             ColumnHeaderStyle="{StaticResource DataGridHeader}"
             GridLinesVisibility="None"
             IsReadOnly="True"
+            IsTextSearchCaseSensitive="False"
+            IsTextSearchEnabled="True"
             ItemsSource="{Binding Layers, UpdateSourceTrigger=PropertyChanged}"
             RowHeaderWidth="0"
             RowHeight="20"
             SelectedItem="{Binding SelectedLayer, UpdateSourceTrigger=PropertyChanged}"
             SelectionMode="Single"
-            SelectionUnit="FullRow">
+            SelectionUnit="FullRow"
+            TextSearch.TextPath="Name">
             <DataGrid.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel />
