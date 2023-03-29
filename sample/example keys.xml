@@ -1,72 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDescriptionKey xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <DescriptionKey>
-    <Key>TB#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Top of Bank</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>255</Red>
-        <Green>0</Green>
-        <Blue>0</Blue>
-        <ColorIndex>1</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
-    <Key>TK#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Top of Kerb</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>255</Red>
-        <Green>63</Green>
-        <Blue>0</Blue>
-        <ColorIndex>20</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
     <Key>BB#*</Key>
     <Draw2D>false</Draw2D>
     <Draw3D>true</Draw3D>
@@ -90,138 +24,6 @@
         <Green>0</Green>
         <Blue>0</Blue>
         <ColorIndex>1</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
-    <Key>WT#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Water Table</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>0</Red>
-        <Green>191</Green>
-        <Blue>255</Blue>
-        <ColorIndex>140</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
-    <Key>NS#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Natural Surface</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>255</Red>
-        <Green>255</Green>
-        <Blue>255</Blue>
-        <ColorIndex>7</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
-    <Key>EB#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Edge of Road</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>255</Red>
-        <Green>63</Green>
-        <Blue>0</Blue>
-        <ColorIndex>20</ColorIndex>
-        <IsVisible>true</IsVisible>
-      </Color>
-      <IsOn>false</IsOn>
-      <IsFrozen>false</IsFrozen>
-      <IsLocked>false</IsLocked>
-      <IsPlottable>false</IsPlottable>
-      <IsSelected>true</IsSelected>
-    </AcadLayer>
-  </DescriptionKey>
-  <DescriptionKey>
-    <Key>EG#*</Key>
-    <Draw2D>false</Draw2D>
-    <Draw3D>true</Draw3D>
-    <AcadColor>
-      <IsColorPicker>false</IsColorPicker>
-      <IsByLayer>true</IsByLayer>
-      <IsByBlock>false</IsByBlock>
-      <Red>255</Red>
-      <Green>255</Green>
-      <Blue>255</Blue>
-      <ColorIndex xsi:nil="true" />
-      <IsVisible>true</IsVisible>
-    </AcadColor>
-    <AcadLayer>
-      <Name>Edge of Road</Name>
-      <Color>
-        <IsColorPicker>false</IsColorPicker>
-        <IsByLayer>false</IsByLayer>
-        <IsByBlock>false</IsByBlock>
-        <Red>255</Red>
-        <Green>63</Green>
-        <Blue>0</Blue>
-        <ColorIndex>20</ColorIndex>
         <IsVisible>true</IsVisible>
       </Color>
       <IsOn>false</IsOn>
@@ -300,6 +102,72 @@
       <Lineweight>Default</Lineweight>
       <Linetype>Continuous</Linetype>
       <PlotStyleName>Color_30</PlotStyleName>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
+    <Key>EB#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Edge of Road</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>255</Red>
+        <Green>63</Green>
+        <Blue>0</Blue>
+        <ColorIndex>20</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
+    <Key>EG#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Edge of Road</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>255</Red>
+        <Green>63</Green>
+        <Blue>0</Blue>
+        <ColorIndex>20</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
       <IsSelected>true</IsSelected>
     </AcadLayer>
   </DescriptionKey>
@@ -916,6 +784,39 @@
     </AcadLayer>
   </DescriptionKey>
   <DescriptionKey>
+    <Key>NS#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Natural Surface</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>255</Red>
+        <Green>255</Green>
+        <Blue>255</Blue>
+        <ColorIndex>7</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
     <Key>OP#*</Key>
     <Draw2D>true</Draw2D>
     <Draw3D>false</Draw3D>
@@ -1132,6 +1033,72 @@
     </AcadLayer>
   </DescriptionKey>
   <DescriptionKey>
+    <Key>TB#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Top of Bank</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>255</Red>
+        <Green>0</Green>
+        <Blue>0</Blue>
+        <ColorIndex>1</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
+    <Key>TK#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Top of Kerb</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>255</Red>
+        <Green>63</Green>
+        <Blue>0</Blue>
+        <ColorIndex>20</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
     <Key>UB#*</Key>
     <Draw2D>false</Draw2D>
     <Draw3D>true</Draw3D>
@@ -1308,6 +1275,39 @@
       <Lineweight>Default</Lineweight>
       <Linetype>Continuous</Linetype>
       <PlotStyleName>Color_150</PlotStyleName>
+      <IsSelected>true</IsSelected>
+    </AcadLayer>
+  </DescriptionKey>
+  <DescriptionKey>
+    <Key>WT#*</Key>
+    <Draw2D>false</Draw2D>
+    <Draw3D>true</Draw3D>
+    <AcadColor>
+      <IsColorPicker>false</IsColorPicker>
+      <IsByLayer>true</IsByLayer>
+      <IsByBlock>false</IsByBlock>
+      <Red>255</Red>
+      <Green>255</Green>
+      <Blue>255</Blue>
+      <ColorIndex xsi:nil="true" />
+      <IsVisible>true</IsVisible>
+    </AcadColor>
+    <AcadLayer>
+      <Name>Water Table</Name>
+      <Color>
+        <IsColorPicker>false</IsColorPicker>
+        <IsByLayer>false</IsByLayer>
+        <IsByBlock>false</IsByBlock>
+        <Red>0</Red>
+        <Green>191</Green>
+        <Blue>255</Blue>
+        <ColorIndex>140</ColorIndex>
+        <IsVisible>true</IsVisible>
+      </Color>
+      <IsOn>false</IsOn>
+      <IsFrozen>false</IsFrozen>
+      <IsLocked>false</IsLocked>
+      <IsPlottable>false</IsPlottable>
       <IsSelected>true</IsSelected>
     </AcadLayer>
   </DescriptionKey>

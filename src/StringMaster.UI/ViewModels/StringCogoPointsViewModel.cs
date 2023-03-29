@@ -144,6 +144,8 @@ public class StringCogoPointsViewModel : ObservableObject
     {
         // If DescriptionKeys matches the cloned keys then no changes.
         IsUnsavedChanges = !DescriptionKeys.SequenceEqual(_unchangedDescriptionKeys);
+
+        DescriptionKeys = new ObservableCollection<DescriptionKey>(DescriptionKeys.OrderBy(p => p.Key));
     }
 
     private void AddRow()
