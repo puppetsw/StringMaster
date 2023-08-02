@@ -2,7 +2,7 @@
 
 ## What is StringMaster
 
-String master is a plugin for Autodesk Civil 3D 2019-2023 which connects/strings CogoPoints together matching the description keys specified.
+String master is a plugin for Autodesk Civil 3D 2017-2023 which connects/strings CogoPoints together matching the description keys specified.
 
 This project was developed for personal use but you may find it useful. Please feel free to discuss or contribute.
 
