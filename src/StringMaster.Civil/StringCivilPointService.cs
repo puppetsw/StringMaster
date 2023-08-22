@@ -64,9 +64,6 @@ public class StringCivilPointService : IStringCivilPointsService
         {
             DescriptionKeyMatch deskeyMatch = desKey.Value;
 
-            if (deskeyMatch.SurveyPoints.Count <= 1)
-	            continue;
-
             foreach (var surveyPoints in deskeyMatch.SurveyPoints)
             {
                 var pointList = new List<SurveyPointList>();
