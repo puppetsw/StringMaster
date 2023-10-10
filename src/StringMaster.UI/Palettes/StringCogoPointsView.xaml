@@ -73,6 +73,7 @@
                     </Button.ToolTip>
                     <Image Source="{StaticResource ExecuteToolBarIcon}" />
                 </Button>
+                <ComboBox Width="200" ItemsSource="{Binding MRUList}" />
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"

@@ -28,6 +28,8 @@ public class StringCogoPointsViewModel : ObservableObject
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
     private DescriptionKey _selectedKey;
+    private ObservableCollection<string> _mruList;
+
 
     public IAcadColorDialogService ACADColorDialogService { get; }
 
@@ -53,6 +55,12 @@ public class StringCogoPointsViewModel : ObservableObject
     {
         get => _selectedKey;
         set => SetProperty(ref _selectedKey, value);
+    }
+
+    public ObservableCollection<string> MRUList
+    {
+        get => _mruList;
+        set => SetProperty(ref _mruList, value);
     }
 
     public ICommand NewDescriptionKeyFileCommand { get; }
@@ -111,6 +119,7 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                  DescriptionKeys.All(x => x.IsValid));
         LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
 
+        LoadMRUList();
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
 
@@ -294,6 +303,7 @@ public class StringCogoPointsViewModel : ObservableObject
         IsUnsavedChanges = false;
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
+        AddToMRUList(fileName);
     }
 
     /// <summary>
@@ -409,5 +419,34 @@ public class StringCogoPointsViewModel : ObservableObject
 
         CurrentFileName = _openDialogService.FileName;
         LoadSettingsFromFile(CurrentFileName);
+    }
+
+    private void AddToMRUList(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+            return;
+
+        if (MRUList.Contains(fileName))
+        {
+            // List already contains this entry. Move it to the top.
+            MRUList.Remove(fileName);
+        }
+
+        MRUList.Insert(0, fileName);
+    }
+
+    private void RemoveFromMRUList(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+            return;
+
+        MRUList.Remove(fileName);
+    }
+
+    private void LoadMRUList()
+    {
+        MRUList = Properties.Settings.Default.MRUList != null
+            ? new ObservableCollection<string>(Properties.Settings.Default.MRUList.Cast<string>().ToList())
+            : new ObservableCollection<string>();
     }
 }
