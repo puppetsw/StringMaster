@@ -222,6 +222,9 @@ public class StringCivilPointService : IStringCivilPointsService
                         }
                     }
 
+                    if (pointCollection.Count <= 1)
+                        continue;
+
                     // Draw the polylines.
                     if (deskeyMatch.DescriptionKey.Draw2D && !hasCurve)
                         PolylineHelpers.DrawPolyline2d(tr, btr, pointCollection, layerName, deskeyMatch.DescriptionKey.AcadColor.ToColor(), isClosed);

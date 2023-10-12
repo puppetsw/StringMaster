@@ -5,6 +5,7 @@
     xmlns:converters="clr-namespace:StringMaster.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="clr-namespace:StringMaster.UI.Helpers"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:StringMaster.UI.Models"
     xmlns:viewmodels="clr-namespace:StringMaster.UI.ViewModels"
@@ -21,7 +22,6 @@
                 <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/ToolTips.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/ToolBar.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/StringMaster.UI;component/Resources/ComboBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:BooleanYesNoConverter x:Key="BooleanYesNoConverter" />
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
@@ -31,7 +31,6 @@
             </Style>
             <Cursor x:Key="PlusCursor">pack://application:,,,/StringMaster.UI;component/Resources/Cursors/pluscursor.cur</Cursor>
             <Cursor x:Key="CheckCursor">pack://application:,,,/StringMaster.UI;component/Resources/Cursors/checkmark.cur</Cursor>
-
             <models:ColumnContext x:Key="proxy" Data="{Binding}" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -73,7 +72,6 @@
                     </Button.ToolTip>
                     <Image Source="{StaticResource ExecuteToolBarIcon}" />
                 </Button>
-                <ComboBox Width="200" ItemsSource="{Binding MRUList}" />
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"
@@ -110,6 +108,7 @@
             ColumnHeaderStyle="{StaticResource DataGridHeader}"
             CurrentItem="{Binding SelectedKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Cursor="{StaticResource PlusCursor}"
+            DockPanel.Dock="Left"
             HorizontalGridLinesBrush="{StaticResource BlueGridLine}"
             ItemsSource="{Binding DescriptionKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             RowHeaderWidth="0"
@@ -202,5 +201,16 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
+        <ListBox
+            x:Name="myListBox"
+            DockPanel.Dock="Right"
+            ItemsSource="{Binding MRUList}"
+            SelectedItem="{Binding CurrentFileName}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding MRUListSelectionChanged}" CommandParameter="{Binding ElementName=myListBox, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
     </DockPanel>
 </UserControl>

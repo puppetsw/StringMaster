@@ -73,6 +73,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand CopyRowCommand { get; }
     public ICommand StringCommand { get; }
     public ICommand LayerSelectCommand { get; }
+    public ICommand MRUListSelectionChanged { get; }
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
@@ -118,6 +119,7 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
         LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
+        MRUListSelectionChanged = new RelayCommand(SelectionChanged);
 
         LoadMRUList();
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
@@ -427,20 +429,11 @@ public class StringCogoPointsViewModel : ObservableObject
             return;
 
         if (MRUList.Contains(fileName))
-        {
-            // List already contains this entry. Move it to the top.
-            MRUList.Remove(fileName);
-        }
-
-        MRUList.Insert(0, fileName);
-    }
-
-    private void RemoveFromMRUList(string fileName)
-    {
-        if (string.IsNullOrEmpty(fileName))
             return;
 
-        MRUList.Remove(fileName);
+        MRUList.Add(fileName);
+
+        Properties.Settings.Default.Save();
     }
 
     private void LoadMRUList()
@@ -448,5 +441,10 @@ public class StringCogoPointsViewModel : ObservableObject
         MRUList = Properties.Settings.Default.MRUList != null
             ? new ObservableCollection<string>(Properties.Settings.Default.MRUList.Cast<string>().ToList())
             : new ObservableCollection<string>();
+    }
+
+    private void SelectionChanged()
+    {
+        LoadSettingsFromFile(CurrentFileName);
     }
 }
