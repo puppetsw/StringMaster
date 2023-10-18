@@ -8,7 +8,7 @@ This project was developed for personal use but you may find it useful. Please f
 
 ## Usage
 
-Load the plugin DLL into Autodesk Civil 3D with `netload`. 
+Load the `stringmaster.civil.dll` plugin into Autodesk Civil 3D with `netload`. 
 
 Display the palette with the `stringmaster` command.
 
