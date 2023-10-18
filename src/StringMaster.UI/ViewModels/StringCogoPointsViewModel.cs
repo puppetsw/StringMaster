@@ -306,6 +306,7 @@ public class StringCogoPointsViewModel : ObservableObject
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
         AddToMRUList(fileName);
+        SaveMRUList();
     }
 
     /// <summary>
@@ -432,8 +433,6 @@ public class StringCogoPointsViewModel : ObservableObject
             return;
 
         MRUList.Add(fileName);
-
-        Properties.Settings.Default.Save();
     }
 
     private void LoadMRUList()
@@ -441,6 +440,14 @@ public class StringCogoPointsViewModel : ObservableObject
         MRUList = Properties.Settings.Default.MRUList != null
             ? new ObservableCollection<string>(Properties.Settings.Default.MRUList.Cast<string>().ToList())
             : new ObservableCollection<string>();
+    }
+
+
+    private void SaveMRUList()
+    {
+        Properties.Settings.Default.MRUList = new StringCollection();
+        Properties.Settings.Default.MRUList.AddRange(MRUList.ToArray());
+        Properties.Settings.Default.Save();
     }
 
     private void SelectionChanged()
