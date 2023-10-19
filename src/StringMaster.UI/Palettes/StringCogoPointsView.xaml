@@ -72,6 +72,13 @@
                     </Button.ToolTip>
                     <Image Source="{StaticResource ExecuteToolBarIcon}" />
                 </Button>
+                <ComboBox ItemsSource="{Binding MRUList}" SelectedItem="{Binding CurrentFileName}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding MRUListSelectionChanged}" CommandParameter="{Binding ElementName=myListBox, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"
@@ -201,16 +208,5 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <ListBox
-            x:Name="myListBox"
-            DockPanel.Dock="Right"
-            ItemsSource="{Binding MRUList}"
-            SelectedItem="{Binding CurrentFileName}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding MRUListSelectionChanged}" CommandParameter="{Binding ElementName=myListBox, Path=SelectedItem}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
     </DockPanel>
 </UserControl>
