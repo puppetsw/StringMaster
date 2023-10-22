@@ -79,6 +79,23 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
+                <Button Command="{Binding UnloadDescriptionKeyCommand}" IsEnabled="{Binding IsDescriptionKeyLoaded}">
+                    <!--<Image Source="{StaticResource RemoveToolBarIcon}" />-->
+                    <Image Width="16" Height="16">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="True">
+                                        <Setter Property="Source" Value="{StaticResource RemoveToolBarIcon}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                                        <Setter Property="Source" Value="{StaticResource RemoveDisabledToolBarIcon}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"

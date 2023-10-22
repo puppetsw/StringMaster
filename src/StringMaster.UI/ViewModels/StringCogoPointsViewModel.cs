@@ -63,6 +63,17 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _mruList, value);
     }
 
+    public bool IsDescriptionKeyLoaded
+    {
+        get
+        {
+            if (MRUList == null || MRUList.Count == 0)
+                return false;
+            else
+                return true;
+        }
+    }
+
     public ICommand NewDescriptionKeyFileCommand { get; }
     public ICommand OpenDescriptionKeyFileCommand { get; }
     public ICommand SaveDescriptionKeyFileCommand { get; }
@@ -74,6 +85,7 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand StringCommand { get; }
     public ICommand LayerSelectCommand { get; }
     public ICommand MRUListSelectionChanged { get; }
+    public ICommand UnloadDescriptionKeyCommand { get; }
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
@@ -120,6 +132,7 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                  DescriptionKeys.All(x => x.IsValid));
         LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
         MRUListSelectionChanged = new RelayCommand(SelectionChanged);
+        UnloadDescriptionKeyCommand = new RelayCommand(UnloadDescriptionKeyFile);
 
         LoadMRUList();
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
@@ -271,7 +284,10 @@ public class StringCogoPointsViewModel : ObservableObject
     private void LoadSettingsFromFile(string fileName)
     {
         if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
+        {
+            DescriptionKeys = new ObservableCollection<DescriptionKey>();
             return;
+        }
 
         DescriptionKeys.CollectionChanged -= DescriptionKeysOnCollectionChanged;
         UnhookPropertyChangeEvents();
@@ -424,6 +440,21 @@ public class StringCogoPointsViewModel : ObservableObject
         LoadSettingsFromFile(CurrentFileName);
     }
 
+
+    private void UnloadDescriptionKeyFile()
+    {
+        MRUList.Remove(CurrentFileName);
+
+        if (MRUList.Count > 0)
+            CurrentFileName = MRUList[MRUList.Count - 1];
+
+        SaveMRUList();
+
+        NotifyPropertyChanged(nameof(IsDescriptionKeyLoaded));
+    }
+
+
+    // MRU list
     private void AddToMRUList(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))
@@ -442,7 +473,6 @@ public class StringCogoPointsViewModel : ObservableObject
             : new ObservableCollection<string>();
     }
 
-
     private void SaveMRUList()
     {
         Properties.Settings.Default.MRUList = new StringCollection();
@@ -453,5 +483,6 @@ public class StringCogoPointsViewModel : ObservableObject
     private void SelectionChanged()
     {
         LoadSettingsFromFile(CurrentFileName);
+        NotifyPropertyChanged(nameof(IsDescriptionKeyLoaded));
     }
 }

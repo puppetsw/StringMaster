@@ -252,6 +252,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\unlocked.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons\remove - disabled.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
