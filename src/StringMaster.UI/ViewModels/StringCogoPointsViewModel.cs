@@ -28,6 +28,8 @@ public class StringCogoPointsViewModel : ObservableObject
     private ObservableCollection<DescriptionKey> _unchangedDescriptionKeys;
     private string _currentFileName;
     private DescriptionKey _selectedKey;
+    private ObservableCollection<string> _mruList;
+
 
     public IAcadColorDialogService ACADColorDialogService { get; }
 
@@ -55,6 +57,23 @@ public class StringCogoPointsViewModel : ObservableObject
         set => SetProperty(ref _selectedKey, value);
     }
 
+    public ObservableCollection<string> MRUList
+    {
+        get => _mruList;
+        set => SetProperty(ref _mruList, value);
+    }
+
+    public bool IsDescriptionKeyLoaded
+    {
+        get
+        {
+            if (MRUList == null || MRUList.Count == 0)
+                return false;
+            else
+                return true;
+        }
+    }
+
     public ICommand NewDescriptionKeyFileCommand { get; }
     public ICommand OpenDescriptionKeyFileCommand { get; }
     public ICommand SaveDescriptionKeyFileCommand { get; }
@@ -65,6 +84,8 @@ public class StringCogoPointsViewModel : ObservableObject
     public ICommand CopyRowCommand { get; }
     public ICommand StringCommand { get; }
     public ICommand LayerSelectCommand { get; }
+    public ICommand MRUListSelectionChanged { get; }
+    public ICommand UnloadDescriptionKeyCommand { get; }
 
     public StringCogoPointsViewModel(IOpenDialogService openDialogService,
                                      ISaveDialogService saveDialogService,
@@ -110,7 +131,10 @@ public class StringCogoPointsViewModel : ObservableObject
                                                                  DescriptionKeys.Count > 0 &&
                                                                  DescriptionKeys.All(x => x.IsValid));
         LayerSelectCommand = new RelayCommand(ShowLayerSelectionDialog);
+        MRUListSelectionChanged = new RelayCommand(SelectionChanged);
+        UnloadDescriptionKeyCommand = new RelayCommand(UnloadDescriptionKeyFile);
 
+        LoadMRUList();
         LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
     }
 
@@ -260,7 +284,10 @@ public class StringCogoPointsViewModel : ObservableObject
     private void LoadSettingsFromFile(string fileName)
     {
         if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
+        {
+            DescriptionKeys = new ObservableCollection<DescriptionKey>();
             return;
+        }
 
         DescriptionKeys.CollectionChanged -= DescriptionKeysOnCollectionChanged;
         UnhookPropertyChangeEvents();
@@ -294,6 +321,8 @@ public class StringCogoPointsViewModel : ObservableObject
         IsUnsavedChanges = false;
         Properties.Settings.Default.DescriptionKeyFileName = fileName;
         Properties.Settings.Default.Save();
+        AddToMRUList(fileName);
+        SaveMRUList();
     }
 
     /// <summary>
@@ -409,5 +438,51 @@ public class StringCogoPointsViewModel : ObservableObject
 
         CurrentFileName = _openDialogService.FileName;
         LoadSettingsFromFile(CurrentFileName);
+    }
+
+
+    private void UnloadDescriptionKeyFile()
+    {
+        MRUList.Remove(CurrentFileName);
+
+        if (MRUList.Count > 0)
+            CurrentFileName = MRUList[MRUList.Count - 1];
+
+        SaveMRUList();
+
+        NotifyPropertyChanged(nameof(IsDescriptionKeyLoaded));
+    }
+
+
+    // MRU list
+    private void AddToMRUList(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+            return;
+
+        if (MRUList.Contains(fileName))
+            return;
+
+        MRUList.Add(fileName);
+    }
+
+    private void LoadMRUList()
+    {
+        MRUList = Properties.Settings.Default.MRUList != null
+            ? new ObservableCollection<string>(Properties.Settings.Default.MRUList.Cast<string>().ToList())
+            : new ObservableCollection<string>();
+    }
+
+    private void SaveMRUList()
+    {
+        Properties.Settings.Default.MRUList = new StringCollection();
+        Properties.Settings.Default.MRUList.AddRange(MRUList.ToArray());
+        Properties.Settings.Default.Save();
+    }
+
+    private void SelectionChanged()
+    {
+        LoadSettingsFromFile(CurrentFileName);
+        NotifyPropertyChanged(nameof(IsDescriptionKeyLoaded));
     }
 }

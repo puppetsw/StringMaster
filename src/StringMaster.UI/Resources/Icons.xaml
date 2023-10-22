@@ -8,6 +8,7 @@
     <BitmapImage x:Key="TickToolBarIcon" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/tick.png" />
     <BitmapImage x:Key="AddToolBarIcon" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/add.png" />
     <BitmapImage x:Key="RemoveToolBarIcon" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/remove.bmp" />
+    <BitmapImage x:Key="RemoveDisabledToolBarIcon" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/remove - disabled.bmp" />
     <BitmapImage x:Key="ExecuteToolBarIcon" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/execute.png" />
     <BitmapImage x:Key="LayerOnImage" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/on.png" />
     <BitmapImage x:Key="LayerOffImage" UriSource="pack://application:,,,/StringMaster.UI;component/Resources/Icons/off.png" />
