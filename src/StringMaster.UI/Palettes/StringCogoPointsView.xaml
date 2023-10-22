@@ -80,7 +80,6 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
                 <Button Command="{Binding UnloadDescriptionKeyCommand}" IsEnabled="{Binding IsDescriptionKeyLoaded}">
-                    <!--<Image Source="{StaticResource RemoveToolBarIcon}" />-->
                     <Image Width="16" Height="16">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -99,7 +98,7 @@
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"
-                Background="{StaticResource DarkBackground}"
+                Background="Transparent"
                 Style="{DynamicResource ToolBarStyle}">
                 <Button Click="DismissPalette_Click" Style="{StaticResource ToolBarButton}">
                     <Border
