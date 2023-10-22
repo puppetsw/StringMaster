@@ -76,7 +76,7 @@
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"
-                Background="{StaticResource DarkBackground}"
+                Background="Transparent"
                 Style="{DynamicResource ToolBarStyle}">
                 <Button Click="DismissPalette_Click" Style="{StaticResource ToolBarButton}">
                     <Border
