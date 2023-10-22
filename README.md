@@ -14,7 +14,8 @@ Display the palette with the `stringmaster` command.
 
 ## Screenshots
 
-![screenshot](https://github.com/puppetsw/StringMaster/blob/master/images/screenshot.png)
+![image](https://github.com/puppetsw/StringMaster/assets/79826944/aa1b0a7a-946e-417a-9ef2-3af5096d7628)
+
 
 ## Building the source
 
