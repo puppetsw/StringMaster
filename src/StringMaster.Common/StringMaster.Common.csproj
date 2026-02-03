@@ -94,6 +94,12 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AecBaseMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2023\AecBaseMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\C3D\AeccDbMgd.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -113,6 +119,7 @@
     <Compile Include="Services\Implementation\AcadLayerService.cs" />
     <Compile Include="Services\Implementation\AcadLinetypeDialogService.cs" />
     <Compile Include="Services\Implementation\AcadLineweightDialogService.cs" />
+    <Compile Include="Services\Implementation\CivilPointGroupService.cs" />
     <Compile Include="Services\Implementation\DialogService.cs" />
     <Compile Include="Services\Implementation\MessageBoxService.cs" />
     <Compile Include="Services\Implementation\OpenDialogService.cs" />

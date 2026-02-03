@@ -112,6 +112,7 @@
     <Compile Include="Services\Interfaces\IAcadLayerService.cs" />
     <Compile Include="Services\Interfaces\IAcadLinetypeDialogService.cs" />
     <Compile Include="Services\Interfaces\IAcadLineweightDialogService.cs" />
+    <Compile Include="Services\Interfaces\ICivilPointGroupService.cs" />
     <Compile Include="Services\Interfaces\IDialog.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IImportService.cs" />
