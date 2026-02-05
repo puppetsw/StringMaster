@@ -272,7 +272,7 @@ public class StringCogoPointsViewModel : ObservableObject
 		if (DescriptionKeys.Count is 0) // If cleanup leaves us with none.
 			return;
 
-		_stringCivilPointsService.StringCivilPoints(DescriptionKeys);
+		_stringCivilPointsService.StringCivilPoints(DescriptionKeys, SelectedPointGroup);
 	}
 
 	private void ShowLayerSelectionDialog()

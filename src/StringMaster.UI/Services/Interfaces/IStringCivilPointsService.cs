@@ -5,5 +5,5 @@ namespace StringMaster.UI.Services.Interfaces;
 
 public interface IStringCivilPointsService
 {
-    void StringCivilPoints(IList<DescriptionKey> descriptionKeys);
+    void StringCivilPoints(IList<DescriptionKey> descriptionKeys, string filterByPointGroup = "");
 }
