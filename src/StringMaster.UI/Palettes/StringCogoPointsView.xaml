@@ -95,6 +95,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
+                <ComboBox ItemsSource="{Binding PointGroups}" SelectedItem="{Binding SelectedPointGroup, UpdateSourceTrigger=PropertyChanged}" />
             </ToolBar>
             <ToolBar
                 HorizontalAlignment="Right"

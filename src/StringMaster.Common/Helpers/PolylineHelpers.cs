@@ -11,7 +11,7 @@ public static class PolylineHelpers
 {
     public static ObjectId DrawPolyline3d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
-        using var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed)
+        var pLine3d = new Polyline3d(Poly3dType.SimplePoly, points, closed)
         {
             Layer = layerName,
             Color = color
@@ -24,8 +24,8 @@ public static class PolylineHelpers
 
     public static ObjectId DrawPolyline2d(Transaction tr, BlockTableRecord btr, Point3dCollection points, string layerName, Color color, bool closed = false)
     {
-        using var pLine2d = new Polyline2d(Poly2dType.SimplePoly, points, 0, closed, 0, 0, null);
-        using var pLine = new Polyline();
+        var pLine2d = new Polyline2d(Poly2dType.SimplePoly, points, 0, closed, 0, 0, null);
+        var pLine = new Polyline();
         pLine.ConvertFrom(pLine2d, false);
         pLine.Layer = layerName;
         pLine.Color = color;
