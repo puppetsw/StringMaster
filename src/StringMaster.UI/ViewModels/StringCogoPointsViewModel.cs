@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using StringMaster.UI.Helpers;
 using StringMaster.UI.Models;
@@ -151,15 +152,19 @@ public class StringCogoPointsViewModel : ObservableObject
 		MRUListSelectionChanged = new RelayCommand(SelectionChanged);
 		UnloadDescriptionKeyCommand = new RelayCommand(UnloadDescriptionKeyFile);
 
+		GetPointGroups();
+		LoadMRUList();
+		LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
+	}
+
+	public void GetPointGroups()
+	{
 		PointGroups = new ObservableCollection<string>(_civilPointGroupService.GetPointGroups());
 
 		if (PointGroups.Count > 0)
 		{
-			SelectedPointGroup = "_All Points";
+			SelectedPointGroup = StringHelpers.ALL_POINTS;
 		}
-
-		LoadMRUList();
-		LoadSettingsFromFile(Properties.Settings.Default.DescriptionKeyFileName);
 	}
 
 	/// <summary>
@@ -202,7 +207,7 @@ public class StringCogoPointsViewModel : ObservableObject
 
 		var desKey = new DescriptionKey
 		{
-			Key = "New DescKey"
+			Key = StringHelpers.NEW_DESCKEY
 		};
 
 		int count = 1;
@@ -253,7 +258,7 @@ public class StringCogoPointsViewModel : ObservableObject
 		if (SelectedKey != null)
 		{
 			var keyCopy = SelectedKey.Clone();
-			keyCopy.Key = "Copy of " + keyCopy.Key;
+			keyCopy.Key = StringHelpers.COPY_OF_ + keyCopy.Key;
 			DescriptionKeys.Add(keyCopy);
 			SelectedKey = DescriptionKeys[DescriptionKeys.Count - 1];
 		}
@@ -310,6 +315,7 @@ public class StringCogoPointsViewModel : ObservableObject
 		if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
 		{
 			DescriptionKeys = new ObservableCollection<DescriptionKey>();
+			DescriptionKeys.CollectionChanged += DescriptionKeysOnCollectionChanged;
 			return;
 		}
 
@@ -416,7 +422,7 @@ public class StringCogoPointsViewModel : ObservableObject
 	}
 
 	// View Commands
-	private void SaveDescriptionKeyFile() => Save();
+			private void SaveDescriptionKeyFile() => Save();
 
 	private void SaveAsDescriptionKeyFile() => SaveAs();
 

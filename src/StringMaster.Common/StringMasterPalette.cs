@@ -16,6 +16,7 @@ public class StringMasterPalette : PaletteSet
     private Palette _currentPalette;
 
     private StringCogoPointsView _stringCogoPointsView;
+    private StringCogoPointsViewModel _viewModel;
 
     public StringMasterPalette(IStringCivilPointsService stringCivilPointsService, bool isCivil = false)
         : base("StringMasterPalette", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
@@ -39,7 +40,7 @@ public class StringMasterPalette : PaletteSet
         // BUG: Probably some memory leak bug here if we had more than one palette?
         // TODO: Inject services to main view model. Use DI?
 
-        var viewModel = new StringCogoPointsViewModel(
+        _viewModel = new StringCogoPointsViewModel(
             new OpenDialogService(),
             new SaveDialogService(),
             new MessageBoxService(),
@@ -53,7 +54,7 @@ public class StringMasterPalette : PaletteSet
             new AcadLineweightDialogService(),
             new CivilPointGroupService());
 
-        _stringCogoPointsView = new StringCogoPointsView(viewModel);
+        _stringCogoPointsView = new StringCogoPointsView(_viewModel);
         _stringCogoPointsView.Background = ColorHelpers.GetBackgroundColor();
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
 
@@ -70,6 +71,7 @@ public class StringMasterPalette : PaletteSet
 
     private void MyPaletteSet_PaletteActivated(object sender, PaletteActivatedEventArgs e)
     {
+        _viewModel.GetPointGroups();
         _currentPalette = e.Activated;
     }
 
