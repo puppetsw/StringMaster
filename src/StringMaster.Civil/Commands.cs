@@ -15,6 +15,6 @@ public static class Commands
         if (s_palette == null)
             s_palette = new StringMasterPalette(new StringCivilPointService(), true);
 
-        s_palette.Visible = true;
+        s_palette.ShowPalette();
     }
 }
