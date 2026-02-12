@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Drawing;
+using System.Windows;
 using Autodesk.AutoCAD.Windows;
 using StringMaster.Common.Helpers;
 using StringMaster.Common.Services.Implementation;
 using StringMaster.UI.Palettes;
 using StringMaster.UI.Services.Interfaces;
 using StringMaster.UI.ViewModels;
+using Size = System.Drawing.Size;
 
 namespace StringMaster.Common;
 
@@ -16,6 +17,7 @@ public class StringMasterPalette : PaletteSet
     private Palette _currentPalette;
 
     private StringCogoPointsView _stringCogoPointsView;
+    private StringCogoPointsViewModel _viewModel;
 
     public StringMasterPalette(IStringCivilPointsService stringCivilPointsService, bool isCivil = false)
         : base("StringMasterPalette", new Guid("B56213B2-F7C0-499F-A3F3-A5A5EC631DA2"))
@@ -39,7 +41,7 @@ public class StringMasterPalette : PaletteSet
         // BUG: Probably some memory leak bug here if we had more than one palette?
         // TODO: Inject services to main view model. Use DI?
 
-        var viewModel = new StringCogoPointsViewModel(
+        _viewModel = new StringCogoPointsViewModel(
             new OpenDialogService(),
             new SaveDialogService(),
             new MessageBoxService(),
@@ -53,19 +55,28 @@ public class StringMasterPalette : PaletteSet
             new AcadLineweightDialogService(),
             new CivilPointGroupService());
 
-        _stringCogoPointsView = new StringCogoPointsView(viewModel);
+        _stringCogoPointsView = new StringCogoPointsView(_viewModel);
         _stringCogoPointsView.Background = ColorHelpers.GetBackgroundColor();
         _stringCogoPointsView.DismissPaletteEvent += DismissPalette;
+        _stringCogoPointsView.IsVisibleChanged += VisibleChanged;
 
         AddVisual("StringMaster", _stringCogoPointsView);
         PaletteActivated += MyPaletteSet_PaletteActivated;
+
         Activate(0);
         _currentPalette = this[0];
+    }
+
+    public void ShowPalette()
+    {
+        _currentPalette.PaletteSet.Visible = true;
+        _stringCogoPointsView.Visibility = Visibility.Visible;
     }
 
     private void DismissPalette(object sender, EventArgs e)
     {
         _currentPalette.PaletteSet.Visible = false;
+        _stringCogoPointsView.Visibility = Visibility.Hidden;
     }
 
     private void MyPaletteSet_PaletteActivated(object sender, PaletteActivatedEventArgs e)
@@ -73,9 +84,38 @@ public class StringMasterPalette : PaletteSet
         _currentPalette = e.Activated;
     }
 
+    private void VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (_stringCogoPointsView == null)
+        {
+            return;
+        }
+
+        if (!_stringCogoPointsView.IsVisible)
+        {
+            return;
+        }
+
+        if (Count <= 0)
+        {
+            return;
+        }
+
+        // Update the point groups before showing view.
+        _viewModel.GetPointGroups();
+
+        Activate(0);
+        _currentPalette = this[0];
+    }
+
     protected override void Dispose(bool dispose)
     {
-        _stringCogoPointsView.DismissPaletteEvent -= DismissPalette;
+        if (_stringCogoPointsView != null)
+        {
+            _stringCogoPointsView.DismissPaletteEvent -= DismissPalette;
+            _stringCogoPointsView.IsVisibleChanged -= VisibleChanged;
+        }
+
         PaletteActivated -= MyPaletteSet_PaletteActivated;
         base.Dispose(dispose);
     }
